@@ -1,0 +1,32 @@
+# Environment
+.dev.env
+.env
+.env.*
+*.env
+!.env.example
+
+# Virtualenv creado en la raíz
+/bin/
+/include/
+/lib/
+/lib64
+/share/
+/pyvenv.cfg
+
+# Python
+__pycache__/
+*.pyc
+
+# Node / Astro
+node_modules/
+dist/
+.astro/
+
+# OS
+.DS_Store
+
+# OTHER
+what-ia/
+pay/
+adipa/
+inventar/
