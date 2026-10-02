@@ -1,0 +1,61 @@
+# Paso 3 del flujo: al hacer merge del PR en main, despliega en producción por SSH:
+#   git pull → docker-compose down → docker-compose up -d --build
+# (los volúmenes se conservan: la base de datos de producción no se borra)
+#
+# Secrets requeridos (Settings → Secrets and variables → Actions):
+#   SSH_HOST         IP pública del servidor
+#   SSH_USER         usuario de despliegue (con acceso a docker)
+#   SSH_PRIVATE_KEY  clave privada cuya pública está en ~/.ssh/authorized_keys del servidor
+#   SSH_KNOWN_HOSTS  salida de: ssh-keyscan -p <puerto> <ip>
+# Variables opcionales:
+#   SSH_PORT  (por defecto 22)
+#   APP_DIR   carpeta del código en el servidor, con su .env (por defecto /home/orion)
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Nunca dos despliegues en paralelo; el siguiente espera a que termine el actual.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Desplegar en el servidor
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ vars.SSH_PORT || '22' }}
+          APP_DIR: ${{ vars.APP_DIR || '/home/orion' }}
+        run: |
+          ssh -i ~/.ssh/deploy_key -p "$SSH_PORT" \
+            -o StrictHostKeyChecking=yes -o ServerAliveInterval=30 \
+            "$SSH_USER@$SSH_HOST" \
+            "bash -s -- $(printf '%q' "$APP_DIR")" < .github/pipelines/deploy.sh
+
+      - name: Limpiar clave
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

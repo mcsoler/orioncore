@@ -1,0 +1,230 @@
+---
+---
+
+<section id="contacto" class="py-24 bg-[#F6F8FC]">
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-8">
+
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <p class="text-xs font-semibold tracking-[0.18em] text-[#08CBEF] uppercase mb-3">CONTACTO</p>
+      <h2 class="text-4xl lg:text-5xl font-bold text-[#101B31] mb-5">
+        Hablemos de tu
+        <span style="background: linear-gradient(135deg, #08CBEF, #2463EB); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">proyecto</span>
+      </h2>
+      <p class="text-[#65748D] text-lg max-w-xl mx-auto leading-relaxed">
+        Cuéntanos tu desafío. Nuestro equipo te responderá en menos de 24 horas con una propuesta personalizada.
+      </p>
+    </div>
+
+    <!-- Two-column layout -->
+    <div class="grid lg:grid-cols-2 gap-12 items-start">
+
+      <!-- Left: info cards -->
+      <div class="flex flex-col gap-6">
+
+        <!-- Why contact us -->
+        <div class="bg-[#061126] rounded-2xl p-8 text-white">
+          <h3 class="text-xl font-semibold mb-6">¿Por qué contactarnos?</h3>
+          <ul class="space-y-4">
+            {[
+              { icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z", text: "Respuesta en menos de 24 horas" },
+              { icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", text: "Diagnóstico inicial sin costo" },
+              { icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z", text: "Equipo multidisciplinario asignado" },
+              { icon: "M13 10V3L4 14h7v7l9-11h-7z", text: "Soluciones implementadas de forma ágil" },
+            ].map(item => (
+              <li class="flex items-start gap-3">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style="background: rgba(8,203,239,0.15);">
+                  <svg class="w-4 h-4 text-[#08CBEF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d={item.icon} />
+                  </svg>
+                </div>
+                <span class="text-white/80 text-sm leading-relaxed pt-1">{item.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Contact info -->
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+          <h3 class="text-[#101B31] font-semibold text-lg mb-6">Información de contacto</h3>
+          <div class="space-y-4">
+            <a href="mailto:contacto@orioncore.com" class="flex items-center gap-4 group">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-105" style="background: linear-gradient(135deg, rgba(8,203,239,0.1), rgba(36,99,235,0.1));">
+                <svg class="w-5 h-5 text-[#2463EB]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-[#65748D] mb-0.5">Correo electrónico</p>
+                <p class="text-[#101B31] font-medium group-hover:text-[#2463EB] transition-colors duration-200">contacto@orioncore.com</p>
+              </div>
+            </a>
+            <a href="https://wa.me/521234567890" target="_blank" rel="noopener" class="flex items-center gap-4 group">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-105" style="background: linear-gradient(135deg, rgba(8,203,239,0.1), rgba(36,99,235,0.1));">
+                <svg class="w-5 h-5 text-[#2463EB]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs text-[#65748D] mb-0.5">WhatsApp</p>
+                <p class="text-[#101B31] font-medium group-hover:text-[#2463EB] transition-colors duration-200">+52 123 456 7890</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: form -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 lg:p-10">
+        <h3 class="text-[#101B31] font-semibold text-xl mb-8">Envíanos un mensaje</h3>
+
+        <form id="contact-form" class="space-y-5" novalidate>
+
+          <!-- Name + Company row -->
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label for="name" class="block text-sm font-medium text-[#101B31] mb-2">Nombre completo <span class="text-[#2463EB]">*</span></label>
+              <input
+                type="text" id="name" name="name" required
+                placeholder="Tu nombre"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-[#101B31] placeholder-[#65748D]/60 text-sm outline-none transition-all duration-200 focus:border-[#2463EB] focus:ring-2 focus:ring-[#2463EB]/10"
+              />
+            </div>
+            <div>
+              <label for="company" class="block text-sm font-medium text-[#101B31] mb-2">Empresa</label>
+              <input
+                type="text" id="company" name="company"
+                placeholder="Tu empresa"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-[#101B31] placeholder-[#65748D]/60 text-sm outline-none transition-all duration-200 focus:border-[#2463EB] focus:ring-2 focus:ring-[#2463EB]/10"
+              />
+            </div>
+          </div>
+
+          <!-- Email + Phone row -->
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label for="email" class="block text-sm font-medium text-[#101B31] mb-2">Correo electrónico <span class="text-[#2463EB]">*</span></label>
+              <input
+                type="email" id="email" name="email" required
+                placeholder="tu@email.com"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-[#101B31] placeholder-[#65748D]/60 text-sm outline-none transition-all duration-200 focus:border-[#2463EB] focus:ring-2 focus:ring-[#2463EB]/10"
+              />
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-[#101B31] mb-2">Teléfono</label>
+              <input
+                type="tel" id="phone" name="phone"
+                placeholder="+52 123 456 7890"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-[#101B31] placeholder-[#65748D]/60 text-sm outline-none transition-all duration-200 focus:border-[#2463EB] focus:ring-2 focus:ring-[#2463EB]/10"
+              />
+            </div>
+          </div>
+
+          <!-- Service select -->
+          <div>
+            <label for="service" class="block text-sm font-medium text-[#101B31] mb-2">¿Qué servicio te interesa?</label>
+            <select
+              id="service" name="service"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 text-[#101B31] text-sm outline-none transition-all duration-200 focus:border-[#2463EB] focus:ring-2 focus:ring-[#2463EB]/10 bg-white appearance-none"
+            >
+              <option value="" disabled selected>Selecciona un servicio</option>
+              <option value="automatizacion">Automatización de Procesos</option>
+              <option value="ia-whatsapp">Agentes de IA para WhatsApp</option>
+              <option value="software">Software Empresarial a Medida</option>
+              <option value="seguridad">Seguridad y Control de Acceso</option>
+              <option value="marketing">Marketing Digital 360°</option>
+              <option value="otro">Otro / No lo tengo claro aún</option>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div>
+            <label for="message" class="block text-sm font-medium text-[#101B31] mb-2">Cuéntanos tu desafío</label>
+            <textarea
+              id="message" name="message" rows="4"
+              placeholder="Describe brevemente qué necesitas o qué problema quieres resolver..."
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 text-[#101B31] placeholder-[#65748D]/60 text-sm outline-none transition-all duration-200 focus:border-[#2463EB] focus:ring-2 focus:ring-[#2463EB]/10 resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Submit -->
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full py-4 px-8 rounded-xl font-semibold text-white text-base transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-[#2463EB]/40 min-h-[48px]"
+            style="background: linear-gradient(135deg, #08CBEF, #2463EB);"
+          >
+            Enviar mensaje
+          </button>
+
+          <!-- Status messages -->
+          <div id="form-success" class="hidden p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl text-sm text-center">
+            ¡Mensaje enviado! Nos pondremos en contacto contigo en menos de 24 horas.
+          </div>
+          <div id="form-error" class="hidden p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm text-center">
+            Hubo un error al enviar el mensaje. Por favor, intenta de nuevo.
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const successMsg = document.getElementById('form-success');
+  const errorMsg = document.getElementById('form-error');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      company: formData.get('company'),
+      service: formData.get('service'),
+      message: formData.get('message'),
+    };
+
+    try {
+      // Vacío = mismo dominio (Nginx enruta /api al backend)
+      const apiUrl = import.meta.env.PUBLIC_API_URL ?? '';
+      const response = await fetch(`${apiUrl}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        successMsg?.classList.remove('hidden');
+        errorMsg?.classList.add('hidden');
+        form.reset();
+        setTimeout(() => successMsg?.classList.add('hidden'), 6000);
+      } else {
+        throw new Error('Server error');
+      }
+    } catch {
+      errorMsg?.classList.remove('hidden');
+      successMsg?.classList.add('hidden');
+      setTimeout(() => errorMsg?.classList.add('hidden'), 6000);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar mensaje';
+    }
+  });
+</script>

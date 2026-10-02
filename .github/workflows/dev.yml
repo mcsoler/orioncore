@@ -1,0 +1,131 @@
+# Paso 2 del flujo: en cada push a una rama distinta de main
+#   1) abre el PR hacia main (si no existe)
+#   2) levanta la app en DEV (tu máquina local) con docker-compose
+#
+# DEV corre en un self-hosted runner instalado en la máquina local, con la etiqueta "dev".
+# Un runner de GitHub (ubuntu-latest) no puede levantar nada en tu localhost.
+#
+# Requisitos:
+#   - Settings → Actions → General → Workflow permissions →
+#     "Allow GitHub Actions to create and approve pull requests"
+#   - Self-hosted runner con etiqueta "dev" (Settings → Actions → Runners)
+#   - Variable DEV_APP_DIR (Settings → Secrets and variables → Actions → Variables):
+#     carpeta del código en la máquina de DEV, con su .dev.env
+#     (por defecto /Users/msoler/Desktop/orioncore)
+name: DEV
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pr-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Crear PR si no existe
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          existing=$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            echo "El PR #$existing ya existe para $BRANCH"
+            exit 0
+          fi
+
+          commits=$(git log --no-merges --pretty='- %s (%h)' origin/main..HEAD)
+          if [ -z "$commits" ]; then
+            echo "$BRANCH no tiene commits nuevos respecto a main"
+            exit 0
+          fi
+
+          {
+            echo "PR creado automáticamente desde \`$BRANCH\`."
+            echo
+            echo "### Commits"
+            echo "$commits"
+            echo
+            echo "Probar en DEV antes de hacer merge; al hacer merge se despliega en producción."
+          } > pr-body.md
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "$(git log -1 --pretty=%s)" \
+            --body-file pr-body.md
+
+  deploy-dev:
+    runs-on: [self-hosted, dev]
+    # Hay un solo entorno DEV: el último push (de cualquier rama) reemplaza al anterior
+    concurrency:
+      group: deploy-dev
+      cancel-in-progress: true
+    timeout-minutes: 30
+    env:
+      COMPOSE_PROJECT_NAME: orioncore-dev
+      APP_DIR: ${{ vars.DEV_APP_DIR || '/Users/msoler/Desktop/orioncore' }}
+    defaults:
+      run:
+        working-directory: ${{ vars.DEV_APP_DIR || '/Users/msoler/Desktop/orioncore' }}
+    steps:
+      - name: Llevar la carpeta de DEV a la rama del push
+        working-directory: /
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          cd "$APP_DIR" || { echo "::error::No existe DEV_APP_DIR=$APP_DIR"; exit 1; }
+          git rev-parse --is-inside-work-tree >/dev/null || { echo "::error::$APP_DIR no es un repo git"; exit 1; }
+
+          # Nunca pisar trabajo sin commitear del dev
+          if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+            echo "::error::$APP_DIR tiene cambios sin commitear; haz commit o stash y vuelve a ejecutar el job"
+            git status --short --untracked-files=no
+            exit 1
+          fi
+
+          git fetch --prune origin "$BRANCH"
+          git checkout -q "$BRANCH" 2>/dev/null || git checkout -q -b "$BRANCH" --track "origin/$BRANCH"
+          # Solo avanza; si la rama local tiene commits que no están en origin, falla en vez de borrarlos
+          git merge --ff-only "origin/$BRANCH"
+
+      - name: Cargar variables de DEV
+        run: |
+          if [ ! -f .dev.env ]; then
+            echo "::error::No existe $APP_DIR/.dev.env. Créalo a partir de .env.example"
+            exit 1
+          fi
+          port=$(sed -n 's/^HTTP_PORT=//p' .dev.env)
+          echo "HTTP_PORT=${port:-80}" >> "$GITHUB_ENV"
+
+      - name: docker-compose up -d --build
+        run: docker-compose --env-file .dev.env up -d --build --remove-orphans
+
+      - name: Verificar que la app responde
+        run: |
+          for _ in $(seq 30); do
+            if curl -fsS "http://localhost:$HTTP_PORT/health" >/dev/null 2>&1; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::La app no respondió en http://localhost:$HTTP_PORT/health"
+          docker-compose --env-file .dev.env logs --tail=100
+          exit 1
+
+      - name: Despliegue en DEV exitoso
+        run: |
+          msg="✅ Despliegue en DEV exitoso — rama ${GITHUB_REF_NAME} (${GITHUB_SHA::7}) corriendo en http://localhost:$HTTP_PORT"
+          echo "$msg"
+          echo "$msg" >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,77 @@
+---
+const objectives = [
+  "Democratizar el acceso a tecnologías de vanguardia",
+  "Reducir costos operativos para nuestros clientes",
+  "Aumentar la productividad empresarial",
+  "Garantizar soluciones de máxima calidad",
+];
+---
+
+<section id="quienes-somos" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Content -->
+      <div>
+        <h2 class="section-title">
+          Quiénes <span class="gradient-text">Somos</span>
+        </h2>
+
+        <p class="text-lg text-text-secondary mb-6">
+          En <span class="font-semibold text-primary">Orion Core Tecnologías</span>, somos una empresa
+          comprometida con la transformación digital de las organizaciones. Nos especializamos en
+          desarrollar soluciones innovadoras basadas en <span class="font-semibold">Blockchain</span>
+          e <span class="font-semibold">Inteligencia Artificial</span>.
+        </p>
+
+        <p class="text-lg text-text-secondary mb-8">
+          Nuestra misión es garantizar que tanto micro como macro empresas tengan acceso a
+          tecnologías de última generación, permitiéndoles reducir costos operativos y
+          mejorar significativamente su productividad.
+        </p>
+
+        <h3 class="text-2xl font-bold text-text-primary mb-4 font-poppins">Nuestros Objetivos</h3>
+
+        <ul class="space-y-3">
+          {objectives.map((objective) => (
+            <li class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span class="text-text-secondary">{objective}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Visual Element -->
+      <div class="relative">
+        <div class="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-3xl p-8 lg:p-12">
+          <div class="grid grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+              <div class="text-4xl font-bold gradient-text mb-2">100+</div>
+              <div class="text-text-secondary text-sm">Proyectos Completados</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+              <div class="text-4xl font-bold gradient-text mb-2">50+</div>
+              <div class="text-text-secondary text-sm">Clientes Satisfechos</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+              <div class="text-4xl font-bold gradient-text mb-2">5+</div>
+              <div class="text-text-secondary text-sm">Años de Experiencia</div>
+            </div>
+            <div class="bg-white rounded-2xl p-6 shadow-lg text-center">
+              <div class="text-4xl font-bold gradient-text mb-2">24/7</div>
+              <div class="text-text-secondary text-sm">Soporte Técnico</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Decorative elements -->
+        <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-full opacity-20 blur-2xl"></div>
+        <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-secondary to-primary rounded-full opacity-20 blur-2xl"></div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,67 @@
+services:
+  # Único servicio con puerto publicado; enruta / al frontend y /api al backend
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - orioncore-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        PUBLIC_API_URL: ${PUBLIC_API_URL:-}
+    restart: unless-stopped
+    networks:
+      - orioncore-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - MONGODB_URL=mongodb://${MONGO_USER:?Define MONGO_USER en .env}:${MONGO_PASSWORD:?Define MONGO_PASSWORD en .env}@mongodb:27017/?authSource=admin
+      - DATABASE_NAME=${DATABASE_NAME:-orioncore}
+      - JWT_SECRET=${JWT_SECRET:?Define JWT_SECRET en .env}
+      - JWT_EXPIRE_MINUTES=${JWT_EXPIRE_MINUTES:-60}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:?Define ADMIN_PASSWORD en .env}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost}
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - orioncore-network
+
+  # Sin "ports": Mongo solo es accesible desde la red interna de Docker
+  mongodb:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER:?Define MONGO_USER en .env}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD:?Define MONGO_PASSWORD en .env}
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orioncore-network
+
+networks:
+  orioncore-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
