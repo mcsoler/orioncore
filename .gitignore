@@ -25,7 +25,11 @@ dist/
 # OS
 .DS_Store
 
+# Configuración local de Claude Code (permisos de cada máquina)
+.claude/settings.local.json
+
 # OTHER
+agents.md
 what-ia/
 pay/
 adipa/
