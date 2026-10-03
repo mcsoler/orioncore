@@ -17,7 +17,10 @@ log() { printf '[deploy %s] %s\n' "$(date +%H:%M:%S)" "$*"; }
 cd "$APP_DIR"
 
 # Evita despliegues simultáneos aunque se lancen fuera de GitHub Actions.
-exec 9>/tmp/orioncore-deploy.lock
+# Se abre en solo lectura para que funcione aunque el archivo lo haya creado otro usuario (p. ej. root).
+LOCK_FILE=/tmp/orioncore-deploy.lock
+[ -e "$LOCK_FILE" ] || { : > "$LOCK_FILE"; chmod 666 "$LOCK_FILE" 2>/dev/null || true; }
+exec 9<"$LOCK_FILE"
 flock -n 9 || { log "Hay otro despliegue en curso"; exit 1; }
 
 [ -f .env ] || { log "No existe $APP_DIR/.env (copiar desde .env.example)"; exit 1; }
