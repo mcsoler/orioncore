@@ -1,0 +1,13 @@
+# NGINX_MODE=http — DEV, o servidor antes de tener certificado.
+
+server {
+    listen 80;
+    server_name _;
+
+    # Validación de Let's Encrypt (para emitir el primer certificado)
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    include /etc/nginx/snippets/app.conf;
+}
