@@ -1,0 +1,174 @@
+---
+import type { NavItem } from '../../../domain/routing/RouteRegistry';
+import Icon from '../shared/Icon.astro';
+import Logo from '../shared/Logo.astro';
+
+interface Props {
+  nav: NavItem[];
+}
+
+const { nav } = Astro.props;
+const linkClass = 'block px-4 py-2 text-[14px] font-medium text-white/80 hover:text-white transition-colors font-inter';
+---
+
+<header class="sticky top-0 z-50 bg-nav-glass backdrop-blur-xl border-b border-white/5" data-header>
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 h-[68px] flex items-center justify-between gap-4">
+    <a href="/" aria-label="Orion Core Tecnologías, inicio" class="shrink-0">
+      <Logo tone="dark" />
+    </a>
+
+    <nav aria-label="Principal" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          nav.map((item, i) =>
+            item.children.length > 0 ? (
+              <li class="relative" data-submenu>
+                <button
+                  type="button"
+                  data-submenu-toggle
+                  aria-expanded="false"
+                  aria-controls={`submenu-${i}`}
+                  class="flex items-center gap-1 px-4 py-2 text-[14px] font-medium text-white/80 hover:text-white font-inter"
+                >
+                  {item.label}
+                  <Icon name="chevron-down" class="w-4 h-4" />
+                </button>
+                <ul
+                  id={`submenu-${i}`}
+                  hidden
+                  class="absolute left-0 top-full mt-2 w-72 rounded-xl bg-navy border border-white/10 py-2 shadow-glow-blue"
+                >
+                  {item.href && (
+                    <li>
+                      <a href={item.href} class:list={[linkClass, 'font-semibold text-secondary']}>
+                        Ver todo {item.label.toLowerCase()}
+                      </a>
+                    </li>
+                  )}
+                  {item.children.map((child) => (
+                    <li>
+                      <a href={child.href} class={linkClass}>
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <li>
+                <a href={item.href} class={linkClass}>
+                  {item.label}
+                </a>
+              </li>
+            ),
+          )
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="/tienda/" aria-label="Carrito (ir a la tienda)" class="p-2 text-white/80 hover:text-white">
+        <Icon name="cart" class="w-6 h-6" />
+      </a>
+      <a
+        href="/contacto/"
+        class="hidden sm:inline-flex px-5 py-2 border border-secondary/40 text-secondary text-[13px] font-semibold rounded-lg hover:bg-secondary/10 hover:border-secondary hover:shadow-glow-cyan transition-all duration-300 font-inter"
+      >
+        Diagnóstico gratis
+      </a>
+      <button
+        type="button"
+        data-mobile-toggle
+        aria-expanded="false"
+        aria-controls="menu-movil"
+        aria-label="Abrir menú"
+        class="lg:hidden p-2 text-white/80 hover:text-white"
+      >
+        <Icon name="menu" class="w-6 h-6" />
+      </button>
+    </div>
+  </div>
+
+  <nav id="menu-movil" aria-label="Menú móvil" hidden class="lg:hidden border-t border-white/10 max-h-[calc(100vh-68px)] overflow-y-auto">
+    <ul class="max-w-7xl mx-auto px-6 py-4 space-y-4">
+      {
+        nav.map((item) => (
+          <li>
+            {item.href ? (
+              <a href={item.href} class="block py-1 text-base font-semibold text-white">
+                {item.label}
+              </a>
+            ) : (
+              <p class="py-1 text-base font-semibold text-white">{item.label}</p>
+            )}
+            {item.children.length > 0 && (
+              <ul class="mt-1 border-l border-white/10 pl-4 space-y-1">
+                {item.children.map((child) => (
+                  <li>
+                    <a href={child.href} class="block py-1.5 text-sm text-white/80 hover:text-white">
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+      <li>
+        <a href="/contacto/" class="btn-primary w-full">Diagnóstico gratis</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+
+  function setOpen(toggle: HTMLButtonElement, open: boolean) {
+    const panel = document.getElementById(toggle.getAttribute('aria-controls') ?? '');
+    toggle.setAttribute('aria-expanded', String(open));
+    if (panel) panel.hidden = !open;
+  }
+
+  // Submenús de escritorio
+  const submenuToggles = [...(header?.querySelectorAll<HTMLButtonElement>('[data-submenu-toggle]') ?? [])];
+  for (const toggle of submenuToggles) {
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      submenuToggles.forEach((other) => setOpen(other, false));
+      setOpen(toggle, open);
+    });
+  }
+
+  // Menú móvil
+  const mobileToggle = header?.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
+  mobileToggle?.addEventListener('click', () => {
+    const open = mobileToggle.getAttribute('aria-expanded') !== 'true';
+    setOpen(mobileToggle, open);
+    mobileToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  });
+  document.getElementById('menu-movil')?.addEventListener('click', (event) => {
+    if ((event.target as HTMLElement).closest('a') && mobileToggle) {
+      setOpen(mobileToggle, false);
+      mobileToggle.setAttribute('aria-label', 'Abrir menú');
+    }
+  });
+
+  // Escape cierra lo que esté abierto y devuelve el foco a su botón
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    for (const toggle of [...submenuToggles, ...(mobileToggle ? [mobileToggle] : [])]) {
+      if (toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(toggle, false);
+        if (toggle === mobileToggle) toggle.setAttribute('aria-label', 'Abrir menú');
+        toggle.focus();
+      }
+    }
+  });
+
+  // Clic fuera cierra los submenús
+  document.addEventListener('click', (event) => {
+    if (!(event.target as HTMLElement).closest('[data-submenu]')) submenuToggles.forEach((t) => setOpen(t, false));
+  });
+</script>
