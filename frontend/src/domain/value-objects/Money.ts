@@ -5,9 +5,14 @@ export interface MoneyFormat {
   format(amount: number): string;
 }
 
+/** Agrupa miles con punto, como se escribe en Colombia: `3118` → `3.118`. */
+export function groupThousands(value: number): string {
+  return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
 /** Formato COP: `$1.299.000` (punto de miles, sin decimales). */
 export const copFormat: MoneyFormat = {
-  format: (amount) => `$${String(amount).replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`,
+  format: (amount) => `$${groupThousands(amount)}`,
 };
 
 /** Monto en pesos colombianos enteros. Los pesos no tienen centavos en la práctica. */
