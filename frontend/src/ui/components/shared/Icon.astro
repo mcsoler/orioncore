@@ -13,12 +13,13 @@ const isWhatsApp = name === 'whatsapp';
 const path = isWhatsApp ? WHATSAPP_PATH : STROKE_ICONS[name];
 if (!path) throw new Error(`Icon: no existe el ícono "${name}"`);
 
-const a11y = label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'true' };
 ---
 
 {
   isWhatsApp ? (
-    <svg viewBox="0 0 24 24" class={className} fill="currentColor" focusable="false" {...a11y}>
+    <svg viewBox="0 0 24 24" class={className} fill="currentColor" focusable="false" role={label ? 'img' : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : 'true'}>
       <path d={path} />
     </svg>
   ) : (
@@ -31,7 +32,9 @@ const a11y = label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'tr
       stroke-linecap="round"
       stroke-linejoin="round"
       focusable="false"
-      {...a11y}
+      role={label ? 'img' : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : 'true'}
     >
       <path d={path} />
     </svg>

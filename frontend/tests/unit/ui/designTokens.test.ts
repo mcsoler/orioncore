@@ -4,7 +4,8 @@ import { describe, expect, it } from 'vitest';
 import tailwindConfig from '../../../tailwind.config.mjs';
 
 const root = new URL('../../../', import.meta.url).pathname;
-const theme = tailwindConfig.theme.extend;
+// Config de Tailwind en JS: se tipa como un registro simple para las aserciones
+const theme = tailwindConfig.theme!.extend as Record<string, Record<string, string | string[]>>;
 
 function filesIn(dir: string, exts: string[]): string[] {
   if (!existsSync(dir)) return [];
@@ -52,8 +53,8 @@ describe('tokens de diseño (identidad visual sin cambios)', () => {
   });
 
   it('mantiene Poppins para títulos e Inter para el cuerpo, sin el alias playfair', () => {
-    expect(theme.fontFamily.poppins[0]).toBe('Poppins');
-    expect(theme.fontFamily.inter[0]).toBe('Inter');
+    expect(theme.fontFamily!.poppins![0]).toBe('Poppins');
+    expect(theme.fontFamily!.inter![0]).toBe('Inter');
     expect(theme.fontFamily).not.toHaveProperty('playfair');
   });
 

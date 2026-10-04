@@ -40,7 +40,9 @@ const lines = [
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     class="w-9 h-9 shrink-0"
-    {...(isIsotype ? { role: 'img', 'aria-label': 'Orion Core Tecnologías' } : { 'aria-hidden': 'true' })}
+    role={isIsotype ? 'img' : undefined}
+    aria-label={isIsotype ? 'Orion Core Tecnologías' : undefined}
+    aria-hidden={isIsotype ? undefined : 'true'}
   >
     {nodes.map((n) => <circle cx={n.cx} cy={n.cy} r={n.r} class="fill-secondary" opacity={n.o} />)}
     {
