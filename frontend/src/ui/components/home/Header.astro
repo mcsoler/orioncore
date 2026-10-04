@@ -89,7 +89,13 @@ const linkClass = 'block px-4 py-2 text-[14px] font-medium text-white/80 hover:t
     </div>
   </div>
 
-  <nav id="menu-movil" aria-label="Menú móvil" hidden class="lg:hidden border-t border-white/10 max-h-[calc(100vh-68px)] overflow-y-auto">
+  <!-- Panel superpuesto: no cambia la altura del header ni desplaza la página -->
+  <nav
+    id="menu-movil"
+    aria-label="Menú móvil"
+    hidden
+    class="lg:hidden absolute inset-x-0 top-full bg-navy border-t border-white/10 shadow-glow-blue max-h-[calc(100svh-68px)] overflow-y-auto"
+  >
     <ul class="max-w-7xl mx-auto px-6 py-4 space-y-4">
       {
         nav.map((item) => (
