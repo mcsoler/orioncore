@@ -54,6 +54,31 @@ describe('createContainer (composition root)', () => {
     expect(routes.patterns()).toHaveLength(24);
   });
 
+  it('seoFor() arma los metadatos de una ruta desde el RouteRegistry', () => {
+    const { seoFor } = createContainer(baseConfig);
+    const home = seoFor('/');
+    expect(home.title).toBe('Automatización, IA y Marketing para Empresas | Orion Core');
+    expect(home.robots).toBe('index, follow');
+    expect(home.canonical).toBe('https://orioncore.co/');
+
+    const draft = seoFor('/servicios/software-a-medida/');
+    expect(draft.title).toBe('Software Empresarial a Medida | Orion Core');
+    expect(draft.robots).toBe('noindex, follow');
+  });
+
+  it('seoFor() del home incluye Organization, LocalBusiness, WebSite y FAQPage', async () => {
+    const container = createContainer(baseConfig);
+    const view = await container.getHomeContent.execute();
+    const types = container.seoFor('/', container.homeJsonLd(view)).jsonLd.map((j) => j['@type']);
+    expect(types).toEqual(['Organization', 'ProfessionalService', 'WebSite', 'FAQPage']);
+  });
+
+  it('notFoundSeo() no se indexa', () => {
+    const meta = createContainer(baseConfig).notFoundSeo();
+    expect(meta.robots).toBe('noindex, follow');
+    expect(meta.title).toBe('Página no encontrada | Orion Core');
+  });
+
   it('construye el enlace de WhatsApp solo si hay número confirmado', () => {
     const { whatsappLink } = createContainer(baseConfig);
     expect(whatsappLink(undefined, 'Hola')).toBeUndefined();
