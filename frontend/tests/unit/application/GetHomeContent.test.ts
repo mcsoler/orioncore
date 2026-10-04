@@ -26,6 +26,16 @@ describe('GetHomeContent', () => {
     ]);
   });
 
+  it('incluye el titular de beneficio y el CTA del servicio cuando existen', async () => {
+    const { Service } = await import('../../../src/domain/entities/Service');
+    const content = homeContentFixture();
+    content.services = {
+      ...content.services,
+      items: [Service.create({ title: 'X', description: 'd', items: ['1'], headline: 'Titular', cta: 'Quiero X' })],
+    };
+    expect((await run(content)).services.items[0]).toMatchObject({ headline: 'Titular', cta: 'Quiero X' });
+  });
+
   it('las líneas de marketing enlazan a /marketing-digital/{slug}/', async () => {
     const view = await run(homeContentFixture());
     expect(view.marketing.items.map((m) => m.href)).toEqual(['/marketing-digital/analisis-web/']);

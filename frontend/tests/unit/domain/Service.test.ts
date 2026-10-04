@@ -35,7 +35,15 @@ describe('Service', () => {
     expect(Service.create(serviceProps).badge).toBeUndefined();
   });
 
+  it('expone el titular de beneficio y el texto del CTA', () => {
+    const service = Service.create({ ...serviceProps, headline: 'Recupera tus horas', cta: 'Quiero automatizar' });
+    expect(service.headline).toBe('Recupera tus horas');
+    expect(service.cta).toBe('Quiero automatizar');
+  });
+
   it.each([
+    ['titular vacío', { ...serviceProps, headline: ' ' }],
+    ['CTA vacío', { ...serviceProps, cta: '' }],
     ['título vacío', { ...serviceProps, title: '  ' }],
     ['descripción vacía', { ...serviceProps, description: '' }],
     ['sin ítems', { ...serviceProps, items: [] }],
