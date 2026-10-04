@@ -133,10 +133,11 @@ describe('Services', () => {
     expect(row.textContent).toContain('Más solicitado');
   });
 
-  it('los enlaces de detalle tienen nombres accesibles distintos', async () => {
+  it('los enlaces de detalle tienen nombres accesibles distintos que incluyen el texto visible', async () => {
     const { document } = await render();
-    const names = [...document.querySelectorAll('a[aria-label^="Ver detalles"]')].map((a) => a.getAttribute('aria-label'));
-    expect(new Set(names).size).toBe(5);
+    const links = [...document.querySelectorAll('a[aria-label^="Ver detalles"]')];
+    expect(new Set(links.map((a) => a.getAttribute('aria-label'))).size).toBe(5);
+    for (const a of links) expect(a.getAttribute('aria-label')).toContain(a.textContent!.trim());
   });
 });
 

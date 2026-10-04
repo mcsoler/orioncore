@@ -77,6 +77,13 @@ describe('Section', () => {
     expect(section.textContent).toContain('contenido');
   });
 
+  it('sobre fondo suave el subtítulo no usa muted (4,45:1); usa ink/80 para pasar 4,5:1', async () => {
+    const { document } = await renderAstro(Section, { props: { id: 'x', tone: 'soft', title: 'T', subtitle: 'S' } });
+    const subtitle = document.querySelector('header p:last-child')!;
+    expect(subtitle.className).not.toContain('text-muted');
+    expect(subtitle.className).toContain('text-ink/80');
+  });
+
   it('tone dark usa el navy de la marca', async () => {
     const { document } = await renderAstro(Section, { props: { id: 'x', tone: 'dark', title: 'T' } });
     expect(document.querySelector('section')!.className).toContain('bg-navy');

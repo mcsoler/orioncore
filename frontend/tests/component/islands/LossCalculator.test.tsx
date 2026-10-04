@@ -51,6 +51,15 @@ describe('LossCalculator (isla)', () => {
     expect(screen.getByRole('link', { name: props.cta.label })).toHaveFocus();
   });
 
+  it('la lista de resultados es un <dl> válido: cada <div> hijo directo contiene un dt y un dd', () => {
+    const { container } = render(<LossCalculator {...props} />);
+    const dl = container.querySelector('dl')!;
+    for (const child of dl.children) {
+      expect(child.tagName).toBe('DIV');
+      expect([...child.children].map((c) => c.tagName)).toEqual(['DT', 'DD']);
+    }
+  });
+
   it('anuncia los cambios del resultado (aria-live)', () => {
     render(<LossCalculator {...props} />);
     expect(screen.getByTestId('monthly-loss').closest('[aria-live]')).toHaveAttribute('aria-live', 'polite');
