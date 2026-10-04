@@ -2,9 +2,9 @@
   "business": {
     "name": "Orion Core Tecnologías",
     "legalName": "[Razón social]",
-    "email": "contacto@orioncore.com",
-    "phoneLabel": "[Teléfono]",
-    "whatsapp": null,
+    "email": "orioncoretechnologies@gmail.com",
+    "phoneLabel": "+57 305 419 5433",
+    "whatsapp": "+57 305 419 5433",
     "address": "[Dirección]",
     "city": "[Ciudad]",
     "googleBusinessUrl": null
@@ -208,9 +208,9 @@
     "results": {
       "title": "Resultados medibles",
       "stats": [
-        { "value": "[X]", "label": "Proyectos entregados" },
-        { "value": "[X]", "label": "Clientes activos" },
-        { "value": "[X]", "label": "Años de experiencia" },
+        { "value": "10+", "label": "Proyectos entregados" },
+        { "value": "5+", "label": "Clientes" },
+        { "value": "5+", "label": "Años de experiencia" },
         { "value": "[X]", "label": "Horas automatizadas al mes" }
       ],
       "certifications": ["[Certificación 1]", "[Certificación 2]"],
