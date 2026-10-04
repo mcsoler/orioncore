@@ -48,8 +48,16 @@ describe('tokens de diseño (identidad visual sin cambios)', () => {
     });
   });
 
-  it('solo agrega colores funcionales nuevos (éxito, error, WhatsApp)', () => {
-    expect(theme.colors).toMatchObject({ success: '#15803d', danger: '#b91c1c', whatsapp: '#25D366' });
+  it('incluye los tokens del tema oscuro de la referencia (home-html/Main.dc.html)', () => {
+    expect(theme.colors).toMatchObject({
+      surface: '#101B2F',
+      'surface-2': '#1A2437',
+      line: '#242E40',
+      success: '#34D399',
+      danger: '#F87171',
+      whatsapp: '#25D366',
+      'whatsapp-ink': '#06210F',
+    });
   });
 
   it('mantiene Poppins para títulos e Inter para el cuerpo, sin el alias playfair', () => {
