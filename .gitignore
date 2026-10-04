@@ -42,3 +42,5 @@ PROMPT-*.md
 frontend/public/globe.gl.min.js
 frontend/public/earth/
 frontend/coverage/
+frontend/test-results/
+frontend/playwright-report/
