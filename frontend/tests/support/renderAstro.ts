@@ -6,9 +6,12 @@ import { JSDOM } from 'jsdom';
 let containerPromise: Promise<AstroContainer> | undefined;
 
 function container(): Promise<AstroContainer> {
-  containerPromise ??= loadRenderers([getContainerRenderer()]).then((renderers) =>
-    AstroContainer.create({ renderers }),
-  );
+  containerPromise ??= loadRenderers([getContainerRenderer()]).then(async (renderers) => {
+    const astro = await AstroContainer.create({ renderers });
+    // Para que las islas (client:*) se rendericen como <astro-island>
+    astro.addClientRenderer({ name: '@astrojs/react', entrypoint: '@astrojs/react/client.js' });
+    return astro;
+  });
   return containerPromise;
 }
 

@@ -1,0 +1,73 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+import Chip from '../shared/Chip.astro';
+import Icon from '../shared/Icon.astro';
+import Section from '../shared/Section.astro';
+
+type Props = HomeViewModel['results'];
+
+const { title, cases, stats, certifications, testimonials } = Astro.props;
+---
+
+<Section id="resultados" tone="dark" eyebrow="Resultados" title={title}>
+  <dl class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+    {
+      stats.map((stat) => (
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-center">
+          <dt class="text-sm text-white/75 order-2">{stat.label}</dt>
+          <dd class="font-poppins text-4xl font-extrabold text-secondary mb-1">{stat.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <h3 class="font-poppins text-xl font-semibold text-white mb-6">Casos de éxito</h3>
+  <ul class="grid gap-6 md:grid-cols-3 mb-12">
+    {
+      cases.map((study) => (
+        <li>
+          <a href={study.href} class="flex flex-col h-full rounded-2xl bg-white/5 border border-white/10 p-6 hover:border-secondary/50 transition-colors">
+            <p class="font-poppins text-2xl font-bold text-secondary mb-3">{study.result}</p>
+            <h4 class="font-semibold text-white mb-2">{study.title}</h4>
+            <p class="text-sm text-white/75 mb-4">{study.description}</p>
+            <span class="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-secondary">
+              Ver el caso <Icon name="arrow-right" class="w-4 h-4" />
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  {
+    testimonials.length > 0 && (
+      <ul class="grid gap-6 md:grid-cols-2 mb-12">
+        {testimonials.map((t) => (
+          <li>
+            <figure class="rounded-2xl bg-white/5 border border-white/10 p-6">
+              <blockquote class="text-white/85 mb-4">“{t.quote}”</blockquote>
+              <figcaption class="text-sm text-white/75">
+                {t.author}
+                {t.company && `, ${t.company}`}
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    certifications.length > 0 && (
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="text-sm text-white/75">Certificaciones:</span>
+        {certifications.map((cert) => (
+          <Chip tone="light">
+            <Icon name="award" class="w-4 h-4" />
+            {cert}
+          </Chip>
+        ))}
+      </div>
+    )
+  }
+</Section>

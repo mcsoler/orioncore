@@ -1,0 +1,13 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+import LossCalculator from '../../islands/LossCalculator';
+import Section from '../shared/Section.astro';
+
+type Props = HomeViewModel['calculator'];
+
+const { title, subtitle, defaultHours, costPerHour, cta } = Astro.props;
+---
+
+<Section id="calculadora" tone="soft" eyebrow="Calculadora" title={title} subtitle={subtitle}>
+  <LossCalculator client:visible defaultHours={defaultHours} costPerHour={costPerHour} cta={cta} />
+</Section>

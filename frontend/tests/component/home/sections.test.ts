@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { renderAstro } from '../../support/renderAstro';
 import { homeView, hrefsOf } from '../../support/homeView';
@@ -27,7 +28,7 @@ describe('Hero', () => {
     const { document } = await render();
     expect(document.querySelectorAll('h1')).toHaveLength(1);
     expect(text(document.querySelector('h1'))).toBe(H1);
-    const hook = [...document.querySelectorAll('p')].find((p) => p.textContent?.startsWith('Deja de perder clientes'));
+    const hook = [...document.querySelectorAll('p')].find((p) => text(p)?.startsWith('Deja de perder clientes'));
     expect(hook).toBeDefined();
   });
 
@@ -44,7 +45,8 @@ describe('Hero', () => {
     const { document, html } = await render();
     expect(document.querySelector('[data-globe]')).not.toBeNull();
     expect(document.querySelector('svg[data-node-network] circle')).not.toBeNull();
-    expect(document.querySelectorAll('svg[data-node-network] rect')).toHaveLength(0);
+    // Las cadenas eran rect redondeados y las velas/tendencia, polylines
+    expect(document.querySelectorAll('svg[data-node-network] rect[rx], svg[data-node-network] polyline')).toHaveLength(0);
     expect(html).not.toMatch(/blockchain/i);
   });
 
@@ -65,9 +67,12 @@ describe('Hero', () => {
     expect(img.getAttribute('height')).toBeTruthy();
   });
 
-  it('respeta prefers-reduced-motion', async () => {
-    const { html } = await render();
-    expect(html).toContain('prefers-reduced-motion');
+  it('respeta prefers-reduced-motion: sin animaciones CSS, sin animación SVG y sin globo 3D', () => {
+    // Los <style> y <script> de Astro se extraen al bundle; se verifica el componente
+    const source = readFileSync(new URL('../../../src/ui/components/home/Hero.astro', import.meta.url), 'utf8');
+    expect(source).toMatch(/@media \(prefers-reduced-motion: reduce\)[^}]*animation: none/s);
+    expect(source).toContain('pauseAnimations()');
+    expect(source).toMatch(/if \(reducedMotion\)[\s\S]*else if[\s\S]*loadGlobe/);
   });
 });
 

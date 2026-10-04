@@ -1,0 +1,43 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+import { iconForHref } from '../../presenters/homePresenter';
+import Icon from '../shared/Icon.astro';
+import Section from '../shared/Section.astro';
+
+type Props = HomeViewModel['marketing'];
+
+const { title, subtitle, hub, items } = Astro.props;
+---
+
+<Section id="marketing" tone="dark" eyebrow="Marketing digital" title={title} subtitle={subtitle}>
+  <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      items.map((line) => (
+        <li>
+          <a
+            href={line.href}
+            data-card
+            class="group flex flex-col h-full rounded-2xl bg-white/5 border border-white/10 p-6 transition-all duration-300 hover:border-secondary/50 hover:bg-white/[0.07]"
+          >
+            <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-secondary/10 text-secondary mb-4">
+              <Icon name={iconForHref(line.href)} class="w-6 h-6" />
+            </span>
+            <h3 class="font-poppins text-lg font-semibold text-white mb-2">{line.title}</h3>
+            <p class="text-sm leading-relaxed text-white/75 mb-4">{line.description}</p>
+            <ul class="mt-auto space-y-1.5 text-sm text-white/85">
+              {line.items.map((item) => (
+                <li class="flex items-start gap-2">
+                  <Icon name="check" class="w-4 h-4 mt-0.5 text-secondary shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="mt-12 text-center">
+    <a href={hub.href} class="btn-secondary">{hub.label}</a>
+  </p>
+</Section>

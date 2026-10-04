@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  logos: string[];
+}
+
+const { title, logos } = Astro.props;
+---
+
+<section aria-labelledby="clientes-titulo" class="bg-bg-main py-12 border-b border-ink/5">
+  <div class="max-w-[1280px] mx-auto px-6 lg:px-8">
+    <h2 id="clientes-titulo" class="text-center text-sm font-semibold tracking-[0.2em] uppercase text-muted mb-8">
+      {title}
+    </h2>
+    <ul class="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+      {
+        logos.map((logo) => (
+          <li class="flex items-center justify-center h-14 min-w-[140px] px-6 rounded-xl border border-dashed border-ink/15 text-sm text-muted">
+            {logo}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

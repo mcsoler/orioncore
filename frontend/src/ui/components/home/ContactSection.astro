@@ -1,0 +1,58 @@
+---
+import type { HomeViewModel, ServiceView } from '../../../application/dto/HomeViewModel';
+import LeadForm from '../../islands/LeadForm';
+import { serviceOptions } from '../../presenters/homePresenter';
+import Chip from '../shared/Chip.astro';
+import Icon from '../shared/Icon.astro';
+import Section from '../shared/Section.astro';
+
+interface Props {
+  contact: HomeViewModel['contact'];
+  services: readonly ServiceView[];
+  whatsappHref?: string;
+}
+
+const { contact, services, whatsappHref } = Astro.props;
+---
+
+<Section id="contacto" tone="dark" eyebrow="Diagnóstico gratuito" title={contact.title} align="left">
+  <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr] items-start">
+    <div class="space-y-8">
+      <Chip tone="amber">{contact.slots}</Chip>
+      <ul data-benefits class="space-y-3">
+        {
+          contact.benefits.map((benefit) => (
+            <li class="flex items-start gap-3 text-white/85">
+              <Icon name="check" class="w-5 h-5 mt-0.5 text-secondary shrink-0" />
+              {benefit}
+            </li>
+          ))
+        }
+      </ul>
+      <figure class="flex items-center gap-4">
+        <span
+          role="img"
+          aria-label={contact.photoAlt}
+          class="flex items-center justify-center w-20 h-20 rounded-full bg-white/10 border border-white/20 text-xs text-white/75 text-center"
+        >
+          [Foto de Michael]
+        </span>
+        <figcaption class="text-sm text-white/75">
+          Te atiende directamente <span class="text-white font-semibold">Michael</span>, fundador de Orion Core.
+        </figcaption>
+      </figure>
+      {
+        whatsappHref && (
+          <div class="space-y-3">
+            <p class="text-white/75">¿Prefieres escribirnos ya?</p>
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+              <Icon name="whatsapp" class="w-5 h-5" />
+              Escríbenos por WhatsApp
+            </a>
+          </div>
+        )
+      }
+    </div>
+    <LeadForm client:visible services={serviceOptions(services)} privacyHref="/privacidad/" />
+  </div>
+</Section>

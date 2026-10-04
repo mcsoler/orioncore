@@ -1,0 +1,31 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+import Icon from '../shared/Icon.astro';
+import Section from '../shared/Section.astro';
+
+type Props = HomeViewModel['shop'];
+
+const { title, cta, products } = Astro.props;
+---
+
+<Section id="tienda" tone="soft" eyebrow="Tienda" title={title}>
+  <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      products.map((product) => (
+        <li>
+          <a href={product.href} class="flex flex-col h-full rounded-2xl bg-white border border-ink/10 p-6 hover:border-brand-blue/40 hover:shadow-glow-blue transition-all">
+            <span class="flex items-center justify-center aspect-[4/3] rounded-xl bg-surface-soft text-brand-blue mb-5" aria-hidden="true">
+              <Icon name="cart" class="w-10 h-10" />
+            </span>
+            <h3 class="font-poppins text-lg font-semibold text-ink mb-2">{product.title}</h3>
+            <p class="text-sm text-ink/80 mb-4">{product.description}</p>
+            <p class="mt-auto font-poppins font-bold text-ink">{product.price}</p>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="mt-10 text-center">
+    <a href={cta.href} class="btn-ghost">{cta.label}</a>
+  </p>
+</Section>
