@@ -13,8 +13,8 @@ const { title, cases, stats, certifications, testimonials } = Astro.props;
   <dl class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
     {
       stats.map((stat) => (
-        <div class="rounded-2xl border border-white/10 bg-white/5 p-6 text-center">
-          <dt class="text-sm text-white/75 order-2">{stat.label}</dt>
+        <div class="flex flex-col-reverse rounded-2xl border border-white/10 bg-white/5 p-6 text-center">
+          <dt class="text-sm text-white/75">{stat.label}</dt>
           <dd class="font-poppins text-4xl font-extrabold text-secondary mb-1">{stat.value}</dd>
         </div>
       ))

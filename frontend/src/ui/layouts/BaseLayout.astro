@@ -53,7 +53,7 @@ const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whats
     </a>
     {announcement && <AnnouncementBar {...announcement} />}
     <Header nav={app.routes.navigation()} />
-    <main id="contenido">
+    <main id="contenido" class="-mt-[68px]">
       <slot />
     </main>
     <Footer groups={app.routes.footerSitemap()} business={view.business} whatsappHref={whatsappHref} />

@@ -23,7 +23,7 @@ const children = app.routes.all().filter((r) => r.path !== path && r.path.starts
 
 <BaseLayout seo={app.seoFor(path)}>
   <section class="bg-gradient-to-br from-hero-from via-hero-to to-hero-from">
-    <div class="max-w-[1280px] mx-auto px-6 lg:px-8 py-16 md:py-24">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-8 pt-[calc(68px+4rem)] pb-16 md:pt-[calc(68px+6rem)] md:pb-24">
       <Breadcrumbs items={app.routes.breadcrumbsFor(path)} site={app.site.url} tone="dark" />
       <h1 class="mt-8 font-poppins text-4xl md:text-5xl font-extrabold text-white max-w-3xl">{route.title}</h1>
       {route.description && <p class="mt-5 text-lg text-white/85 max-w-2xl leading-relaxed">{route.description}</p>}
