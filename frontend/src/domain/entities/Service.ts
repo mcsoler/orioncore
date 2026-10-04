@@ -7,6 +7,10 @@ export interface ServiceProps {
   items: readonly string[];
   slug?: string;
   badge?: string;
+  /** Titular de beneficio que se muestra en el home. */
+  headline?: string;
+  /** Texto del botón del servicio. */
+  cta?: string;
   /** Destino distinto de /servicios/{slug}/ (p. ej. Marketing 360° → /marketing-digital/). */
   href?: string;
 }
@@ -20,6 +24,8 @@ export class Service {
     readonly items: readonly string[],
     readonly href: string,
     readonly badge?: string,
+    readonly headline?: string,
+    readonly cta?: string,
   ) {}
 
   static create(props: ServiceProps): Service {
@@ -32,6 +38,8 @@ export class Service {
       requireItems('items', props.items),
       props.href ? requireInternalPath('href', props.href) : `/servicios/${slug.value}/`,
       props.badge?.trim() || undefined,
+      props.headline === undefined ? undefined : requireText('headline', props.headline),
+      props.cta === undefined ? undefined : requireText('cta', props.cta),
     );
   }
 }

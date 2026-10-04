@@ -97,5 +97,7 @@ function toServiceView(item: Service | MarketingLine): ServiceView {
     items: item.items,
     href: item.href,
     ...('badge' in item && item.badge && { badge: item.badge }),
+    ...('headline' in item && item.headline && { headline: item.headline }),
+    ...('cta' in item && item.cta && { cta: item.cta }),
   };
 }

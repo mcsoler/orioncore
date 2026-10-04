@@ -9,6 +9,8 @@ export interface LinkCardView {
 export interface ServiceView extends LinkCardView {
   items: readonly string[];
   badge?: string;
+  headline?: string;
+  cta?: string;
 }
 
 export interface ProductView extends LinkCardView {
