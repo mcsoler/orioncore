@@ -14,7 +14,7 @@ import { siteContentSchema, type SiteContent } from './schemas';
 
 export class ContentValidationError extends Error {
   constructor(readonly issues: string[]) {
-    super(`content/home.es.json no es válido:\n${issues.map((i) => `  - ${i}`).join('\n')}`);
+    super(`content/home/home.es.json no es válido:\n${issues.map((i) => `  - ${i}`).join('\n')}`);
     this.name = 'ContentValidationError';
   }
 }

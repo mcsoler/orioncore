@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets';
 import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
 import heroGlobe from '../../../assets/hero-globe.png';
-import tailwind from '../../../../tailwind.config.mjs';
+import { brandColors as colors } from '../../theme';
 import Icon from '../shared/Icon.astro';
 
 interface Props {
@@ -10,7 +10,6 @@ interface Props {
 }
 
 const { hero } = Astro.props;
-const colors = tailwind.theme.extend.colors as Record<string, string>;
 
 // Red de nodos original (sin cadenas, velas ni tendencia: eran motivos de blockchain/trading)
 const leftLines = [
@@ -66,6 +65,9 @@ const stroke = (c: string) => (c === 's' ? 'stroke-secondary' : 'stroke-primary'
     <Picture
       src={heroGlobe}
       formats={['avif', 'webp']}
+      fallbackFormat="webp"
+      widths={[320, 600]}
+      sizes="(min-width: 1024px) 600px, 320px"
       alt=""
       width={600}
       height={600}

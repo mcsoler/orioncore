@@ -25,7 +25,7 @@ const marketingLineSchema = z.object({
   items: z.array(text).min(1),
 });
 
-/** Forma de content/home.es.json. Las reglas de negocio las validan las entidades del dominio. */
+/** Forma de content/home/home.es.json. Las reglas de negocio las validan las entidades del dominio. */
 export const siteContentSchema = z.object({
   business: z.object({
     name: text,

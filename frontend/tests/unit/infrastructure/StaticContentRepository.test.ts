@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { ContentValidationError, StaticContentRepository } from '../../../src/infrastructure/content/StaticContentRepository';
 import { GetHomeContent } from '../../../src/application/use-cases/GetHomeContent';
 import { RouteRegistry } from '../../../src/domain/routing/RouteRegistry';
-import content from '../../../src/content/home.es.json';
+import content from '../../../src/content/home/home.es.json';
 import { SeoMetaBuilder } from '../../../src/infrastructure/seo/SeoMetaBuilder';
 
 const repository = () => new StaticContentRepository(content);
@@ -36,7 +36,7 @@ const APPROVED_URL_MAP = [
   '/terminos/',
 ];
 
-describe('StaticContentRepository (content/home.es.json)', () => {
+describe('StaticContentRepository (content/home/home.es.json)', () => {
   it('el contenido real es válido', () => {
     expect(repository).not.toThrow();
   });

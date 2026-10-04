@@ -1,6 +1,6 @@
 import type { HomeViewModel } from '../application/dto/HomeViewModel';
 import { GetHomeContent } from '../application/use-cases/GetHomeContent';
-import content from '../content/home.es.json';
+import content from '../content/home/home.es.json';
 import { RouteRegistry } from '../domain/routing/RouteRegistry';
 import { StaticContentRepository } from '../infrastructure/content/StaticContentRepository';
 import {

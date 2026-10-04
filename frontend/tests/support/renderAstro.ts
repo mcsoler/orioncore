@@ -27,9 +27,12 @@ export async function renderAstro(
   return { html, document };
 }
 
-/** Renderiza una página completa (con <html> y <head>). */
-export async function renderPage(page: AstroComponent, params: Record<string, string> = {}) {
-  const html = await (await container()).renderToString(page, { params, partial: false });
+/**
+ * Renderiza una página completa (con <html> y <head>).
+ * Las páginas sin Props se tipan como `(_props: never) => any`, por eso se recibe unknown.
+ */
+export async function renderPage(page: unknown, params: Record<string, string> = {}) {
+  const html = await (await container()).renderToString(page as AstroComponent, { params, partial: false });
   const { document } = new JSDOM(html).window;
   return { html, document };
 }

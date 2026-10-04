@@ -1,0 +1,62 @@
+---
+// Fuentes autoalojadas: mismas familias y solo los pesos que usa el sitio (font-display: swap)
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import '@fontsource/poppins/800.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import poppinsH1 from '@fontsource/poppins/files/poppins-latin-700-normal.woff2?url';
+import poppinsHook from '@fontsource/poppins/files/poppins-latin-800-normal.woff2?url';
+import '../../styles/global.css';
+
+import { brandColors as colors } from '../theme';
+import { container, type SeoMeta } from '../../composition/container';
+import AnnouncementBar from '../components/home/AnnouncementBar.astro';
+import Footer from '../components/home/Footer.astro';
+import Header from '../components/home/Header.astro';
+import WhatsAppFloat from '../components/home/WhatsAppFloat.astro';
+import Seo from '../components/shared/Seo.astro';
+
+interface Props {
+  seo: SeoMeta;
+  /** Barra de escasez (solo en el home). */
+  announcement?: { text: string; cta: { label: string; href: string } };
+}
+
+const { seo, announcement } = Astro.props;
+const app = container();
+const view = await app.getHomeContent.execute();
+const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whatsappMessage);
+---
+
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content={colors.navy} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href={poppinsH1} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={poppinsHook} as="font" type="font/woff2" crossorigin />
+    <meta name="generator" content={Astro.generator} />
+    <Seo meta={seo} />
+  </head>
+  <body>
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-ink"
+    >
+      Saltar al contenido
+    </a>
+    {announcement && <AnnouncementBar {...announcement} />}
+    <Header nav={app.routes.navigation()} />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer groups={app.routes.footerSitemap()} business={view.business} whatsappHref={whatsappHref} />
+    <WhatsAppFloat href={whatsappHref} />
+  </body>
+</html>

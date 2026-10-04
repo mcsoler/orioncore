@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { ContentRepository } from '../../src/application/ports/out/ContentRepository';
 import { GetHomeContent } from '../../src/application/use-cases/GetHomeContent';
 import { StaticContentRepository } from '../../src/infrastructure/content/StaticContentRepository';
-import content from '../../src/content/home.es.json';
+import content from '../../src/content/home/home.es.json';
 import { homeContentFixture } from '../support/homeContent';
 
 /** Contrato (Liskov): cualquier ContentRepository alimenta GetHomeContent sin cambios. */
