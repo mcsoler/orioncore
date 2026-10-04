@@ -35,7 +35,10 @@ RUN npm install -g serve
 
 # Copy built files
 COPY --from=builder /app/dist ./dist
+COPY serve.json ./serve.json
 
 EXPOSE 3000
 
-CMD ["serve", "-s", "dist", "-l", "3000"]
+# Sin -s (modo SPA): las rutas inexistentes responden 404 con dist/404.html, no index.html con 200.
+# serve.json fuerza la barra final, igual que trailingSlash: 'always' de Astro.
+CMD ["serve", "dist", "-l", "3000", "-c", "../serve.json"]
