@@ -6,6 +6,13 @@ export class DomainError extends Error {
   }
 }
 
+/** Se pidió una URL que no está en el RouteRegistry. */
+export class RouteNotFoundError extends DomainError {
+  constructor(readonly path: string) {
+    super(`La ruta ${path} no existe en el RouteRegistry`);
+  }
+}
+
 /** Un value object o entidad recibió un valor que no cumple sus reglas. */
 export class InvalidValueError extends DomainError {
   constructor(
