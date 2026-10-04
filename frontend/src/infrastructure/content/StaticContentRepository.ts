@@ -78,20 +78,20 @@ export class StaticContentRepository implements ContentRepository, RouteReposito
   getRoutes(): SiteRouteProps[] {
     const c = this.content;
     return [
-      ...c.pages,
+      ...c.pages.map((p) => ({ ...p })),
       // Los servicios con href propio (Marketing 360° → hub) no tienen página en /servicios/
       ...c.services
         .filter((s) => !s.href)
-        .map((s) => route(Service.create(s).href, s.title, s.status ?? 'draft', 'servicios')),
-      ...c.marketingLines.map((m) => route(MarketingLine.create(m).href, m.title, m.status, 'marketing')),
+        .map((s) => route(Service.create(s).href, s.title, s.status ?? 'draft', 'servicios', s.description)),
+      ...c.marketingLines.map((m) => route(MarketingLine.create(m).href, m.title, m.status, 'marketing', m.description)),
       ...c.shop.categories.map((cat) =>
-        route(ShopCategory.create(cat).href, cat.title, cat.status, 'tienda', '/tienda/[categoria]/'),
+        route(ShopCategory.create(cat).href, cat.title, cat.status, 'tienda', `Productos de la categoría ${cat.title}.`, '/tienda/[categoria]/'),
       ),
       ...c.shop.products.map((p) =>
-        route(Product.create({ ...p, price: p.price ?? undefined }).href, p.title, p.status, 'tienda', '/tienda/[producto]/'),
+        route(Product.create({ ...p, price: p.price ?? undefined }).href, p.title, p.status, 'tienda', p.description, '/tienda/[producto]/'),
       ),
-      ...c.cases.map((cs) => route(CaseStudy.create(cs).href, cs.client, cs.status, 'casos', '/casos/[cliente]/')),
-      ...c.articles.map((a) => route(Article.create(a).href, a.title, a.status, 'blog', '/blog/[articulo]/')),
+      ...c.cases.map((cs) => route(CaseStudy.create(cs).href, cs.client, cs.status, 'casos', cs.summary, '/casos/[cliente]/')),
+      ...c.articles.map((a) => route(Article.create(a).href, a.title, a.status, 'blog', a.excerpt, '/blog/[articulo]/')),
     ];
   }
 
@@ -121,7 +121,8 @@ function route(
   title: string,
   status: SiteRouteProps['status'],
   section: SiteRouteProps['section'],
+  description: string,
   pattern?: string,
 ): SiteRouteProps {
-  return { path, title, status, section, ...(pattern && { pattern }) };
+  return { path, title, status, section, description, ...(pattern && { pattern }) };
 }

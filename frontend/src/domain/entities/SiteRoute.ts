@@ -14,6 +14,10 @@ export interface SiteRouteProps {
   section: RouteSection;
   /** Patrón dinámico al que pertenece (p. ej. `/tienda/[producto]/`). Por defecto, la propia ruta. */
   pattern?: string;
+  /** Meta description de la página. */
+  description?: string;
+  /** Title SEO propio; si no hay, la página usa "{title} | Orion Core". */
+  seoTitle?: string;
 }
 
 /** Una URL del sitio. `draft` = existe pero no se indexa; `published` = indexable y en el sitemap. */
@@ -24,6 +28,8 @@ export class SiteRoute {
     readonly status: RouteStatus,
     readonly section: RouteSection,
     readonly pattern: string,
+    readonly description?: string,
+    readonly seoTitle?: string,
   ) {}
 
   static create(props: SiteRouteProps): SiteRoute {
@@ -38,7 +44,15 @@ export class SiteRoute {
     if (!patternToRegExp(pattern).test(path)) {
       throw new DomainError(`La ruta ${path} no corresponde al patrón ${pattern}`);
     }
-    return new SiteRoute(path, requireText('title', props.title), props.status, props.section, pattern);
+    return new SiteRoute(
+      path,
+      requireText('title', props.title),
+      props.status,
+      props.section,
+      pattern,
+      props.description?.trim() || undefined,
+      props.seoTitle?.trim() || undefined,
+    );
   }
 
   /** Página generada desde una colección (producto, caso, artículo...). */

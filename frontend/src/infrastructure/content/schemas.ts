@@ -37,7 +37,18 @@ export const siteContentSchema = z.object({
     city: text,
     googleBusinessUrl: z.string().url().nullable(),
   }),
-  pages: z.array(z.object({ path: text, title: text, status, section: z.enum(ROUTE_SECTIONS) })).min(1),
+  pages: z
+    .array(
+      z.object({
+        path: text,
+        title: text,
+        status,
+        section: z.enum(ROUTE_SECTIONS),
+        description: text,
+        seoTitle: text.optional(),
+      }),
+    )
+    .min(1),
   services: z.array(serviceSchema).min(1),
   marketingLines: z.array(marketingLineSchema).min(1),
   shop: z.object({
