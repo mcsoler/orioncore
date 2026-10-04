@@ -1,0 +1,75 @@
+---
+/**
+ * Logo actual de Orion Core (extraído de la Navbar original, sin redibujar):
+ * isotipo = constelación de Orión (7 nodos + halo) y wordmark de dos líneas.
+ * tone = tono del FONDO donde se coloca: dark → texto blanco, light → texto ink.
+ */
+interface Props {
+  variant?: 'full' | 'isotype';
+  tone?: 'dark' | 'light';
+  class?: string;
+}
+
+const { variant = 'full', tone = 'dark', class: className = '' } = Astro.props;
+const isIsotype = variant === 'isotype';
+
+const nodes = [
+  { cx: 18, cy: 4, r: 2.8, o: 0.95 },
+  { cx: 9, cy: 13, r: 2.2, o: 0.85 },
+  { cx: 27, cy: 13, r: 2.2, o: 0.85 },
+  { cx: 14, cy: 20, r: 1.8, o: 0.75 },
+  { cx: 22, cy: 20, r: 1.8, o: 0.75 },
+  { cx: 9, cy: 29, r: 2.2, o: 0.9 },
+  { cx: 27, cy: 29, r: 2.2, o: 0.9 },
+];
+const lines = [
+  { x1: 18, y1: 4, x2: 9, y2: 13, o: 0.5 },
+  { x1: 18, y1: 4, x2: 27, y2: 13, o: 0.5 },
+  { x1: 9, y1: 13, x2: 27, y2: 13, o: 0.35 },
+  { x1: 9, y1: 13, x2: 14, y2: 20, o: 0.5 },
+  { x1: 27, y1: 13, x2: 22, y2: 20, o: 0.5 },
+  { x1: 14, y1: 20, x2: 9, y2: 29, o: 0.5 },
+  { x1: 22, y1: 20, x2: 27, y2: 29, o: 0.5 },
+  { x1: 9, y1: 29, x2: 27, y2: 29, o: 0.35 },
+];
+---
+
+<span class:list={['inline-flex items-center gap-3', className]}>
+  <svg
+    viewBox="0 0 36 36"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    class="w-9 h-9 shrink-0"
+    {...(isIsotype ? { role: 'img', 'aria-label': 'Orion Core Tecnologías' } : { 'aria-hidden': 'true' })}
+  >
+    {nodes.map((n) => <circle cx={n.cx} cy={n.cy} r={n.r} class="fill-secondary" opacity={n.o} />)}
+    {
+      lines.map((l) => (
+        <line x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} class="stroke-secondary" stroke-width="0.9" stroke-opacity={l.o} />
+      ))
+    }
+    <circle cx="18" cy="4" r="5.5" class="stroke-secondary" stroke-width="0.6" stroke-opacity="0.2" fill="none" />
+  </svg>
+  {
+    !isIsotype && (
+      <span class="leading-tight">
+        <span
+          class:list={[
+            'block font-poppins text-[15px] font-bold tracking-tight',
+            tone === 'dark' ? 'text-white' : 'text-ink',
+          ]}
+        >
+          Orion Core
+        </span>
+        <span
+          class:list={[
+            'block font-inter text-[10px] font-medium tracking-widest uppercase',
+            tone === 'dark' ? 'text-secondary/70' : 'text-primary',
+          ]}
+        >
+          Tecnologías
+        </span>
+      </span>
+    )
+  }
+</span>

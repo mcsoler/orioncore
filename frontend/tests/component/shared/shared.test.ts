@@ -72,7 +72,7 @@ describe('Section', () => {
     const h2 = section.querySelector('h2')!;
     expect(section.id).toBe('servicios');
     expect(section.getAttribute('aria-labelledby')).toBe(h2.id);
-    expect(h2.textContent).toBe('Nuestros servicios');
+    expect(h2.textContent?.trim()).toBe('Nuestros servicios');
     expect(section.className).toContain('bg-bg-main');
     expect(section.textContent).toContain('contenido');
   });
@@ -113,7 +113,7 @@ describe('Breadcrumbs', () => {
     const nav = document.querySelector('nav')!;
     expect(nav.getAttribute('aria-label')).toBe('Migas de pan');
     expect([...nav.querySelectorAll('a')].map((a) => a.getAttribute('href'))).toEqual(['/', '/marketing-digital/']);
-    expect(nav.querySelector('[aria-current="page"]')!.textContent).toBe('Análisis web');
+    expect(nav.querySelector('[aria-current="page"]')!.textContent?.trim()).toBe('Análisis web');
   });
 
   it('incluye el JSON-LD BreadcrumbList con URLs absolutas', async () => {
@@ -136,6 +136,6 @@ describe('Chip y Card', () => {
       slots: { default: '<p>Resumen</p>' },
     });
     expect(document.querySelector('a')!.getAttribute('href')).toBe('/blog/x/');
-    expect(document.querySelector('h3')!.textContent).toBe('Guía');
+    expect(document.querySelector('h3')!.textContent?.trim()).toBe('Guía');
   });
 });

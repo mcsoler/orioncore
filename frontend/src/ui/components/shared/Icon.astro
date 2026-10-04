@@ -1,0 +1,39 @@
+---
+import { STROKE_ICONS, WHATSAPP_PATH } from './icons';
+
+interface Props {
+  name: string;
+  /** Si se da, el ícono se anuncia a lectores de pantalla; si no, es decorativo. */
+  label?: string;
+  class?: string;
+}
+
+const { name, label, class: className = 'w-6 h-6' } = Astro.props;
+const isWhatsApp = name === 'whatsapp';
+const path = isWhatsApp ? WHATSAPP_PATH : STROKE_ICONS[name];
+if (!path) throw new Error(`Icon: no existe el ícono "${name}"`);
+
+const a11y = label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'true' };
+---
+
+{
+  isWhatsApp ? (
+    <svg viewBox="0 0 24 24" class={className} fill="currentColor" focusable="false" {...a11y}>
+      <path d={path} />
+    </svg>
+  ) : (
+    <svg
+      viewBox="0 0 24 24"
+      class={className}
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      focusable="false"
+      {...a11y}
+    >
+      <path d={path} />
+    </svg>
+  )
+}

@@ -1,0 +1,26 @@
+---
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'ghost' | 'whatsapp';
+  size?: 'md' | 'lg';
+  class?: string;
+  [attr: `data-${string}`]: string;
+}
+
+const { href, variant = 'primary', size = 'md', class: className = '', ...rest } = Astro.props;
+
+if (!href || href === '#') {
+  throw new Error(`Button: href inválido ("${href}"). Usa una URL real o un ancla con id.`);
+}
+
+const isExternal = /^https?:\/\//.test(href);
+---
+
+<a
+  href={href}
+  class:list={[`btn-${variant}`, size === 'lg' && 'btn-lg', className]}
+  {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
+  {...rest}
+>
+  <slot />
+</a>
