@@ -3,6 +3,7 @@ import { ContentValidationError, StaticContentRepository } from '../../../src/in
 import { GetHomeContent } from '../../../src/application/use-cases/GetHomeContent';
 import { RouteRegistry } from '../../../src/domain/routing/RouteRegistry';
 import content from '../../../src/content/home.es.json';
+import { SeoMetaBuilder } from '../../../src/infrastructure/seo/SeoMetaBuilder';
 
 const repository = () => new StaticContentRepository(content);
 const registry = () => RouteRegistry.create(repository().getRoutes());
@@ -43,6 +44,28 @@ describe('StaticContentRepository (content/home.es.json)', () => {
   it('el RouteRegistry contiene exactamente las 24 URLs del mapa aprobado', () => {
     expect(registry().patterns().sort()).toEqual([...APPROVED_URL_MAP].sort());
     expect(APPROVED_URL_MAP).toHaveLength(24);
+  });
+
+  it('todas las rutas tienen title (≤ 60) y description (≤ 155) válidos para SEO', () => {
+    const site = { url: 'https://orioncore.co', name: 'Orion Core', locale: 'es_CO', image: '/og-image.png' };
+    for (const route of registry().all()) {
+      expect(route.description, route.path).toBeTruthy();
+      expect(() =>
+        new SeoMetaBuilder(site)
+          .forPath(route.path)
+          .withTitle(route.seoTitle ?? `${route.title} | Orion Core`)
+          .withDescription(route.description!)
+          .build(),
+      ).not.toThrow();
+    }
+  });
+
+  it('el home usa el title y la description SEO aprobados', () => {
+    const home = registry().get('/');
+    expect(home.seoTitle).toBe('Automatización, IA y Marketing para Empresas | Orion Core');
+    expect(home.description).toBe(
+      'Automatizamos procesos, atendemos WhatsApp con IA 24/7, creamos software y marketing 360°. Diagnóstico gratis en Colombia.',
+    );
   });
 
   it('el home es la única ruta publicada en la fase 1', () => {

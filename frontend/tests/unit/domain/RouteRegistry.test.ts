@@ -54,6 +54,15 @@ describe('RouteRegistry', () => {
     });
   });
 
+  it('cada ruta expone su description y su title SEO opcional', () => {
+    const route = RouteRegistry.create([
+      { ...routes[0]!, description: 'Descripción del home', seoTitle: 'Título SEO | Orion Core' },
+    ]).get('/');
+    expect(route.description).toBe('Descripción del home');
+    expect(route.seoTitle).toBe('Título SEO | Orion Core');
+    expect(registry().get('/nosotros/').seoTitle).toBeUndefined();
+  });
+
   it('todas las rutas terminan en barra', () => {
     expect(registry().all().every((r) => r.path.endsWith('/'))).toBe(true);
   });
