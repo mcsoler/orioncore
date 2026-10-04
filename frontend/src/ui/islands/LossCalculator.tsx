@@ -73,26 +73,24 @@ export default function LossCalculator({ defaultHours, costPerHour, cta, calcula
 
       <div className="rounded-2xl bg-navy p-6 md:p-8 flex flex-col justify-between gap-6" aria-live="polite">
         {result.ok ? (
-          <dl className="space-y-5">
-            <div>
+          <dl className="grid grid-cols-2 gap-x-4 gap-y-5">
+            <div className="col-span-2">
               <dt className="text-sm text-white/75">Pierdes cada mes</dt>
               <dd className="font-poppins font-extrabold text-4xl md:text-5xl text-white" data-testid="monthly-loss">
                 {result.monthlyLoss}
               </dd>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <dt className="text-sm text-white/75">Al año</dt>
-                <dd className="font-poppins font-bold text-2xl text-secondary" data-testid="annual-loss">
-                  {result.annualLoss}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-sm text-white/75">Horas al año</dt>
-                <dd className="font-poppins font-bold text-2xl text-secondary" data-testid="hours-per-year">
-                  {result.hoursPerYear}
-                </dd>
-              </div>
+            <div>
+              <dt className="text-sm text-white/75">Al año</dt>
+              <dd className="font-poppins font-bold text-2xl text-secondary" data-testid="annual-loss">
+                {result.annualLoss}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-sm text-white/75">Horas al año</dt>
+              <dd className="font-poppins font-bold text-2xl text-secondary" data-testid="hours-per-year">
+                {result.hoursPerYear}
+              </dd>
             </div>
           </dl>
         ) : (

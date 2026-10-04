@@ -47,7 +47,7 @@ const { title, subtitle, ctaLabel, items } = Astro.props;
               </a>
               <a
                 href={service.href}
-                aria-label={`Ver detalles de ${service.title}`}
+                aria-label={`${ctaLabel}: ${service.title}`}
                 class="inline-flex items-center gap-1.5 font-semibold text-brand-blue hover:underline underline-offset-4"
               >
                 {ctaLabel}

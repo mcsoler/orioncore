@@ -38,7 +38,9 @@ const background = { dark: 'bg-navy', light: 'bg-bg-main', soft: 'bg-surface-sof
       </h2>
       {
         subtitle && (
-          <p class:list={['text-lg leading-relaxed', isDark ? 'text-white/75' : 'text-muted']}>{subtitle}</p>
+          <p class:list={['text-lg leading-relaxed', { dark: 'text-white/75', light: 'text-muted', soft: 'text-ink/80' }[tone]]}>
+            {subtitle}
+          </p>
         )
       }
     </header>
