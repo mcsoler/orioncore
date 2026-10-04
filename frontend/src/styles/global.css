@@ -8,36 +8,65 @@
   }
 
   body {
-    @apply font-inter text-text-primary bg-bg-main;
+    @apply font-inter text-text-primary bg-bg-main antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-poppins;
   }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-brand-cyan;
+  }
 }
 
 @layer components {
+  /* Texto blanco sobre brand-blue sólido (5,2:1). El degradado original arrancaba en el
+     token secondary (cian), donde el texto blanco no llega a 4,5:1; el brillo cian queda al pasar el cursor. */
   .btn-primary {
-    @apply bg-gradient-to-r from-secondary to-primary text-white px-7 py-3 rounded-xl
+    @apply inline-flex items-center justify-center gap-2 bg-brand-blue text-white px-7 py-3 rounded-xl
            font-semibold transition-all duration-300
-           hover:shadow-glow-cyan hover:scale-[1.02] hover:brightness-110;
+           hover:shadow-glow-cyan hover:scale-[1.02];
   }
 
+  /* Solo sobre fondos oscuros (cian sobre navy). */
   .btn-secondary {
-    @apply px-7 py-3 border-2 border-secondary text-secondary rounded-xl
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 border-2 border-secondary text-secondary rounded-xl
            font-semibold transition-all duration-300
            hover:bg-secondary/10 hover:shadow-glow-cyan hover:scale-[1.02];
   }
 
-  .section-title {
-    @apply text-4xl md:text-5xl font-bold text-text-primary mb-6 font-poppins;
+  /* Variante de contorno para fondos claros. */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-brand-blue text-brand-blue rounded-xl
+           font-semibold transition-colors duration-300 hover:bg-brand-blue/5;
   }
 
-  .section-subtitle {
-    @apply text-lg text-text-secondary mb-8 font-inter;
+  /* El blanco sobre el verde de WhatsApp no alcanza 4,5:1; el navy da 9:1. */
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 bg-whatsapp text-navy px-6 py-3 rounded-xl
+           font-semibold transition-all duration-300 hover:brightness-105 hover:scale-[1.02];
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-base md:text-lg;
   }
 
   .gradient-text {
     @apply bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
