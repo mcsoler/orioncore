@@ -71,9 +71,16 @@ describe('StaticContentRepository (content/home.es.json)', () => {
     expect(home.pains.items).toHaveLength(4);
   });
 
-  it('no inventa el WhatsApp: sin número confirmado queda vacío', async () => {
-    const home = await repository().getHome();
-    expect(home.business.whatsapp).toBeUndefined();
+  it('usa los datos de contacto confirmados', async () => {
+    const { business } = await repository().getHome();
+    expect(business.email).toBe('orioncoretechnologies@gmail.com');
+    expect(business.phoneLabel).toBe('+57 305 419 5433');
+    expect(business.whatsapp?.value).toBe('+573054195433');
+  });
+
+  it('muestra las cifras confirmadas y deja pendiente la que no lo está', async () => {
+    const { results } = await repository().getHome();
+    expect(results.stats.map((s) => s.value)).toEqual(['10+', '5+', '5+', '[X]']);
   });
 
   it('integridad de enlaces: todo href interno del home existe en el RouteRegistry', async () => {
