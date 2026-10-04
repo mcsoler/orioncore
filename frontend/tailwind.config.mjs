@@ -29,10 +29,14 @@ export default {
         amber: '#FBBF24',
         'nav-glass': 'rgba(2, 8, 30, 0.55)',
 
-        // ── Funcionales nuevos (no existían) ──
-        success: '#15803d', // 5,0:1 sobre blanco
-        danger: '#b91c1c', // 6,5:1 sobre blanco
+        // ── Tema oscuro del rediseño (home-html/Main.dc.html) ──
+        surface: '#101B2F',
+        'surface-2': '#1A2437',
+        line: '#242E40',
+        success: '#34D399',
+        danger: '#F87171',
         whatsapp: '#25D366', // color oficial de WhatsApp
+        'whatsapp-ink': '#06210F', // texto e ícono sobre el verde de WhatsApp
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
