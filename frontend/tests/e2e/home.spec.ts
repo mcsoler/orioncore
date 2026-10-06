@@ -90,10 +90,10 @@ test('el botón de WhatsApp aparece al salir del hero', async ({ page }) => {
 test('calculadora: el slider actualiza el resultado', async ({ page }) => {
   await page.goto('/#calculadora');
   await hydrated(page, '#calculadora');
-  const hours = page.getByLabel('Horas por semana en tareas manuales');
+  const hours = page.getByLabel(/Horas a la semana en tareas repetitivas/);
   await hours.focus();
-  await page.keyboard.press('ArrowRight');
-  await expect(page.getByTestId('hours-per-year')).toHaveText('572');
+  await page.keyboard.press('ArrowRight'); // 15 → 16 h/semana
+  await expect(page.getByTestId('hours-per-year')).toHaveText('831');
 });
 
 test('formulario: envía el lead al backend con el contrato actual y muestra el éxito', async ({ page }) => {
@@ -104,17 +104,30 @@ test('formulario: envía el lead al backend con el contrato actual y muestra el 
   });
   await page.goto('/#contacto');
   await hydrated(page, '#contacto');
-  const form = page.locator('#contacto');
-  await form.getByLabel('Nombre completo').fill('Ana Gómez');
-  await form.getByLabel('WhatsApp').fill('300 123 4567');
+  const form = page.locator('#contacto form');
+  await form.getByRole('checkbox', { name: 'Agente IA WhatsApp' }).check();
+  await form.getByLabel('Nombre', { exact: true }).fill('Ana Gómez');
+  await form.getByLabel('WhatsApp', { exact: true }).fill('300 123 4567');
+  await form.getByRole('checkbox', { name: /Acepto la política/ }).check();
+  await form.getByRole('button', { name: /Reservar mi cupo gratis/ }).click();
   await form.getByLabel('Correo electrónico').fill('ana@empresa.com');
-  await form.getByRole('button', { name: 'Continuar' }).click();
-  await form.getByRole('checkbox', { name: 'Agentes de IA para WhatsApp' }).check();
-  await form.getByLabel(/Autorizo el tratamiento/).check();
   await form.getByRole('button', { name: 'Enviar solicitud' }).click();
 
-  await expect(form.getByRole('status')).toContainText('Recibimos tu solicitud');
+  await expect(page.locator('#contacto').getByRole('status')).toContainText('Recibimos tu solicitud');
   expect(body).toEqual({ name: 'Ana Gómez', phone: '+573001234567', email: 'ana@empresa.com' });
+});
+
+test('carrito: "Agregar al carrito" actualiza el contador del header y se conserva al recargar', async ({ page }) => {
+  await page.goto('/#tienda');
+  const badge = page.getByTestId('cart-count');
+  await expect(badge).toHaveText('0');
+  const first = page.locator('#tienda article').first();
+  await expect(first.locator('astro-island')).not.toHaveAttribute('ssr');
+  await first.getByRole('button', { name: /Agregar al carrito/ }).click();
+  await first.getByRole('button', { name: /Agregar al carrito/ }).click();
+  await expect(badge).toHaveText('2');
+  await page.reload();
+  await expect(page.getByTestId('cart-count')).toHaveText('2');
 });
 
 test('una URL inexistente responde 404', async ({ page }) => {
