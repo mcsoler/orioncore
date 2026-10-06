@@ -119,11 +119,20 @@ describe('RouteRegistry', () => {
     expect(tienda).toEqual({ label: 'Tienda', href: '/tienda/', children: [] });
   });
 
-  it('footerSitemap() agrupa servicios, marketing, empresa y legal', () => {
+  it('footerSitemap() agrupa servicios (con el hub de marketing), marketing, tienda y empresa', () => {
     const footer = registry().footerSitemap();
-    expect(footer.map((g) => g.title)).toEqual(['Servicios', 'Marketing digital', 'Empresa', 'Legal']);
-    expect(footer[1]!.links.map((l) => l.href)).toEqual(['/marketing-digital/', '/marketing-digital/analisis-web/']);
-    expect(footer[2]!.links.map((l) => l.href)).toEqual(['/tienda/', '/casos/', '/blog/', '/nosotros/', '/contacto/']);
-    expect(footer[3]!.links.map((l) => l.href)).toEqual(['/privacidad/']);
+    expect(footer.map((g) => g.title)).toEqual(['Servicios', 'Marketing digital', 'Tienda', 'Empresa']);
+    expect(footer[0]!.links.map((l) => l.href)).toEqual([
+      '/servicios/automatizacion-de-procesos/',
+      '/servicios/agentes-ia-whatsapp/',
+      '/marketing-digital/',
+    ]);
+    expect(footer[1]!.links.map((l) => l.href)).toEqual(['/marketing-digital/analisis-web/']);
+    expect(footer[2]!.links).toEqual([{ label: 'Catálogo', href: '/tienda/' }]);
+    expect(footer[3]!.links.map((l) => l.href)).toEqual(['/nosotros/', '/casos/', '/blog/', '/contacto/']);
+  });
+
+  it('legalLinks() devuelve las páginas legales para la barra inferior', () => {
+    expect(registry().legalLinks()).toEqual([{ label: 'Privacidad', href: '/privacidad/' }]);
   });
 });
