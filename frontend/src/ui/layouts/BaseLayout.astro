@@ -1,14 +1,13 @@
 ---
 // Fuentes autoalojadas: mismas familias y solo los pesos que usa el sitio (font-display: swap)
-import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
-import '@fontsource/poppins/800.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
-import poppinsH1 from '@fontsource/poppins/files/poppins-latin-700-normal.woff2?url';
-import poppinsHook from '@fontsource/poppins/files/poppins-latin-800-normal.woff2?url';
+import '@fontsource/inter/700.css';
+import interH1 from '@fontsource/inter/files/inter-latin-700-normal.woff2?url';
+import poppinsHook from '@fontsource/poppins/files/poppins-latin-700-normal.woff2?url';
 import '../../styles/global.css';
 
 import { brandColors as colors } from '../theme';
@@ -39,24 +38,24 @@ const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whats
     <meta name="theme-color" content={colors.navy} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preload" href={poppinsH1} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interH1} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={poppinsHook} as="font" type="font/woff2" crossorigin />
     <meta name="generator" content={Astro.generator} />
     <Seo meta={seo} />
   </head>
-  <body>
+  <body class="bg-navy text-white">
     <a
       href="#contenido"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-ink"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-navy"
     >
       Saltar al contenido
     </a>
     {announcement && <AnnouncementBar {...announcement} />}
     <Header nav={app.routes.navigation()} />
-    <main id="contenido" class="-mt-[68px]">
+    <main id="contenido">
       <slot />
     </main>
-    <Footer groups={app.routes.footerSitemap()} business={view.business} whatsappHref={whatsappHref} />
+    <Footer groups={app.routes.footerSitemap()} legal={app.routes.legalLinks()} business={view.business} />
     <WhatsAppFloat href={whatsappHref} />
   </body>
 </html>

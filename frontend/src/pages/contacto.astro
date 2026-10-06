@@ -8,9 +8,5 @@ const view = await app.getHomeContent.execute();
 ---
 
 <DraftPageLayout path="/contacto/" cta={{ label: 'Ir al formulario', href: '#contacto' }}>
-  <ContactSection
-    contact={view.contact}
-    services={view.services.items}
-    whatsappHref={app.whatsappLink(view.business.whatsapp, view.contact.whatsappMessage)}
-  />
+  <ContactSection contact={view.contact} whatsappHref={app.whatsappLink(view.business.whatsapp, view.contact.whatsappMessage)} />
 </DraftPageLayout>

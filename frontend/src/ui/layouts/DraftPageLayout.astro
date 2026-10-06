@@ -22,11 +22,11 @@ const children = app.routes.all().filter((r) => r.path !== path && r.path.starts
 ---
 
 <BaseLayout seo={app.seoFor(path)}>
-  <section class="bg-gradient-to-br from-hero-from via-hero-to to-hero-from">
-    <div class="max-w-[1280px] mx-auto px-6 lg:px-8 pt-[calc(68px+4rem)] pb-16 md:pt-[calc(68px+6rem)] md:pb-24">
+  <section class="bg-navy border-b border-line">
+    <div class="wrap py-16 md:py-24">
       <Breadcrumbs items={app.routes.breadcrumbsFor(path)} site={app.site.url} tone="dark" />
-      <h1 class="mt-8 font-poppins text-4xl md:text-5xl font-extrabold text-white max-w-3xl">{route.title}</h1>
-      {route.description && <p class="mt-5 text-lg text-white/85 max-w-2xl leading-relaxed">{route.description}</p>}
+      <h1 class="h2 mt-8 max-w-3xl md:text-5xl">{route.title}</h1>
+      {route.description && <p class="mt-2 text-[19px] text-white/70 max-w-2xl leading-relaxed">{route.description}</p>}
       <div class="mt-10 flex flex-wrap gap-4">
         <a href={cta.href} class="btn-primary btn-lg">{cta.label}</a>
       </div>
@@ -35,17 +35,17 @@ const children = app.routes.all().filter((r) => r.path !== path && r.path.starts
 
   {
     children.length > 0 && (
-      <section aria-labelledby="subpaginas" class="bg-bg-main">
-        <div class="max-w-[1280px] mx-auto px-6 lg:px-8 py-16">
-          <h2 id="subpaginas" class="font-poppins text-2xl font-bold text-ink mb-8">
+      <section aria-labelledby="subpaginas" class="bg-surface">
+        <div class="wrap py-16">
+          <h2 id="subpaginas" class="font-poppins text-2xl font-bold mb-8">
             En esta sección
           </h2>
           <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {children.map((child) => (
               <li>
-                <a href={child.path} class="flex items-center justify-between gap-4 rounded-2xl border border-ink/10 p-5 font-semibold text-ink hover:border-brand-blue/40">
+                <a href={child.path} class="card bg-navy flex items-center justify-between gap-4 p-5 font-semibold text-white hover:border-brand-blue">
                   {child.title}
-                  <Icon name="arrow-right" class="w-5 h-5 text-brand-blue shrink-0" />
+                  <Icon name="arrow-right" class="w-5 h-5 text-brand-cyan shrink-0" />
                 </a>
               </li>
             ))}

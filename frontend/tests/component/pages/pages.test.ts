@@ -105,7 +105,7 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
     // H1 (Inter 700) y gancho del hero (Poppins 700, el LCP)
     expect(preloads.some((h) => /inter-latin-700-normal.*\.woff2/.test(h))).toBe(true);
     expect(preloads.some((h) => /poppins-latin-700-normal.*\.woff2/.test(h))).toBe(true);
-    expect(preloads.every((l) => l.hasAttribute('crossorigin'))).toBe(true);
+    expect([...document.querySelectorAll('link[rel="preload"][as="font"]')].every((l) => l.hasAttribute('crossorigin'))).toBe(true);
   });
 
   it('no queda rastro de Blockchain', () => {
@@ -118,7 +118,7 @@ describe('Páginas en borrador (plantilla mínima)', () => {
     const { document } = await renderPage(ServicePage, { slug: 'software-a-medida' });
     expect(document.querySelectorAll('h1')).toHaveLength(1);
     expect(document.querySelector('h1')!.textContent?.trim()).toBe('Software empresarial a medida');
-    expect(document.querySelector('main')!.textContent).toContain('Creamos plataformas digitales');
+    expect(document.querySelector('main')!.textContent).toContain('Construimos el sistema que se adapta a cómo trabajas tú');
     expect(document.querySelector('main a[href="/contacto/"]')).not.toBeNull();
     expect(document.querySelector('nav[aria-label="Migas de pan"]')).not.toBeNull();
     expect(meta(document, 'meta[name="robots"]')).toBe('noindex, follow');

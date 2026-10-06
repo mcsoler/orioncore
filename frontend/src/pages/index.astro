@@ -23,7 +23,7 @@ const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whats
   <Hero hero={view.hero} />
   <ClientLogos {...view.clients} />
   <PainPoints {...view.pains} />
-  <Services {...view.services} />
+  <Services {...view.services} whatsappHref={whatsappHref} />
   <Marketing360 {...view.marketing} />
   <LossCalculatorSection {...view.calculator} />
   <Results {...view.results} />
@@ -31,5 +31,5 @@ const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whats
   <Shop {...view.shop} />
   <BlogGuides {...view.blog} />
   <Faq {...view.faq} />
-  <ContactSection contact={view.contact} services={view.services.items} whatsappHref={whatsappHref} />
+  <ContactSection contact={view.contact} whatsappHref={whatsappHref} />
 </BaseLayout>

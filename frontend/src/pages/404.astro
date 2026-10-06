@@ -6,14 +6,14 @@ const app = container();
 ---
 
 <BaseLayout seo={app.notFoundSeo()}>
-  <section class="bg-gradient-to-br from-hero-from via-hero-to to-hero-from">
-    <div class="max-w-3xl mx-auto px-6 pt-[calc(68px+6rem)] pb-24 md:pt-[calc(68px+8rem)] md:pb-32 text-center">
-      <p class="font-poppins text-6xl font-extrabold gradient-text">404</p>
-      <h1 class="mt-4 font-poppins text-3xl md:text-4xl font-bold text-white">Página no encontrada</h1>
-      <p class="mt-4 text-white/85">La página que buscas no existe o cambió de dirección.</p>
-      <div class="mt-10 flex flex-wrap justify-center gap-4">
+  <section class="bg-navy">
+    <div class="wrap max-w-3xl py-24 md:py-32 text-center">
+      <p class="font-poppins text-6xl font-bold text-brand-cyan">404</p>
+      <h1 class="h2 mt-4">Página no encontrada</h1>
+      <p class="mt-2 text-white/70">La página que buscas no existe o cambió de dirección.</p>
+      <div class="mt-10 flex flex-wrap justify-center gap-3">
         <a href="/" class="btn-primary">Volver al inicio</a>
-        <a href="/contacto/" class="btn-secondary">Contáctanos</a>
+        <a href="/contacto/" class="btn-ghost">Contáctanos</a>
       </div>
     </div>
   </section>
