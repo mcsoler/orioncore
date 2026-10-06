@@ -20,88 +20,63 @@ export default function LossCalculator({ defaultHours, costPerHour, cta, calcula
   const [cost, setCost] = useState(costPerHour.default);
   const result = useMemo(() => calculate({ hoursPerWeek: hours, costPerHour: cost }), [calculate, hours, cost]);
 
-  const hoursText = `${hours} horas por semana`;
-  const costText = `${copFormat.format(cost)} por hora`;
-
   return (
-    <div className="grid gap-8 lg:grid-cols-2 items-stretch">
-      <div className="rounded-2xl bg-white border border-ink/10 p-6 md:p-8 space-y-8">
-        <div>
-          <div className="flex items-baseline justify-between gap-4 mb-3">
-            <label htmlFor={`${id}-hours`} className="font-semibold text-ink">
-              Horas por semana en tareas manuales
-            </label>
-            <span className="font-poppins font-bold text-brand-blue text-lg" aria-hidden="true">
-              {hours} h
-            </span>
-          </div>
-          <input
-            id={`${id}-hours`}
-            type="range"
-            min={MIN_HOURS_PER_WEEK}
-            max={MAX_HOURS_PER_WEEK}
-            step={1}
-            value={hours}
-            aria-valuetext={hoursText}
-            onChange={(e) => setHours(Number(e.target.value))}
-            className="w-full accent-brand-blue h-2 cursor-pointer"
-          />
-        </div>
-
-        <div>
-          <div className="flex items-baseline justify-between gap-4 mb-3">
-            <label htmlFor={`${id}-cost`} className="font-semibold text-ink">
-              Costo por hora de tu equipo
-            </label>
-            <span className="font-poppins font-bold text-brand-blue text-lg" aria-hidden="true">
-              {copFormat.format(cost)}
-            </span>
-          </div>
-          <input
-            id={`${id}-cost`}
-            type="range"
-            min={costPerHour.min}
-            max={costPerHour.max}
-            step={costPerHour.step}
-            value={cost}
-            aria-valuetext={costText}
-            onChange={(e) => setCost(Number(e.target.value))}
-            className="w-full accent-brand-blue h-2 cursor-pointer"
-          />
-        </div>
+    <div className="card p-7 flex flex-col gap-5">
+      <div className="flex flex-col gap-2">
+        <label htmlFor={`${id}-hours`} className="text-[15px]">
+          Horas a la semana en tareas repetitivas: <strong className="block text-xl">{hours} h</strong>
+        </label>
+        <input
+          id={`${id}-hours`}
+          type="range"
+          min={MIN_HOURS_PER_WEEK}
+          max={MAX_HOURS_PER_WEEK}
+          step={1}
+          value={hours}
+          aria-valuetext={`${hours} horas por semana`}
+          onChange={(e) => setHours(Number(e.target.value))}
+          className="w-full accent-brand-blue cursor-pointer"
+        />
       </div>
 
-      <div className="rounded-2xl bg-navy p-6 md:p-8 flex flex-col justify-between gap-6" aria-live="polite">
+      <div className="flex flex-col gap-2">
+        <label htmlFor={`${id}-cost`} className="text-[15px]">
+          Costo por hora de tu equipo (COP): <strong className="block text-xl">{copFormat.format(cost)}</strong>
+        </label>
+        <input
+          id={`${id}-cost`}
+          type="range"
+          min={costPerHour.min}
+          max={costPerHour.max}
+          step={costPerHour.step}
+          value={cost}
+          aria-valuetext={`${copFormat.format(cost)} por hora`}
+          onChange={(e) => setCost(Number(e.target.value))}
+          className="w-full accent-brand-blue cursor-pointer"
+        />
+      </div>
+
+      <div className="rounded-[14px] bg-navy border border-danger p-5" aria-live="polite">
         {result.ok ? (
-          <dl className="grid grid-cols-2 gap-x-4 gap-y-5">
-            <div className="col-span-2">
-              <dt className="text-sm text-white/75">Pierdes cada mes</dt>
-              <dd className="font-poppins font-extrabold text-4xl md:text-5xl text-white" data-testid="monthly-loss">
-                {result.monthlyLoss}
-              </dd>
-            </div>
-            <div>
-              <dt className="text-sm text-white/75">Al año</dt>
-              <dd className="font-poppins font-bold text-2xl text-secondary" data-testid="annual-loss">
-                {result.annualLoss}
-              </dd>
-            </div>
-            <div>
-              <dt className="text-sm text-white/75">Horas al año</dt>
-              <dd className="font-poppins font-bold text-2xl text-secondary" data-testid="hours-per-year">
-                {result.hoursPerYear}
-              </dd>
-            </div>
-          </dl>
+          <>
+            <p className="text-sm text-white/70">Estás perdiendo aproximadamente</p>
+            <p className="font-poppins text-4xl md:text-[44px] font-bold text-danger">
+              <span data-testid="annual-loss">{result.annualLoss}</span>{' '}
+              <span className="text-lg text-white/70 font-normal">al año</span>
+            </p>
+            <p className="text-sm text-white/70">
+              <span data-testid="monthly-loss">{result.monthlyLoss}</span> al mes ·{' '}
+              <span data-testid="hours-per-year">{result.hoursPerYear}</span> horas al año
+            </p>
+          </>
         ) : (
-          <p role="alert" className="text-white">
-            {Object.values(result.errors).join(' ')}
-          </p>
+          <p role="alert">{Object.values(result.errors).join(' ')}</p>
         )}
-        <a href={cta.href} className="btn-primary text-center">
-          {cta.label}
-        </a>
       </div>
+
+      <a href={cta.href} className="btn-primary">
+        {cta.label}
+      </a>
     </div>
   );
 }

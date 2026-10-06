@@ -1,8 +1,10 @@
 import type { AnalyticsTracker } from '../application/ports/out/AnalyticsTracker';
 import type { LeadGateway } from '../application/ports/out/LeadGateway';
+import { AddToCart, GetCartCount } from '../application/use-cases/AddToCart';
 import { CalculateLoss } from '../application/use-cases/CalculateLoss';
 import { SubmitLead } from '../application/use-cases/SubmitLead';
 import { LossCalculator } from '../domain/services/LossCalculator';
+import { LocalStorageCartRepository } from '../infrastructure/cart/LocalStorageCartRepository';
 import { GtmAnalyticsTracker } from '../infrastructure/analytics/GtmAnalyticsTracker';
 import { NoopAnalyticsTracker } from '../infrastructure/analytics/NoopAnalyticsTracker';
 import { ConsoleLeadGateway } from '../infrastructure/leads/ConsoleLeadGateway';
@@ -16,11 +18,13 @@ export interface InteractiveConfig {
   fetch: typeof fetch;
   gtmId?: string;
   dataLayer?: unknown[];
+  /** localStorage del navegador; sin él, el carrito vive solo en la página. */
+  storage?: Storage;
 }
 
 /**
  * Parte del composition root que necesitan las islas en el navegador
- * (calculadora y formulario), sin el contenido ni las rutas del sitio.
+ * (calculadora, formulario y carrito), sin el contenido ni las rutas del sitio.
  */
 export function createInteractiveUseCases(config: InteractiveConfig) {
   const leadGateway: LeadGateway =
@@ -31,9 +35,13 @@ export function createInteractiveUseCases(config: InteractiveConfig) {
   const analytics: AnalyticsTracker =
     config.gtmId && config.dataLayer ? new GtmAnalyticsTracker(config.dataLayer) : new NoopAnalyticsTracker();
 
+  const cart = new LocalStorageCartRepository(config.storage);
+
   return {
     calculateLoss: new CalculateLoss(new LossCalculator()),
     submitLead: new SubmitLead(leadGateway, analytics),
+    addToCart: new AddToCart(cart),
+    cartCount: new GetCartCount(cart),
     adapters: { leadGateway, analytics },
   };
 }
@@ -50,6 +58,7 @@ export function interactiveConfigFromEnv(): InteractiveConfig {
     fetch: (...args) => globalThis.fetch(...args),
     gtmId: import.meta.env.PUBLIC_GTM_ID || undefined,
     dataLayer,
+    storage: safeLocalStorage(),
   };
 }
 
@@ -59,4 +68,13 @@ let fromEnv: ReturnType<typeof createInteractiveUseCases> | undefined;
 export function interactiveUseCases() {
   fromEnv ??= createInteractiveUseCases(interactiveConfigFromEnv());
   return fromEnv;
+}
+
+/** En modo privado o con cookies bloqueadas, acceder a localStorage puede lanzar un error. */
+function safeLocalStorage(): Storage | undefined {
+  try {
+    return typeof window === 'undefined' ? undefined : window.localStorage;
+  } catch {
+    return undefined;
+  }
 }

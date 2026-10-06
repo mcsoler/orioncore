@@ -1,11 +1,12 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import type { LeadField, LeadRequest } from '../../application/dto/LeadRequest';
 import type { SubmitLeadUseCase } from '../../application/ports/in/SubmitLeadUseCase';
-import { CONTACT_FIELDS, validateLead } from '../../application/use-cases/validateLead';
+import { STEP_FIELDS, validateLead } from '../../application/use-cases/validateLead';
 import { interactiveUseCases } from '../../composition/interactive';
 
 export interface LeadFormProps {
-  services: { value: string; label: string }[];
+  /** Opciones de "¿Qué quieres mejorar primero?". */
+  options: { value: string; label: string }[];
   privacyHref: string;
   /** Inyectable para pruebas; por defecto, el caso de uso SubmitLead. */
   submitLead?: SubmitLeadUseCase;
@@ -15,9 +16,10 @@ type Errors = Partial<Record<LeadField, string>>;
 
 const EMPTY: LeadRequest = { name: '', whatsapp: '', email: '', company: '', services: [], message: '', consent: false };
 const inputClass =
-  'w-full rounded-xl border border-ink/20 bg-white px-4 py-3 text-ink placeholder:text-muted focus:border-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-blue/30 aria-[invalid=true]:border-danger';
+  'w-full rounded-[10px] border border-line bg-navy min-h-[46px] px-3.5 text-[15px] text-white placeholder:text-white/50 focus:border-brand-cyan focus:outline-none aria-[invalid=true]:border-danger';
 
-export default function LeadForm({ services, privacyHref, submitLead }: LeadFormProps) {
+/** Formulario de diagnóstico en 2 pasos (referencia del home): primero lo esencial, después el correo. */
+export default function LeadForm({ options, privacyHref, submitLead }: LeadFormProps) {
   const id = useId();
   const [step, setStep] = useState<1 | 2>(1);
   const [values, setValues] = useState<LeadRequest>(EMPTY);
@@ -43,12 +45,13 @@ export default function LeadForm({ services, privacyHref, submitLead }: LeadForm
     'aria-describedby': errors[field] ? errorId(field) : undefined,
   });
 
-  function goToProject(event: FormEvent) {
+  function continueToEmail(event: FormEvent) {
     event.preventDefault();
-    const { errors: all } = validateLead({ ...values, services: ['-'], consent: true });
-    const contactErrors = Object.fromEntries(CONTACT_FIELDS.filter((f) => all[f]).map((f) => [f, all[f]]));
-    setErrors(contactErrors);
-    if (Object.keys(contactErrors).length === 0) setStep(2);
+    // El correo se pide en el paso 2: aquí solo cuentan los errores del paso 1
+    const { errors: all } = validateLead({ ...values, email: 'paso1@orioncore.co' });
+    const stepErrors = Object.fromEntries(STEP_FIELDS[0].filter((f) => all[f]).map((f) => [f, all[f]]));
+    setErrors(stepErrors);
+    if (Object.keys(stepErrors).length === 0) setStep(2);
   }
 
   async function send(event: FormEvent) {
@@ -61,97 +64,104 @@ export default function LeadForm({ services, privacyHref, submitLead }: LeadForm
     }
     setStatus('idle');
     setErrors(result.errors);
-    if (CONTACT_FIELDS.some((f) => result.errors[f])) setStep(1);
+    if (STEP_FIELDS[0].some((f) => result.errors[f])) setStep(1);
   }
 
   if (status === 'sent') {
     return (
-      <div role="status" className="rounded-2xl bg-white p-8 text-center">
-        <p className="font-poppins text-2xl font-bold text-ink mb-2">¡Listo, {values.name.split(' ')[0]}!</p>
-        <p className="text-muted">
-          Recibimos tu solicitud. Te contactaremos en menos de 24 horas por WhatsApp o correo.
-        </p>
+      <div role="status" className="card bg-navy p-7 text-center">
+        <p className="font-poppins text-2xl font-bold mb-2">¡Listo, {values.name.split(' ')[0]}!</p>
+        <p className="text-white/70">Recibimos tu solicitud. Te contactaremos en menos de 24 horas por WhatsApp o correo.</p>
       </div>
     );
   }
 
-  const toggleService = (value: string, checked: boolean) =>
+  const toggle = (value: string, checked: boolean) =>
     set('services', checked ? [...values.services, value] : values.services.filter((s) => s !== value));
+  const progress = step === 1 ? 50 : 100;
 
   return (
-    <form
-      noValidate
-      onSubmit={step === 1 ? goToProject : send}
-      className="rounded-2xl bg-white p-6 md:p-8 space-y-5"
-      aria-labelledby={`${id}-heading`}
-    >
-      <p className="text-xs font-semibold tracking-[0.2em] uppercase text-brand-blue">Paso {step} de 2</p>
-      <h3 id={`${id}-heading`} ref={stepHeading} tabIndex={-1} className="font-poppins text-xl font-bold text-ink focus:outline-none">
-        {step === 1 ? 'Tus datos de contacto' : 'Cuéntanos de tu proyecto'}
+    <form noValidate onSubmit={step === 1 ? continueToEmail : send} className="card bg-navy p-7 flex flex-col gap-4" aria-labelledby={`${id}-heading`}>
+      <div className="flex justify-between text-[13px] text-white/70">
+        <span>Paso {step} de 2</span>
+        <span>Toma 30 segundos</span>
+      </div>
+      <div
+        role="progressbar"
+        aria-label="Avance del formulario"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={progress}
+        className="h-1.5 rounded-full bg-surface-2"
+      >
+        <div className="h-full rounded-full bg-brand-blue transition-all" style={{ width: `${progress}%` }} />
+      </div>
+      <h3 id={`${id}-heading`} ref={stepHeading} tabIndex={-1} className="sr-only focus:not-sr-only focus:outline-none font-poppins font-semibold">
+        {step === 1 ? 'Reserva tu diagnóstico' : '¿A qué correo te enviamos el diagnóstico?'}
       </h3>
 
       {step === 1 ? (
         <>
-          <Field label="Nombre completo" htmlFor={fieldId('name')} error={errors.name} errorId={errorId('name')}>
-            <input {...a11y('name')} type="text" autoComplete="name" required value={values.name} onChange={(e) => set('name', e.target.value)} className={inputClass} />
-          </Field>
-          <Field label="WhatsApp" htmlFor={fieldId('whatsapp')} error={errors.whatsapp} errorId={errorId('whatsapp')}>
-            <input {...a11y('whatsapp')} type="tel" inputMode="tel" autoComplete="tel" required placeholder="300 123 4567" value={values.whatsapp} onChange={(e) => set('whatsapp', e.target.value)} className={inputClass} />
-          </Field>
-          <Field label="Correo electrónico" htmlFor={fieldId('email')} error={errors.email} errorId={errorId('email')}>
-            <input {...a11y('email')} type="email" autoComplete="email" required value={values.email} onChange={(e) => set('email', e.target.value)} className={inputClass} />
-          </Field>
-          <button type="submit" className="btn-primary w-full">
-            Continuar
-          </button>
-        </>
-      ) : (
-        <>
           <fieldset aria-describedby={errors.services ? errorId('services') : undefined}>
-            <legend className="font-semibold text-ink mb-3">¿Qué servicios te interesan?</legend>
-            <div className="grid sm:grid-cols-2 gap-2">
-              {services.map((service) => (
-                <label key={service.value} className="flex items-center gap-3 rounded-xl border border-ink/15 px-3 py-2.5 text-sm text-ink cursor-pointer has-[:checked]:border-brand-blue has-[:checked]:bg-brand-blue/5">
+            <legend className="font-semibold mb-2.5">¿Qué quieres mejorar primero?</legend>
+            <div className="flex flex-wrap gap-2">
+              {options.map((option) => (
+                <label key={option.value} className="chip min-h-11 cursor-pointer has-[:checked]:border-brand-cyan has-[:checked]:text-white">
                   <input
                     type="checkbox"
-                    value={service.value}
-                    checked={values.services.includes(service.value)}
-                    onChange={(e) => toggleService(service.value, e.target.checked)}
-                    className="accent-brand-blue w-4 h-4"
+                    value={option.value}
+                    checked={values.services.includes(option.value)}
+                    onChange={(e) => toggle(option.value, e.target.checked)}
+                    className="accent-brand-blue"
                   />
-                  {service.label}
+                  {option.label}
                 </label>
               ))}
             </div>
             {errors.services && <ErrorText id={errorId('services')}>{errors.services}</ErrorText>}
           </fieldset>
-          <Field label="Empresa (opcional)" htmlFor={fieldId('company')}>
-            <input id={fieldId('company')} type="text" autoComplete="organization" value={values.company} onChange={(e) => set('company', e.target.value)} className={inputClass} />
+          <Field label="Nombre" htmlFor={fieldId('name')} error={errors.name} errorId={errorId('name')}>
+            <input {...a11y('name')} type="text" autoComplete="name" placeholder="Tu nombre" value={values.name} onChange={(e) => set('name', e.target.value)} className={inputClass} />
           </Field>
-          <Field label="Cuéntanos tu desafío (opcional)" htmlFor={fieldId('message')}>
-            <textarea id={fieldId('message')} rows={3} value={values.message} onChange={(e) => set('message', e.target.value)} className={inputClass} />
+          <Field label="WhatsApp" htmlFor={fieldId('whatsapp')} error={errors.whatsapp} errorId={errorId('whatsapp')}>
+            <input {...a11y('whatsapp')} type="tel" inputMode="tel" autoComplete="tel" placeholder="+57 300 000 0000" value={values.whatsapp} onChange={(e) => set('whatsapp', e.target.value)} className={inputClass} />
           </Field>
+          <button type="submit" className="btn-primary w-full min-h-[54px]">
+            Reservar mi cupo gratis →
+          </button>
           <div>
-            <label className="flex items-start gap-3 text-sm text-ink">
+            <label className="flex gap-2 text-[13px] text-white/70">
               <input
                 type="checkbox"
                 {...a11y('consent')}
                 checked={values.consent}
                 onChange={(e) => set('consent', e.target.checked)}
-                className="accent-brand-blue w-4 h-4 mt-0.5 shrink-0"
+                className="accent-brand-blue mt-0.5 shrink-0"
               />
               <span>
-                Autorizo el tratamiento de mis datos personales según la Ley 1581 de 2012 y la{' '}
-                <a href={privacyHref} className="text-brand-blue underline underline-offset-2">
-                  política de privacidad
-                </a>
-                .
+                Acepto la{' '}
+                <a href={privacyHref} className="text-brand-cyan underline underline-offset-2">
+                  política de tratamiento de datos
+                </a>{' '}
+                (Ley 1581).
               </span>
             </label>
             {errors.consent && <ErrorText id={errorId('consent')}>{errors.consent}</ErrorText>}
           </div>
+        </>
+      ) : (
+        <>
+          <Field label="Correo electrónico" htmlFor={fieldId('email')} error={errors.email} errorId={errorId('email')}>
+            <input {...a11y('email')} type="email" autoComplete="email" placeholder="nombre@empresa.com" value={values.email} onChange={(e) => set('email', e.target.value)} className={inputClass} />
+          </Field>
+          <Field label="Empresa (opcional)" htmlFor={fieldId('company')}>
+            <input id={fieldId('company')} type="text" autoComplete="organization" value={values.company} onChange={(e) => set('company', e.target.value)} className={inputClass} />
+          </Field>
+          <Field label="Cuéntanos tu reto (opcional)" htmlFor={fieldId('message')}>
+            <textarea id={fieldId('message')} rows={3} value={values.message} onChange={(e) => set('message', e.target.value)} className={`${inputClass} py-3`} />
+          </Field>
           {errors.form && (
-            <p role="alert" className="rounded-xl bg-danger/10 px-4 py-3 text-sm text-danger">
+            <p role="alert" className="rounded-[10px] bg-danger/15 px-4 py-3 text-sm text-danger">
               {errors.form}
             </p>
           )}
@@ -171,8 +181,8 @@ export default function LeadForm({ services, privacyHref, submitLead }: LeadForm
 
 function Field({ label, htmlFor, error, errorId, children }: { label: string; htmlFor: string; error?: string; errorId?: string; children: ReactNode }) {
   return (
-    <div>
-      <label htmlFor={htmlFor} className="block font-semibold text-ink mb-1.5 text-sm">
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={htmlFor} className="text-sm text-white/70">
         {label}
       </label>
       {children}
@@ -183,7 +193,7 @@ function Field({ label, htmlFor, error, errorId, children }: { label: string; ht
 
 function ErrorText({ id, children }: { id: string; children: ReactNode }) {
   return (
-    <p id={id} className="mt-1.5 text-sm text-danger">
+    <p id={id} className="mt-1 text-sm text-danger">
       {children}
     </p>
   );
