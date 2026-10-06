@@ -3,7 +3,6 @@ import { Picture } from 'astro:assets';
 import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
 import heroGlobe from '../../../assets/hero-globe.png';
 import { brandColors as colors } from '../../theme';
-import Icon from '../shared/Icon.astro';
 
 interface Props {
   hero: HomeViewModel['hero'];
@@ -50,7 +49,7 @@ const fill = (c: string) => (c === 's' ? 'fill-secondary' : 'fill-primary');
 const stroke = (c: string) => (c === 's' ? 'stroke-secondary' : 'stroke-primary');
 ---
 
-<section id="inicio" aria-label="Presentación" class="relative overflow-hidden bg-gradient-to-br from-hero-from via-hero-to to-hero-from">
+<section id="inicio" aria-label="Presentación" class="relative overflow-hidden bg-navy">
   <!-- Globo: imagen estática (móvil y fallback) + canvas 3D diferido en escritorio -->
   <div
     data-globe
@@ -121,28 +120,34 @@ const stroke = (c: string) => (c === 's' ? 'stroke-secondary' : 'stroke-primary'
     </g>
   </svg>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 items-center min-h-[calc(100svh-40px)] pt-[calc(68px+3rem)] pb-16 lg:pt-[calc(68px+5rem)] lg:pb-24">
-    <div class="text-left lg:pr-8">
-      <h1 class="font-poppins font-bold text-secondary text-base md:text-lg leading-snug mb-5 max-w-xl">
+  <div class="relative z-10 wrap grid lg:grid-cols-2 items-center gap-14 pt-[72px] pb-16 lg:min-h-[640px]">
+    <div class="flex flex-col gap-[22px]">
+      <h1 class="font-inter text-sm font-bold uppercase tracking-[0.12em] leading-normal text-brand-cyan">
         {hero.title}
       </h1>
-      <p class="font-poppins font-extrabold text-white leading-[1.08] mb-6 text-4xl md:text-5xl xl:text-6xl">
-        {hero.hook}
+      <p data-hook class="font-poppins font-bold text-[40px] md:text-[58px] leading-[1.03]" style="text-wrap: balance">
+        {hero.hook.before} <span class="text-brand-blue">{hero.hook.highlight}</span> {hero.hook.after}
       </p>
-      <p class="font-inter text-lg md:text-xl text-white/85 mb-10 max-w-[560px] leading-relaxed">
-        {hero.subtitle}
-      </p>
-      <div class="flex flex-col sm:flex-row sm:flex-wrap gap-4">
-        <a href={hero.primaryCta.href} class="btn-primary btn-lg sm:whitespace-nowrap">{hero.primaryCta.label}</a>
-        <a href={hero.secondaryCta.href} class="btn-secondary btn-lg sm:whitespace-nowrap">{hero.secondaryCta.label}</a>
+      <p class="text-[19px] leading-[1.55] text-white/70">{hero.subtitle}</p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <a href={hero.primaryCta.href} class="btn-primary btn-lg">{hero.primaryCta.label}</a>
+        <a href={hero.secondaryCta.href} class="btn-ghost btn-lg">{hero.secondaryCta.label}</a>
       </div>
-      <p class="mt-4 text-sm text-white/75">{hero.microcopy}</p>
-      <p class="mt-10 pt-8 border-t border-white/10 flex items-center gap-3 text-white/85">
-        <Icon name="users" class="w-6 h-6 text-secondary shrink-0" />
-        {hero.socialProof}
-      </p>
+      <p class="text-sm text-white/70">{hero.microcopy}</p>
+      <div class="flex items-center gap-3.5 pt-1.5">
+        <div class="flex" aria-hidden="true">
+          {[0, 1, 2, 3].map((i) => (
+            <span class:list={['ph w-10 h-10 rounded-full border-2 border-navy text-[10px]', i > 0 && '-ml-3']}>[foto]</span>
+          ))}
+        </div>
+        <p class="text-sm leading-snug">
+          <span class="text-amber" role="img" aria-label={`Calificación: ${hero.rating} de 5`}>★★★★★</span>
+          <strong>{hero.rating}/5</strong><br />
+          <span class="text-white/70">{hero.socialProof}</span>
+        </p>
+      </div>
     </div>
-    <div class="hidden lg:block"></div>
+    <div class="hidden lg:block" aria-hidden="true"></div>
   </div>
 </section>
 

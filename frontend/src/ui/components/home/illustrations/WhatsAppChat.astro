@@ -1,0 +1,26 @@
+---
+// 02 · Agentes de IA: conversación en WhatsApp + métricas del lead
+const incoming = 'bg-surface rounded-xl rounded-bl-[3px] px-2.5 py-2 text-xs self-start max-w-[85%]';
+const outgoing = 'bg-surface-2 rounded-xl rounded-br-[3px] px-2.5 py-2 text-xs self-end max-w-[85%]';
+---
+
+<div class="stage flex items-center justify-center gap-6" data-illustration aria-hidden="true">
+  <div class="w-[250px] h-[460px] rounded-[36px] border-8 border-surface-2 bg-navy px-3 py-4 flex flex-col gap-2.5">
+    <div class="flex items-center gap-2 pb-2.5 border-b border-line">
+      <span class="w-[30px] h-[30px] rounded-full bg-whatsapp flex items-center justify-center">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="stroke-whatsapp-ink" stroke-width="2.4"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"></path></svg>
+      </span>
+      <span class="text-[13px]"><strong>Tu empresa</strong><br /><span class="text-success text-[11px]">en línea</span></span>
+    </div>
+    <div class={incoming}>Hola, quiero cotizar cámaras para 2 sedes</div>
+    <div class={outgoing}>¡Con gusto! ¿Cuántos accesos tiene cada sede?</div>
+    <div class={incoming}>3 y 2</div>
+    <div class={outgoing}>Perfecto. Te agendé visita técnica el jueves 9:00 a. m. ✓</div>
+    <div class="mt-auto bg-surface rounded-full px-3 py-2.5 text-[11px] text-white/70">Escribe un mensaje…</div>
+  </div>
+  <div class="hidden md:flex flex-col gap-3 w-[190px]">
+    <div class="card bg-navy p-3.5"><div class="text-[11px] text-white/70">Lead calificado</div><strong class="text-[15px] text-success">Alta intención</strong></div>
+    <div class="card bg-navy p-3.5"><div class="text-[11px] text-white/70">Enviado a</div><strong class="text-[15px]">CRM + Agenda</strong></div>
+    <div class="card bg-navy p-3.5"><div class="text-[11px] text-white/70">Tiempo de respuesta</div><strong class="font-poppins text-[22px]">[X] s</strong></div>
+  </div>
+</div>

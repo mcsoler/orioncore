@@ -1,0 +1,28 @@
+---
+// 04 · Seguridad: escaneo facial + registro de ingresos
+const entries = [
+  ['[Nombre] · Oficina', '08:02', true],
+  ['[Nombre] · Bodega', '08:15', true],
+  ['Desconocido · Puerta 2', 'Bloqueado', false],
+  ['[Nombre] · Sala TI', '09:40', true],
+] as const;
+---
+
+<div class="stage flex flex-wrap gap-5 items-center justify-center" data-illustration aria-hidden="true">
+  <div class="relative w-[240px] h-[300px] rounded-[20px] bg-navy border border-line overflow-hidden flex items-center justify-center">
+    <svg width="200" height="220" viewBox="0 0 200 220" fill="none">
+      <path d="M16 56V16h40M144 16h40v40M184 164v40h-40M56 204H16v-40" class="stroke-brand-cyan" stroke-width="4"></path>
+      <circle cx="100" cy="88" r="36" class="stroke-white/70" stroke-width="3"></circle>
+      <path d="M44 190c6-32 30-50 56-50s50 18 56 50" class="stroke-white/70" stroke-width="3"></path>
+      <circle cx="86" cy="84" r="3" class="fill-brand-cyan"></circle><circle cx="114" cy="84" r="3" class="fill-brand-cyan"></circle><circle cx="100" cy="100" r="3" class="fill-brand-cyan"></circle>
+      <path d="M86 84 100 100 114 84M86 84h28" class="stroke-brand-cyan" stroke-width="1"></path>
+    </svg>
+    <span class="absolute left-5 right-5 h-0.5 bg-brand-cyan shadow-glow-cyan animate-scan"></span>
+    <span class="absolute bottom-3.5 left-3.5 right-3.5 bg-success/15 text-success rounded-lg p-2 text-xs font-bold text-center">✓ ACCESO AUTORIZADO</span>
+  </div>
+  <div class="card bg-navy p-4 w-[230px] flex flex-col gap-2.5 text-xs">
+    <strong class="text-sm">Registro de ingresos</strong>
+    {entries.map(([who, time, ok]) => <div class="flex justify-between"><span>{who}</span><span class:list={[ok ? 'text-success' : 'text-danger']}>{time}</span></div>)}
+    <div class="mt-1 p-2 rounded-lg bg-danger/15 text-danger">Alerta enviada al supervisor</div>
+  </div>
+</div>

@@ -1,31 +1,46 @@
 ---
 import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
-import Icon from '../shared/Icon.astro';
-import Section from '../shared/Section.astro';
+import AddToCartButton from '../../islands/AddToCartButton';
 
 type Props = HomeViewModel['shop'];
 
-const { title, cta, products } = Astro.props;
+const { eyebrow, title, subtitle, cta, products } = Astro.props;
 ---
 
-<Section id="tienda" tone="soft" eyebrow="Tienda" title={title}>
-  <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-    {
-      products.map((product) => (
-        <li>
-          <a href={product.href} class="flex flex-col h-full rounded-2xl bg-white border border-ink/10 p-6 hover:border-brand-blue/40 hover:shadow-glow-blue transition-all">
-            <span class="flex items-center justify-center aspect-[4/3] rounded-xl bg-surface-soft text-brand-blue mb-5" aria-hidden="true">
-              <Icon name="cart" class="w-10 h-10" />
-            </span>
-            <h3 class="font-poppins text-lg font-semibold text-ink mb-2">{product.title}</h3>
-            <p class="text-sm text-ink/80 mb-4">{product.description}</p>
-            <p class="mt-auto font-poppins font-bold text-ink">{product.price}</p>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-  <p class="mt-10 text-center">
-    <a href={cta.href} class="btn-ghost">{cta.label}</a>
-  </p>
-</Section>
+<section id="tienda" aria-labelledby="tienda-titulo" class="bg-surface py-[88px]">
+  <div class="wrap">
+    <div class="flex flex-wrap justify-between items-end gap-6 mb-8">
+      <header>
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 id="tienda-titulo" class="h2">{title}</h2>
+        <p class="text-[17px] text-white/70">{subtitle}</p>
+      </header>
+      <a href={cta.href} class="btn-ghost">{cta.label}</a>
+    </div>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        products.map((product) => (
+          <article class="card bg-navy p-3.5 flex flex-col gap-[9px]">
+            <a href={product.href} tabindex="-1" aria-hidden="true" class="ph relative h-[170px] no-underline">
+              {product.badge && (
+                <span data-badge class="absolute top-2.5 left-2.5 bg-brand-blue text-white text-xs font-bold px-2 py-1 rounded-md">
+                  {product.badge}
+                </span>
+              )}
+              [Foto del producto]
+            </a>
+            <h3 class="font-inter text-base font-semibold">
+              <a href={product.href} class="text-white hover:underline underline-offset-4">{product.title}</a>
+            </h3>
+            <p class="flex items-baseline gap-2">
+              <span class="font-poppins text-[21px] font-bold">{product.price}</span>
+              {product.oldPrice && <s class="text-[13px] text-white/70">{product.oldPrice}</s>}
+            </p>
+            {product.stock && <p class="text-[13px] text-amber">● {product.stock}</p>}
+            <AddToCartButton client:visible slug={product.slug} name={product.title} />
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

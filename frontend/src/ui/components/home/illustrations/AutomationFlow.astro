@@ -1,0 +1,27 @@
+---
+// 01 · Automatización: flujo disparador → CRM → factura/inventario → alerta
+const node = 'card bg-navy px-[18px] py-3.5 flex gap-3 items-center w-[280px] max-w-full';
+const link = 'w-0.5 h-7 bg-brand-cyan';
+---
+
+<div class="stage flex flex-col items-center justify-center" data-illustration aria-hidden="true">
+  <div class={node}>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="stroke-brand-cyan shrink-0" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg>
+    <span><strong class="text-sm">Nuevo pedido web</strong><br /><span class="text-xs text-white/70">Disparador</span></span>
+  </div>
+  <div class={link}></div>
+  <div class={node}>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="stroke-brand-blue shrink-0" stroke-width="2"><circle cx="9" cy="8" r="4"></circle><path d="M3 21c0-4 3-6 6-6s6 2 6 6M17 11h4M19 9v4"></path></svg>
+    <span><strong class="text-sm">Cliente creado en CRM</strong><br /><span class="text-xs text-white/70">Automático · 0,4 s</span></span>
+  </div>
+  <div class={link}></div>
+  <div class="flex gap-3.5">
+    <div class="card bg-navy px-3.5 py-3 text-[13px] w-[133px] text-center"><strong>Factura</strong><br /><span class="text-white/70">emitida</span></div>
+    <div class="card bg-navy px-3.5 py-3 text-[13px] w-[133px] text-center"><strong>Inventario</strong><br /><span class="text-white/70">actualizado</span></div>
+  </div>
+  <div class={link}></div>
+  <div class:list={[node, 'border-success']}>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="stroke-success shrink-0" stroke-width="2"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"></path></svg>
+    <span><strong class="text-sm">Alerta y reporte al gerente</strong><br /><span class="text-xs text-success">Sin tocar un teclado</span></span>
+  </div>
+</div>

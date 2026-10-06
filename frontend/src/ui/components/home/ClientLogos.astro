@@ -7,19 +7,11 @@ interface Props {
 const { title, logos } = Astro.props;
 ---
 
-<section aria-labelledby="clientes-titulo" class="bg-bg-main py-12 border-b border-ink/5">
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-8">
-    <h2 id="clientes-titulo" class="text-center text-sm font-semibold tracking-[0.2em] uppercase text-muted mb-8">
-      {title}
-    </h2>
-    <ul class="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-      {
-        logos.map((logo) => (
-          <li class="flex items-center justify-center h-14 min-w-[140px] px-6 rounded-xl border border-dashed border-ink/15 text-sm text-muted">
-            {logo}
-          </li>
-        ))
-      }
+<section aria-label="Clientes" class="border-y border-line py-[26px]">
+  <div class="wrap flex flex-wrap items-center justify-between gap-7">
+    <p class="text-sm text-white/70">{title}</p>
+    <ul class="flex flex-wrap gap-3.5">
+      {logos.map((logo) => <li class="ph w-[120px] h-[42px]">{logo}</li>)}
     </ul>
   </div>
 </section>

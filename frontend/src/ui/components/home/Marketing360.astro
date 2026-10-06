@@ -1,43 +1,37 @@
 ---
 import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
-import { iconForHref } from '../../presenters/homePresenter';
-import Icon from '../shared/Icon.astro';
-import Section from '../shared/Section.astro';
 
 type Props = HomeViewModel['marketing'];
 
-const { title, subtitle, hub, items } = Astro.props;
+const { eyebrow, title, subtitle, hub, cards } = Astro.props;
 ---
 
-<Section id="marketing" tone="dark" eyebrow="Marketing digital" title={title} subtitle={subtitle}>
-  <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-    {
-      items.map((line) => (
-        <li>
-          <a
-            href={line.href}
-            data-card
-            class="group flex flex-col h-full rounded-2xl bg-white/5 border border-white/10 p-6 transition-all duration-300 hover:border-secondary/50 hover:bg-white/[0.07]"
-          >
-            <span class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-secondary/10 text-secondary mb-4">
-              <Icon name={iconForHref(line.href)} class="w-6 h-6" />
-            </span>
-            <h3 class="font-poppins text-lg font-semibold text-white mb-2">{line.title}</h3>
-            <p class="text-sm leading-relaxed text-white/75 mb-4">{line.description}</p>
-            <ul class="mt-auto space-y-1.5 text-sm text-white/85">
-              {line.items.map((item) => (
-                <li class="flex items-start gap-2">
-                  <Icon name="check" class="w-4 h-4 mt-0.5 text-secondary shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-  <p class="mt-12 text-center">
-    <a href={hub.href} class="btn-secondary">{hub.label}</a>
-  </p>
-</Section>
+<section id="marketing360" aria-labelledby="marketing360-titulo" class="bg-surface py-[88px] scroll-mt-20">
+  <div class="wrap">
+    <div class="flex flex-wrap justify-between items-end gap-6 mb-9">
+      <header class="max-w-[680px]">
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 id="marketing360-titulo" class="h2">{title}</h2>
+        <p class="text-[17px] text-white/70">{subtitle}</p>
+      </header>
+      <a href={hub.href} class="btn-ghost">{hub.label}</a>
+    </div>
+    <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        cards.map((card) => (
+          <li>
+            <a href={card.href} data-card class="card bg-navy p-[22px] flex flex-col gap-2.5 h-full text-white hover:border-brand-blue transition-colors">
+              <span data-number class="w-12 h-12 rounded-xl bg-surface-2 flex items-center justify-center text-brand-cyan font-poppins font-bold">
+                {card.number}
+              </span>
+              <h3 class="font-poppins text-lg leading-tight font-semibold">{card.title}</h3>
+              <p class="text-sm leading-normal text-white/70">{card.hook}</p>
+              <p class="text-[13px] text-white/70">{card.items.join(' · ')}</p>
+              <span data-more class="mt-auto text-sm font-semibold text-brand-cyan">Ver servicio →</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

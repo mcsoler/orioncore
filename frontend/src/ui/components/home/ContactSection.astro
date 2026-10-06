@@ -1,58 +1,62 @@
 ---
-import type { HomeViewModel, ServiceView } from '../../../application/dto/HomeViewModel';
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
 import LeadForm from '../../islands/LeadForm';
-import { serviceOptions } from '../../presenters/homePresenter';
-import Chip from '../shared/Chip.astro';
-import Icon from '../shared/Icon.astro';
-import Section from '../shared/Section.astro';
 
 interface Props {
   contact: HomeViewModel['contact'];
-  services: readonly ServiceView[];
   whatsappHref?: string;
 }
 
-const { contact, services, whatsappHref } = Astro.props;
+const { contact, whatsappHref } = Astro.props;
 ---
 
-<Section id="contacto" tone="dark" eyebrow="Diagnóstico gratuito" title={contact.title} align="left">
-  <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr] items-start">
-    <div class="space-y-8">
-      <Chip tone="amber">{contact.slots}</Chip>
-      <ul data-benefits class="space-y-3">
+<section id="contacto" aria-labelledby="contacto-titulo" class="bg-surface py-[88px] scroll-mt-20">
+  <div class="wrap grid gap-12 items-start lg:grid-cols-2">
+    <div class="flex flex-col gap-[18px]">
+      <p class="eyebrow">{contact.eyebrow}</p>
+      <h2 id="contacto-titulo" class="h2 my-0">{contact.title}</h2>
+      <div class="rounded-[14px] bg-navy border border-line p-[18px]">
+        <p class="flex justify-between text-sm">
+          <span>{contact.slots.label}</span><strong class="text-amber">{contact.slots.value}</strong>
+        </p>
+        <div
+          role="progressbar"
+          aria-label={contact.slots.label}
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow={contact.slots.progress}
+          class="h-2 bg-surface-2 rounded-full mt-2.5"
+        >
+          <div class="h-full bg-amber rounded-full" style={`width:${contact.slots.progress}%`}></div>
+        </div>
+      </div>
+      <ul data-benefits class="flex flex-col gap-3">
         {
           contact.benefits.map((benefit) => (
-            <li class="flex items-start gap-3 text-white/85">
-              <Icon name="check" class="w-5 h-5 mt-0.5 text-secondary shrink-0" />
+            <li class="flex gap-2.5 items-start">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="stroke-success shrink-0" stroke-width="2.5" aria-hidden="true">
+                <path d="m5 12 5 5 9-10" />
+              </svg>
               {benefit}
             </li>
           ))
         }
       </ul>
-      <figure class="flex items-center gap-4">
-        <span
-          role="img"
-          aria-label={contact.photoAlt}
-          class="flex items-center justify-center w-20 h-20 rounded-full bg-white/10 border border-white/20 text-xs text-white/75 text-center"
-        >
-          [Foto de Michael]
-        </span>
-        <figcaption class="text-sm text-white/75">
-          Te atiende directamente <span class="text-white font-semibold">Michael</span>, fundador de Orion Core.
-        </figcaption>
-      </figure>
+      <div class="flex items-center gap-3.5">
+        <span class="ph w-[60px] h-[60px] rounded-full shrink-0" role="img" aria-label={contact.photoAlt}>[Foto]</span>
+        <p class="text-[15px]">
+          <strong>{contact.person.name}</strong> · {contact.person.role}<br />
+          <span class="text-white/70">{contact.person.note}</span>
+        </p>
+      </div>
       {
         whatsappHref && (
-          <div class="space-y-3">
-            <p class="text-white/75">¿Prefieres escribirnos ya?</p>
-            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
-              <Icon name="whatsapp" class="w-5 h-5" />
-              Escríbenos por WhatsApp
-            </a>
-          </div>
+          <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="btn-whatsapp self-start">
+            {contact.whatsappCta}
+          </a>
         )
       }
     </div>
-    <LeadForm client:visible services={serviceOptions(services)} privacyHref="/privacidad/" />
+    <LeadForm client:visible options={contact.formOptions} privacyHref="/privacidad/" />
   </div>
-</Section>
+</section>

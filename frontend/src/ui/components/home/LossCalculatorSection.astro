@@ -1,13 +1,19 @@
 ---
 import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
 import LossCalculator from '../../islands/LossCalculator';
-import Section from '../shared/Section.astro';
 
 type Props = HomeViewModel['calculator'];
 
-const { title, subtitle, defaultHours, costPerHour, cta } = Astro.props;
+const { eyebrow, title, subtitle, defaultHours, costPerHour, cta } = Astro.props;
 ---
 
-<Section id="calculadora" tone="soft" eyebrow="Calculadora" title={title} subtitle={subtitle}>
-  <LossCalculator client:visible defaultHours={defaultHours} costPerHour={costPerHour} cta={cta} />
-</Section>
+<section id="calculadora" aria-labelledby="calculadora-titulo" class="bg-navy py-[88px] scroll-mt-20">
+  <div class="wrap grid gap-12 items-center lg:grid-cols-2">
+    <header class="flex flex-col gap-3.5">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 id="calculadora-titulo" class="h2 my-0">{title}</h2>
+      <p class="text-[17px] text-white/70">{subtitle}</p>
+    </header>
+    <LossCalculator client:visible defaultHours={defaultHours} costPerHour={costPerHour} cta={cta} />
+  </div>
+</section>

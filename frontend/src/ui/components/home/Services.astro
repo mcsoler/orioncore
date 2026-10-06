@@ -1,62 +1,87 @@
 ---
 import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
-import { iconForHref } from '../../presenters/homePresenter';
-import Chip from '../shared/Chip.astro';
-import Icon from '../shared/Icon.astro';
-import Section from '../shared/Section.astro';
+import AutomationFlow from './illustrations/AutomationFlow.astro';
+import FaceAccess from './illustrations/FaceAccess.astro';
+import MarketingAds from './illustrations/MarketingAds.astro';
+import SoftwareDashboard from './illustrations/SoftwareDashboard.astro';
+import WhatsAppChat from './illustrations/WhatsAppChat.astro';
+import { slugOf } from '../../presenters/homePresenter';
 
-type Props = HomeViewModel['services'];
+type Props = HomeViewModel['services'] & {
+  /** Destino de los CTA "whatsapp"; sin número confirmado, esos CTA van al formulario. */
+  whatsappHref?: string;
+};
 
-const { title, subtitle, ctaLabel, items } = Astro.props;
+const { eyebrow, title, items, whatsappHref } = Astro.props;
+
+const ILLUSTRATIONS = {
+  'automatizacion-de-procesos': AutomationFlow,
+  'agentes-ia-whatsapp': WhatsAppChat,
+  'software-a-medida': SoftwareDashboard,
+  'seguridad-control-de-acceso': FaceAccess,
+  'marketing-digital': MarketingAds,
+} as const;
+
+const ctaHref = (href: string) => (href === 'whatsapp' ? (whatsappHref ?? '#contacto') : href);
+const isMarketing = (href: string) => href === '/marketing-digital/';
 ---
 
-<Section id="servicios" tone="light" eyebrow="Soluciones que impulsan tu crecimiento" title={title} subtitle={subtitle}>
-  <div class="space-y-16 md:space-y-24">
+<section id="servicios" aria-labelledby="servicios-titulo" class="bg-navy pt-12 pb-[88px] scroll-mt-20">
+  <div class="wrap flex flex-col gap-24">
+    <header class="text-center max-w-[720px] mx-auto">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 id="servicios-titulo" class="h2">{title}</h2>
+    </header>
+
     {
-      items.map((service, i) => (
-        <article class:list={['grid items-center gap-10 lg:grid-cols-2', i % 2 === 1 && 'lg:[&>*:first-child]:order-2']}>
-          <div
-            class="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-navy to-hero-to flex items-center justify-center overflow-hidden"
-            aria-hidden="true"
-          >
-            <span class="absolute w-64 h-64 rounded-full bg-brand-cyan/10 blur-2xl" />
-            <span class="relative flex items-center justify-center w-28 h-28 rounded-3xl bg-white/5 border border-white/10 text-secondary shadow-glow-cyan">
-              <Icon name={iconForHref(service.href)} class="w-14 h-14" />
-            </span>
-          </div>
-          <div>
-            {service.badge && (
-              <Chip tone="amber" class="mb-4">
-                {service.badge}
-              </Chip>
-            )}
-            <h3 class="font-poppins text-2xl md:text-3xl font-bold text-ink mb-3">{service.title}</h3>
-            {service.headline && <p class="text-lg font-semibold text-brand-blue mb-3">{service.headline}</p>}
-            <p class="text-muted leading-relaxed mb-6">{service.description}</p>
-            <ul class="space-y-2.5 mb-8">
-              {service.items.map((item) => (
-                <li class="flex items-start gap-3 text-ink">
-                  <Icon name="check" class="w-5 h-5 mt-0.5 text-success shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div class="flex flex-wrap items-center gap-4">
-              <a href="#contacto" class="btn-primary">
-                {service.cta ?? 'Quiero esta solución'}
-              </a>
-              <a
-                href={service.href}
-                aria-label={`${ctaLabel}: ${service.title}`}
-                class="inline-flex items-center gap-1.5 font-semibold text-brand-blue hover:underline underline-offset-4"
-              >
-                {ctaLabel}
-                <Icon name="arrow-right" class="w-4 h-4" />
-              </a>
+      items.map((service, i) => {
+        const Illustration = ILLUSTRATIONS[slugOf(service.href) as keyof typeof ILLUSTRATIONS] ?? AutomationFlow;
+        return (
+          <article class:list={['grid gap-14 items-center lg:grid-cols-2', i % 2 === 1 && 'lg:[&>*:first-child]:order-2']}>
+            <Illustration />
+            <div class="flex flex-col gap-4">
+              <div class="flex flex-wrap gap-2">
+                <span class="tag bg-surface-2 text-brand-cyan">
+                  {service.number} · {service.title}
+                </span>
+                {service.badge && <span class="tag bg-success/15 text-success">{service.badge}</span>}
+              </div>
+              <h3 class="h2 my-0">{service.headline}</h3>
+              <p class="text-[17px] leading-relaxed text-white/70">{service.description}</p>
+              {isMarketing(service.href) ? (
+                <div class="flex flex-wrap gap-2">
+                  {service.items.map((item) => (
+                    <span class="chip">{item}</span>
+                  ))}
+                </div>
+              ) : (
+                <ul class="flex flex-col gap-4">
+                  {service.items.map((item) => (
+                    <li class="flex gap-2.5 items-start">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="stroke-success shrink-0" stroke-width="2.5" aria-hidden="true">
+                        <path d="m5 12 5 5 9-10" />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:items-center pt-1.5">
+                <a
+                  href={ctaHref(service.ctaHref)}
+                  class="btn-primary"
+                  {...(service.ctaHref === 'whatsapp' && whatsappHref && { target: '_blank', rel: 'noopener noreferrer' })}
+                >
+                  {service.cta}
+                </a>
+                <a href={service.href} data-detail class="text-link">
+                  {service.linkLabel} →
+                </a>
+              </div>
             </div>
-          </div>
-        </article>
-      ))
+          </article>
+        );
+      })
     }
   </div>
-</Section>
+</section>
