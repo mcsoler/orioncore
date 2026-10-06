@@ -19,7 +19,7 @@ const APPROVED_URL_MAP = [
   '/marketing-digital/analisis-web/',
   '/marketing-digital/branding-digital/',
   '/marketing-digital/community-manager/',
-  '/marketing-digital/posicionamiento-de-marca/',
+  '/marketing-digital/posicionamiento-presencial/',
   '/marketing-digital/email-marketing/',
   '/marketing-digital/pauta-digital/',
   '/marketing-digital/integraciones-web/',
@@ -84,6 +84,35 @@ describe('StaticContentRepository (content/home/home.es.json)', () => {
     expect(home.services.items.find((s) => s.badge)?.href).toBe('/servicios/agentes-ia-whatsapp/');
   });
 
+  it('usa los textos de la referencia del home (home-html/Main.dc.html)', async () => {
+    const home = await repository().getHome();
+    expect(home.hero.hook).toEqual({
+      before: 'Deja de perder',
+      highlight: 'clientes, horas y dinero',
+      after: 'en lo que la tecnología ya resuelve.',
+    });
+    expect(home.pains.title).toBe('Si te pasa al menos una de estas cosas, estás dejando dinero sobre la mesa.');
+    expect(home.services.title).toBe('Cinco soluciones. Un mismo objetivo: que tu empresa crezca.');
+    expect(home.services.items.map((s) => s.headline)).toEqual([
+      'Recupera hasta [X] horas cada semana.',
+      'Tu mejor vendedor no duerme, no se enferma y responde en segundos.',
+      'Toda tu empresa en una sola pantalla.',
+      'Sabe quién entra, cuándo y por dónde. Siempre.',
+      'Más clientes, no solo más likes.',
+    ]);
+    expect(home.services.items.map((s) => s.ctaHref)).toEqual(['#contacto', 'whatsapp', '#contacto', '#contacto', '#marketing360']);
+    expect(home.marketing.items.map((m) => m.title)).toEqual([
+      'Análisis web', 'Branding digital', 'Community manager', 'Posicionamiento presencial',
+      'Email marketing', 'Pauta multicanal', 'Conexiones e integraciones web',
+    ]);
+    expect(home.faq.items.map((f) => f.question)).toEqual([
+      '¿El diagnóstico de verdad es gratis?',
+      '¿Cuánto cuesta un proyecto?',
+      '¿Cuánto tarda la implementación?',
+      '¿Puedo contratar solo un servicio?',
+    ]);
+  });
+
   it('entrega las líneas de marketing, productos, casos y artículos del home', async () => {
     const home = await repository().getHome();
     expect(home.marketing.items).toHaveLength(7);
@@ -103,7 +132,12 @@ describe('StaticContentRepository (content/home/home.es.json)', () => {
 
   it('muestra las cifras confirmadas y deja pendiente la que no lo está', async () => {
     const { results } = await repository().getHome();
-    expect(results.stats.map((s) => s.value)).toEqual(['10+', '5+', '5+', '[X]']);
+    expect(results.stats).toEqual([
+      { value: '10+', label: 'Proyectos entregados' },
+      { value: '5+', label: 'Empresas clientes' },
+      { value: '5+', label: 'Años de experiencia' },
+      { value: '24/7', label: 'Soporte técnico' },
+    ]);
   });
 
   it('integridad de enlaces: todo href interno del home existe en el RouteRegistry', async () => {
