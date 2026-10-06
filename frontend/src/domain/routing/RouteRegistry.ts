@@ -97,15 +97,26 @@ export class RouteRegistry {
   }
 
   footerSitemap(): FooterGroup[] {
-    const indexes = (['tienda', 'casos', 'blog'] as const)
-      .map((section) => this.indexOf(section))
-      .filter((r): r is SiteRoute => r !== undefined);
+    const index = (section: RouteSection) => this.indexOf(section);
+    const pages = (routes: (SiteRoute | undefined)[]) => routes.filter((r): r is SiteRoute => r !== undefined).map(toLink);
+    const marketingHub = index('marketing');
+    const shop = index('tienda');
+    const [about, contact] = [this.find('/nosotros/'), this.find('/contacto/')];
     return [
-      { title: 'Servicios', links: this.pagesOf('servicios').map(toLink) },
-      { title: 'Marketing digital', links: this.pagesOf('marketing').map(toLink) },
-      { title: 'Empresa', links: [...indexes, ...this.pagesOf('empresa')].map(toLink) },
-      { title: 'Legal', links: this.pagesOf('legal').map(toLink) },
+      { title: 'Servicios', links: pages([...this.pagesOf('servicios'), marketingHub]) },
+      { title: 'Marketing digital', links: pages(this.pagesOf('marketing').filter((r) => r !== marketingHub)) },
+      { title: 'Tienda', links: shop ? [{ label: 'Catálogo', href: shop.path }] : [] },
+      { title: 'Empresa', links: pages([about, index('casos'), index('blog'), contact]) },
     ];
+  }
+
+  /** Páginas legales, para la barra inferior del footer. */
+  legalLinks(): Link[] {
+    return this.pagesOf('legal').map(toLink);
+  }
+
+  private find(path: string): SiteRoute | undefined {
+    return this.routes.get(path);
   }
 
   /** Páginas fijas de una sección (sin las páginas de colección). */
