@@ -6,10 +6,10 @@ import LossCalculator from '../../../src/ui/islands/LossCalculator';
 const props = {
   defaultHours: 10,
   costPerHour: { default: 25_000, min: 10_000, max: 200_000, step: 5_000 },
-  cta: { label: 'Quiero recuperar ese tiempo', href: '#contacto' },
+  cta: { label: 'Quiero recuperar ese dinero', href: '#contacto' },
 };
 
-const hoursSlider = () => screen.getByLabelText(/horas por semana/i);
+const hoursSlider = () => screen.getByLabelText(/horas a la semana/i);
 const costSlider = () => screen.getByLabelText(/costo por hora/i);
 
 describe('LossCalculator (isla)', () => {
@@ -51,18 +51,16 @@ describe('LossCalculator (isla)', () => {
     expect(screen.getByRole('link', { name: props.cta.label })).toHaveFocus();
   });
 
-  it('la lista de resultados es un <dl> válido: cada <div> hijo directo contiene un dt y un dd', () => {
-    const { container } = render(<LossCalculator {...props} />);
-    const dl = container.querySelector('dl')!;
-    for (const child of dl.children) {
-      expect(child.tagName).toBe('DIV');
-      expect([...child.children].map((c) => c.tagName)).toEqual(['DT', 'DD']);
-    }
-  });
-
   it('anuncia los cambios del resultado (aria-live)', () => {
     render(<LossCalculator {...props} />);
     expect(screen.getByTestId('monthly-loss').closest('[aria-live]')).toHaveAttribute('aria-live', 'polite');
+  });
+
+  it('muestra la pérdida anual destacada con los textos de la referencia', () => {
+    render(<LossCalculator {...props} />);
+    expect(screen.getByText('Estás perdiendo aproximadamente')).toBeInTheDocument();
+    expect(screen.getByTestId('annual-loss').parentElement).toHaveTextContent('$12.990.000 al año');
+    expect(screen.getByTestId('monthly-loss').parentElement).toHaveTextContent('$1.082.500 al mes · 520 horas al año');
   });
 
   it('muestra el error si el cálculo no es válido', () => {
