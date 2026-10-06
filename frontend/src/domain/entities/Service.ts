@@ -1,5 +1,9 @@
 import { Slug } from '../value-objects/Slug';
-import { requireInternalPath, requireItems, requireText } from './guards';
+import { InvalidValueError } from '../errors/DomainError';
+import { optionalText, requireInternalPath, requireItems, requireText } from './guards';
+
+/** Destinos válidos del CTA de un servicio: un ancla del home o el WhatsApp de la empresa. */
+const CTA_TARGET = /^(#[a-z][a-z0-9-]*|whatsapp)$/;
 
 export interface ServiceProps {
   title: string;
@@ -11,6 +15,10 @@ export interface ServiceProps {
   headline?: string;
   /** Texto del botón del servicio. */
   cta?: string;
+  /** Destino del botón: `#contacto` (por defecto), otra ancla del home o `whatsapp`. */
+  ctaHref?: string;
+  /** Texto del enlace a la página del servicio. */
+  linkLabel?: string;
   /** Destino distinto de /servicios/{slug}/ (p. ej. Marketing 360° → /marketing-digital/). */
   href?: string;
 }
@@ -26,6 +34,8 @@ export class Service {
     readonly badge?: string,
     readonly headline?: string,
     readonly cta?: string,
+    readonly ctaHref: string = '#contacto',
+    readonly linkLabel?: string,
   ) {}
 
   static create(props: ServiceProps): Service {
@@ -38,8 +48,16 @@ export class Service {
       requireItems('items', props.items),
       props.href ? requireInternalPath('href', props.href) : `/servicios/${slug.value}/`,
       props.badge?.trim() || undefined,
-      props.headline === undefined ? undefined : requireText('headline', props.headline),
-      props.cta === undefined ? undefined : requireText('cta', props.cta),
+      optionalText('headline', props.headline),
+      optionalText('cta', props.cta),
+      ctaTarget(props.ctaHref),
+      optionalText('linkLabel', props.linkLabel),
     );
   }
+}
+
+function ctaTarget(href: string | undefined): string {
+  if (href === undefined) return '#contacto';
+  if (!CTA_TARGET.test(href)) throw new InvalidValueError('ctaHref', `"${href}" debe ser un ancla (#id) o "whatsapp"`);
+  return href;
 }

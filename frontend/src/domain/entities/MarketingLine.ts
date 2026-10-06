@@ -1,11 +1,13 @@
 import { Slug } from '../value-objects/Slug';
-import { requireItems, requireText } from './guards';
+import { optionalText, requireItems, requireText } from './guards';
 
 export interface MarketingLineProps {
   title: string;
   description: string;
   items: readonly string[];
   slug?: string;
+  /** Gancho corto de la tarjeta del home. */
+  hook?: string;
 }
 
 /** Línea de Marketing 360° con su página en /marketing-digital/{slug}/. */
@@ -15,6 +17,7 @@ export class MarketingLine {
     readonly slug: Slug,
     readonly description: string,
     readonly items: readonly string[],
+    readonly hook?: string,
   ) {}
 
   static create(props: MarketingLineProps): MarketingLine {
@@ -24,6 +27,7 @@ export class MarketingLine {
       props.slug ? Slug.of(props.slug) : Slug.fromText(title),
       requireText('description', props.description),
       requireItems('items', props.items),
+      optionalText('hook', props.hook),
     );
   }
 
