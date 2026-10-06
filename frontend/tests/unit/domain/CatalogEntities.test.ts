@@ -25,6 +25,17 @@ describe('ShopCategory y Product', () => {
     expect(product.price?.equals(Money.cop(1_299_000))).toBe(true);
   });
 
+  it('expone distintivo, precio anterior y unidades disponibles opcionales', () => {
+    const product = Product.create({
+      title: 'Router', description: 'x', category: 'redes', price: 400_000, oldPrice: 500_000, badge: 'Combo', stock: 3,
+    });
+    expect(product.badge).toBe('Combo');
+    expect(product.oldPrice?.amount).toBe(500_000);
+    expect(product.stock).toBe(3);
+    expect(() => Product.create({ title: 'R', description: 'x', category: 'redes', stock: -1 })).toThrow(InvalidValueError);
+    expect(() => Product.create({ title: 'R', description: 'x', category: 'redes', stock: 1.5 })).toThrow(InvalidValueError);
+  });
+
   it('el precio puede quedar pendiente ([X]) sin inventarlo', () => {
     const product = Product.create({ title: 'Kit', description: 'x', category: 'kits' });
     expect(product.price).toBeUndefined();
@@ -43,6 +54,15 @@ describe('CaseStudy', () => {
     expect(study.result).toBe('[X] % menos tiempo');
   });
 
+  it('expone su etiqueta y la cita opcional del cliente', () => {
+    const study = CaseStudy.create({
+      client: 'A', summary: 's', result: '+30%', tag: 'Marketing · Retail', quote: 'Excelente', quoteAuthor: 'Ana, Gerente',
+    });
+    expect(study.tag).toBe('Marketing · Retail');
+    expect(study.quote).toBe('Excelente');
+    expect(study.quoteAuthor).toBe('Ana, Gerente');
+  });
+
   it('rechaza un caso sin resumen', () => {
     expect(() => CaseStudy.create({ client: 'A', summary: '', result: 'x' })).toThrow(InvalidValueError);
   });
@@ -53,6 +73,21 @@ describe('Article', () => {
     expect(Article.create({ title: 'Guía de automatización', excerpt: 'Paso a paso.' }).href).toBe(
       '/blog/guia-de-automatizacion/',
     );
+  });
+});
+
+describe('Article (metadatos)', () => {
+  it('expone la categoría, el tiempo de lectura y un title SEO opcional', () => {
+    const article = Article.create({
+      title: '¿Cuánto cuesta un chatbot de IA para WhatsApp en Colombia?',
+      excerpt: 'x',
+      category: 'Agentes de IA',
+      readingTime: '[N] min de lectura',
+      seoTitle: 'Precio de un chatbot de IA para WhatsApp | Orion Core',
+    });
+    expect(article.category).toBe('Agentes de IA');
+    expect(article.readingTime).toBe('[N] min de lectura');
+    expect(article.seoTitle).toBe('Precio de un chatbot de IA para WhatsApp | Orion Core');
   });
 });
 

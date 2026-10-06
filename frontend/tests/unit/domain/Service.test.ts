@@ -35,6 +35,21 @@ describe('Service', () => {
     expect(Service.create(serviceProps).badge).toBeUndefined();
   });
 
+  it('expone el texto del enlace de detalle y el destino del CTA', () => {
+    const service = Service.create({ ...serviceProps, linkLabel: 'Ver automatización de procesos', ctaHref: 'whatsapp' });
+    expect(service.linkLabel).toBe('Ver automatización de procesos');
+    expect(service.ctaHref).toBe('whatsapp');
+    expect(Service.create(serviceProps).ctaHref).toBe('#contacto');
+  });
+
+  it.each(['#marketing360', '#contacto', 'whatsapp'])('acepta el destino de CTA %s', (ctaHref) => {
+    expect(Service.create({ ...serviceProps, ctaHref }).ctaHref).toBe(ctaHref);
+  });
+
+  it.each(['/contacto/', 'https://wa.me/1', '#', 'contacto'])('rechaza el destino de CTA %s', (ctaHref) => {
+    expect(() => Service.create({ ...serviceProps, ctaHref })).toThrow(InvalidValueError);
+  });
+
   it('expone el titular de beneficio y el texto del CTA', () => {
     const service = Service.create({ ...serviceProps, headline: 'Recupera tus horas', cta: 'Quiero automatizar' });
     expect(service.headline).toBe('Recupera tus horas');
@@ -64,6 +79,12 @@ describe('MarketingLine', () => {
     });
     expect(line.slug.value).toBe('analisis-web');
     expect(line.href).toBe('/marketing-digital/analisis-web/');
+  });
+
+  it('expone el gancho corto de su tarjeta', () => {
+    const line = MarketingLine.create({ title: 'Email marketing', description: 'd', hook: 'Ventas automáticas.', items: ['x'] });
+    expect(line.hook).toBe('Ventas automáticas.');
+    expect(() => MarketingLine.create({ title: 'X', description: 'd', hook: ' ', items: ['x'] })).toThrow(InvalidValueError);
   });
 
   it('rechaza una línea sin ítems', () => {
