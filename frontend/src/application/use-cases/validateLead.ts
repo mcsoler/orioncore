@@ -13,8 +13,14 @@ export const MESSAGES = {
   form: 'No pudimos enviar tu solicitud. Inténtalo de nuevo o escríbenos por WhatsApp.',
 } as const;
 
-/** Campos del primer paso del formulario (datos de contacto). */
-export const CONTACT_FIELDS = ['name', 'whatsapp', 'email'] as const satisfies readonly LeadField[];
+/**
+ * Campos de cada paso del formulario del home: primero qué quiere mejorar, nombre, WhatsApp
+ * y consentimiento; después el correo (lo exige el backend).
+ */
+export const STEP_FIELDS = [
+  ['services', 'name', 'whatsapp', 'consent'],
+  ['email'],
+] as const satisfies readonly (readonly LeadField[])[];
 
 export interface LeadValidation {
   errors: Partial<Record<LeadField, string>>;
