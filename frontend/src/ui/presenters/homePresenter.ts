@@ -1,5 +1,3 @@
-import type { ServiceView } from '../../application/dto/HomeViewModel';
-
 /** Ícono de cada servicio o línea de marketing según su URL (es presentación, no contenido). */
 const ICONS_BY_SLUG: Record<string, string> = {
   'automatizacion-de-procesos': 'gear',
@@ -10,7 +8,7 @@ const ICONS_BY_SLUG: Record<string, string> = {
   'analisis-web': 'chart',
   'branding-digital': 'palette',
   'community-manager': 'users',
-  'posicionamiento-de-marca': 'search',
+  'posicionamiento-presencial': 'megaphone',
   'email-marketing': 'mail',
   'pauta-digital': 'megaphone',
   'integraciones-web': 'plug',
@@ -29,12 +27,4 @@ export function iconForHref(href: string): string {
 
 export function painIcon(index: number): string {
   return PAIN_ICONS[index % PAIN_ICONS.length]!;
-}
-
-/** Opciones del formulario de contacto: los servicios del home más "Otro". */
-export function serviceOptions(services: readonly ServiceView[]): { value: string; label: string }[] {
-  return [
-    ...services.map((s) => ({ value: slugOf(s.href), label: s.title })),
-    { value: 'otro', label: 'Otro / No lo tengo claro aún' },
-  ];
 }

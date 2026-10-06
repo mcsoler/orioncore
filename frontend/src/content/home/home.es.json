@@ -1,12 +1,14 @@
 {
   "business": {
     "name": "Orion Core Tecnologías",
-    "legalName": "[Razón social]",
+    "legalName": "Orion Core Tecnologías S.A.S.",
+    "nit": "[número]",
     "email": "orioncoretechnologies@gmail.com",
     "phoneLabel": "+57 305 419 5433",
     "whatsapp": "+57 305 419 5433",
-    "address": "[Dirección]",
-    "city": "[Ciudad]",
+    "address": "[Dirección], [Barrio]",
+    "city": "Bogotá D.C.",
+    "hours": "Lun a vie · [8:00 a. m. – 6:00 p. m.]",
     "googleBusinessUrl": null
   },
   "pages": [
@@ -62,7 +64,7 @@
     },
     {
       "path": "/privacidad/",
-      "title": "Política de privacidad",
+      "title": "Política de tratamiento de datos",
       "status": "draft",
       "section": "legal",
       "description": "Política de tratamiento de datos personales de Orion Core Tecnologías según la Ley 1581 de 2012."
@@ -77,70 +79,84 @@
   ],
   "services": [
     {
-      "title": "Automatización de Procesos",
+      "title": "Automatización de procesos",
       "slug": "automatizacion-de-procesos",
       "status": "draft",
-      "headline": "Recupera las horas que hoy se van en tareas repetitivas",
-      "description": "Transformamos tareas manuales y repetitivas en flujos automatizados, más rápidos, medibles y eficientes.",
+      "headline": "Recupera hasta [X] horas cada semana.",
+      "description": "Transformamos tareas manuales y repetitivas en flujos automáticos, más rápidos, medibles y sin errores. Tu equipo se enfoca en lo que sí genera dinero.",
       "items": [
         "Automatización de tareas administrativas",
         "Integración entre plataformas",
         "Reportes y alertas en tiempo real"
       ],
-      "cta": "Quiero automatizar procesos"
+      "cta": "Quiero automatizar procesos",
+      "ctaHref": "#contacto",
+      "linkLabel": "Ver automatización de procesos"
     },
     {
       "title": "Agentes de IA para WhatsApp",
       "slug": "agentes-ia-whatsapp",
       "status": "draft",
       "badge": "Más solicitado",
-      "headline": "Responde a cada cliente en segundos, 24/7",
-      "description": "Automatiza la atención, calificación de prospectos y seguimiento comercial mediante agentes conversacionales disponibles 24/7.",
+      "headline": "Tu mejor vendedor no duerme, no se enferma y responde en segundos.",
+      "description": "El cliente le compra al primero que contesta. Nuestro agente atiende, califica y agenda por WhatsApp 24/7, y solo te pasa los prospectos listos para cerrar.",
+      "seoDescription": "Un agente de IA atiende, califica y agenda por WhatsApp 24/7, y solo te pasa los prospectos listos para cerrar.",
       "items": [
         "Respuestas automáticas inteligentes",
         "Calificación y derivación de prospectos",
         "Integración con CRM, agenda o inventario"
       ],
-      "cta": "Conocer agentes de IA"
+      "cta": "Probar el agente ahora en WhatsApp",
+      "ctaHref": "whatsapp",
+      "linkLabel": "Ver agentes de IA para WhatsApp"
     },
     {
-      "title": "Software Empresarial a Medida",
+      "title": "Software empresarial a medida",
       "slug": "software-a-medida",
       "status": "draft",
-      "headline": "Un sistema que se adapta a tu operación, no al revés",
-      "description": "Creamos plataformas digitales adaptadas a tus procesos, objetivos y necesidades operativas.",
+      "headline": "Toda tu empresa en una sola pantalla.",
+      "description": "Basta de 10 archivos de Excel y 5 plataformas que no se hablan. Construimos el sistema que se adapta a cómo trabajas tú, no al revés.",
       "items": [
         "CRM y sistemas de gestión",
         "Dashboards y portales empresariales",
         "Aplicaciones e integraciones personalizadas"
       ],
-      "cta": "Cotizar mi software"
+      "cta": "Cotizar mi software",
+      "ctaHref": "#contacto",
+      "linkLabel": "Ver software a medida"
     },
     {
-      "title": "Seguridad y Control de Acceso",
+      "title": "Seguridad y control de acceso",
       "slug": "seguridad-control-de-acceso",
       "status": "draft",
-      "headline": "Sabe quién entra, cuándo y a dónde",
-      "description": "Implementamos soluciones tecnológicas para proteger instalaciones, información y accesos empresariales.",
+      "headline": "Sabe quién entra, cuándo y por dónde. Siempre.",
+      "description": "Un solo incidente cuesta más que prevenirlo. Protegemos tus instalaciones, tu información y tus accesos con reconocimiento facial y monitoreo en tiempo real.",
+      "seoDescription": "Protegemos tus instalaciones, tu información y tus accesos con reconocimiento facial y monitoreo en tiempo real.",
       "items": [
         "Control de ingreso y permisos",
         "Reconocimiento facial",
         "Registro, monitoreo y alertas"
       ],
-      "cta": "Evaluar mi seguridad"
+      "cta": "Evaluar mi seguridad gratis",
+      "ctaHref": "#contacto",
+      "linkLabel": "Ver control de acceso"
     },
     {
-      "title": "Marketing Digital 360°",
+      "title": "Marketing digital 360°",
       "slug": "marketing-digital-360",
       "href": "/marketing-digital/",
-      "headline": "Atrae clientes y conviértelos en ventas",
-      "description": "Diseñamos y ejecutamos estrategias digitales enfocadas en atraer clientes, aumentar las conversiones y fortalecer tu marca.",
+      "headline": "Más clientes, no solo más likes.",
+      "description": "Estrategia, marca, contenido, pauta y medición trabajando juntos. Ocho frentes, un solo equipo y un tablero donde ves exactamente qué te trae ventas.",
       "items": [
-        "Gestión de pauta en Meta Ads y Google Ads",
-        "Estrategia de contenido y comunicación digital",
-        "Analítica, seguimiento y optimización de campañas"
+        "Meta",
+        "Google",
+        "TikTok",
+        "Pinterest",
+        "LinkedIn"
       ],
-      "cta": "Impulsar mi negocio"
+      "cta": "Ver los 8 servicios de marketing ↓",
+      "ctaHref": "#marketing360",
+      "linkLabel": "Ir a marketing digital"
     }
   ],
   "marketingLines": [
@@ -148,77 +164,92 @@
       "title": "Análisis web",
       "slug": "analisis-web",
       "status": "draft",
-      "description": "Medimos lo que pasa en tu sitio para decidir con datos y no con intuición.",
+      "hook": "Descubre por qué tu web no convierte.",
+      "description": "Sabrás exactamente dónde se van tus clientes y cómo recuperarlos.",
       "items": [
-        "Configuración de GA4 y Tag Manager",
-        "Embudos y conversiones",
-        "Informes accionables"
+        "Auditoría UX/CRO",
+        "Velocidad y SEO",
+        "Mapas de calor",
+        "Embudo GA4"
       ]
     },
     {
       "title": "Branding digital",
       "slug": "branding-digital",
       "status": "draft",
-      "description": "Una identidad coherente en cada canal donde tus clientes te encuentran.",
+      "hook": "Identidad de marca y logo que se recuerdan.",
+      "description": "Una marca que se ve profesional y genera confianza al primer vistazo.",
       "items": [
-        "Identidad visual",
-        "Tono de comunicación",
-        "Piezas para redes y anuncios"
+        "Logo",
+        "Paleta y tipografía",
+        "Manual de marca",
+        "Plantillas para redes"
       ]
     },
     {
       "title": "Community manager",
       "slug": "community-manager",
       "status": "draft",
-      "description": "Gestión diaria de tus redes con contenido que conversa y convierte.",
+      "hook": "Redes orgánicas activas que construyen comunidad.",
+      "description": "Tus redes vivas todos los días, sin que tengas que pensar en ellas.",
       "items": [
         "Calendario de contenido",
-        "Publicación y respuesta",
-        "Reporte mensual"
+        "Diseño y copy",
+        "Reels y stories",
+        "Respuesta a la comunidad"
       ]
     },
     {
-      "title": "Posicionamiento de marca",
-      "slug": "posicionamiento-de-marca",
+      "title": "Posicionamiento presencial",
+      "slug": "posicionamiento-presencial",
       "status": "draft",
-      "description": "Que te encuentren en Google cuando te están buscando.",
+      "hook": "Tu marca también en el mundo físico.",
+      "description": "Presencia de marca en eventos, puntos de venta y material impreso.",
       "items": [
-        "SEO técnico y de contenido",
-        "Perfil de Google Business",
-        "Estrategia de palabras clave"
+        "Material POP",
+        "Activaciones y eventos",
+        "Señalética",
+        "Brochures y catálogos"
       ]
     },
     {
       "title": "Email marketing",
       "slug": "email-marketing",
       "status": "draft",
-      "description": "Correos automáticos que nutren a tus prospectos hasta la compra.",
+      "hook": "Ventas automáticas desde tu base de datos.",
+      "description": "Correos que venden solos: bienvenida, recompra y carrito abandonado.",
       "items": [
-        "Secuencias automatizadas",
-        "Segmentación de contactos",
+        "Secuencias automáticas",
+        "Newsletters",
+        "Segmentación",
         "Diseño de plantillas"
       ]
     },
     {
-      "title": "Pauta digital",
+      "title": "Pauta multicanal",
       "slug": "pauta-digital",
       "status": "draft",
-      "description": "Campañas en Meta, Google, TikTok, Pinterest y LinkedIn enfocadas en resultados.",
+      "hook": "Meta, Google, TikTok, Pinterest y LinkedIn.",
+      "description": "Anuncios donde están tus clientes, optimizados cada semana.",
       "items": [
-        "Meta Ads y Google Ads",
-        "TikTok, Pinterest y LinkedIn Ads",
-        "Optimización continua del presupuesto"
+        "Meta Ads",
+        "Google Ads",
+        "TikTok Ads",
+        "Pinterest Ads",
+        "LinkedIn Ads"
       ]
     },
     {
-      "title": "Integraciones web",
+      "title": "Conexiones e integraciones web",
       "slug": "integraciones-web",
       "status": "draft",
-      "description": "Conectamos tu sitio con tu CRM, WhatsApp y herramientas de venta.",
+      "hook": "Tu web conectada a CRM, pagos y WhatsApp.",
+      "description": "Tu página deja de ser un folleto y se vuelve una máquina de ventas.",
       "items": [
-        "Landing pages que convierten",
-        "Formularios conectados al CRM",
-        "Píxeles y eventos de conversión"
+        "Píxeles y CAPI",
+        "CRM y formularios",
+        "Pasarelas de pago",
+        "WhatsApp y chat"
       ]
     }
   ],
@@ -232,35 +263,47 @@
     ],
     "products": [
       {
-        "title": "[Producto 1]",
-        "slug": "producto-ejemplo-1",
+        "title": "[Laptop empresarial 14\"]",
+        "slug": "laptop-empresarial-14",
         "category": "categoria-ejemplo",
         "description": "[Descripción del producto]",
         "price": null,
+        "oldPrice": null,
+        "badge": "Más vendido",
+        "stock": null,
         "status": "draft"
       },
       {
-        "title": "[Producto 2]",
-        "slug": "producto-ejemplo-2",
+        "title": "[Router Wi‑Fi 6 malla]",
+        "slug": "router-wifi-6-malla",
         "category": "categoria-ejemplo",
         "description": "[Descripción del producto]",
         "price": null,
+        "oldPrice": null,
+        "badge": "-[X]%",
+        "stock": null,
         "status": "draft"
       },
       {
-        "title": "[Producto 3]",
-        "slug": "producto-ejemplo-3",
+        "title": "[Terminal facial de acceso]",
+        "slug": "terminal-facial-de-acceso",
         "category": "categoria-ejemplo",
         "description": "[Descripción del producto]",
         "price": null,
+        "oldPrice": null,
+        "badge": "Nuevo",
+        "stock": null,
         "status": "draft"
       },
       {
-        "title": "[Producto 4]",
-        "slug": "producto-ejemplo-4",
+        "title": "[Cámara IP exterior 4MP]",
+        "slug": "camara-ip-exterior-4mp",
         "category": "categoria-ejemplo",
         "description": "[Descripción del producto]",
         "price": null,
+        "oldPrice": null,
+        "badge": "Combo",
+        "stock": null,
         "status": "draft"
       }
     ]
@@ -269,57 +312,79 @@
     {
       "client": "[Cliente 1]",
       "slug": "cliente-ejemplo-1",
-      "summary": "[Qué problema tenía y qué implementamos]",
-      "result": "[X] % menos tiempo en [proceso]",
+      "tag": "Agente IA · Servicios",
+      "result": "[X] h",
+      "summary": "[Horas de atención ahorradas al mes]",
+      "quote": "[Frase real del cliente]",
+      "quoteAuthor": "[Nombre, Cargo]",
       "status": "draft"
     },
     {
       "client": "[Cliente 2]",
       "slug": "cliente-ejemplo-2",
-      "summary": "[Qué problema tenía y qué implementamos]",
-      "result": "[X] % más prospectos calificados",
+      "tag": "Seguridad · Industria",
+      "result": "[X] sedes",
+      "summary": "[Control de acceso facial implementado]",
+      "quote": "[Frase real del cliente]",
+      "quoteAuthor": "[Nombre, Cargo]",
       "status": "draft"
     },
     {
       "client": "[Cliente 3]",
       "slug": "cliente-ejemplo-3",
-      "summary": "[Qué problema tenía y qué implementamos]",
-      "result": "[X] horas ahorradas al mes",
+      "tag": "Marketing · Retail",
+      "result": "+[X]%",
+      "summary": "[Crecimiento en leads o ventas]",
+      "quote": "[Frase real del cliente]",
+      "quoteAuthor": "[Nombre, Cargo]",
       "status": "draft"
     }
   ],
   "articles": [
     {
-      "title": "[Guía 1: qué procesos automatizar primero]",
-      "slug": "articulo-ejemplo-1",
-      "excerpt": "[Resumen del artículo]",
+      "title": "¿Cuánto cuesta un chatbot de IA para WhatsApp en Colombia?",
+      "slug": "cuanto-cuesta-un-chatbot-de-ia-para-whatsapp",
+      "category": "Agentes de IA",
+      "seoTitle": "Precio de un chatbot de IA para WhatsApp | Orion Core",
+      "readingTime": "[N] min de lectura · Actualizado [fecha]",
+      "excerpt": "Qué incluye un agente de IA para WhatsApp, de qué depende su precio y cómo calcular su retorno en una empresa colombiana.",
       "status": "draft"
     },
     {
-      "title": "[Guía 2: agentes de IA en WhatsApp]",
-      "slug": "articulo-ejemplo-2",
-      "excerpt": "[Resumen del artículo]",
+      "title": "Cómo automatizar la facturación electrónica DIAN en una pyme",
+      "slug": "automatizar-facturacion-electronica-dian",
+      "category": "Automatización",
+      "seoTitle": "Automatizar la facturación electrónica DIAN | Orion Core",
+      "readingTime": "[N] min de lectura · Actualizado [fecha]",
+      "excerpt": "Paso a paso para conectar tu sistema de ventas con la facturación electrónica de la DIAN y dejar de emitir facturas a mano.",
       "status": "draft"
     },
     {
-      "title": "[Guía 3: retorno de la pauta digital]",
-      "slug": "articulo-ejemplo-3",
-      "excerpt": "[Resumen del artículo]",
+      "title": "Control de acceso con reconocimiento facial: guía para empresas",
+      "slug": "control-de-acceso-reconocimiento-facial",
+      "category": "Seguridad",
+      "seoTitle": "Control de acceso facial: guía para empresas | Orion Core",
+      "readingTime": "[N] min de lectura · Actualizado [fecha]",
+      "excerpt": "Cómo funciona el control de acceso con reconocimiento facial, qué necesita tu empresa y qué cuidar con los datos personales.",
       "status": "draft"
     }
   ],
   "home": {
     "announcement": {
-      "text": "Diagnóstico gratuito de [mes]: quedan [N] de [10] cupos",
+      "text": "Diagnóstico gratuito de octubre: quedan solo [N] de [10] cupos",
       "cta": {
-        "label": "Reservar cupo",
+        "label": "Reservar el mío →",
         "href": "#contacto"
       }
     },
     "hero": {
       "title": "Automatización, inteligencia artificial y marketing digital para empresas en Colombia",
-      "hook": "Deja de perder clientes, horas y dinero en tareas que se pueden automatizar.",
-      "subtitle": "Automatizamos procesos, atendemos tu WhatsApp con IA 24/7, creamos software a la medida, protegemos tus accesos y llevamos tu marketing a resultados.",
+      "hook": {
+        "before": "Deja de perder",
+        "highlight": "clientes, horas y dinero",
+        "after": "en lo que la tecnología ya resuelve."
+      },
+      "subtitle": "Automatizamos tu operación, atendemos tu WhatsApp con IA 24/7, construimos tu software, protegemos tus accesos y llenamos tu embudo con marketing 360°. Un solo equipo, todo conectado.",
       "primaryCta": {
         "label": "Reservar mi diagnóstico gratis",
         "href": "#contacto"
@@ -328,71 +393,92 @@
         "label": "¿Cuánto estoy perdiendo?",
         "href": "#calculadora"
       },
-      "microcopy": "Sin compromiso. Te respondemos en menos de 24 horas.",
-      "socialProof": "[X] empresas ya trabajan con Orion Core"
+      "microcopy": "Valorado en [$X] · Sin compromiso · Respuesta en menos de 24 h",
+      "rating": "[4,9]",
+      "socialProof": "Más de [N] empresas ya confían en nosotros"
     },
     "clients": {
-      "title": "Empresas que confían en nosotros",
+      "title": "Empresas que ya dejaron de perder tiempo:",
       "logos": [
-        "[Logo cliente 1]",
-        "[Logo cliente 2]",
-        "[Logo cliente 3]",
-        "[Logo cliente 4]",
-        "[Logo cliente 5]"
+        "[Logo]",
+        "[Logo]",
+        "[Logo]",
+        "[Logo]",
+        "[Logo]"
       ]
     },
     "pains": {
-      "title": "¿Te suena familiar?",
+      "eyebrow": "¿Te suena familiar?",
+      "title": "Si te pasa al menos una de estas cosas, estás dejando dinero sobre la mesa.",
       "items": [
         {
-          "title": "Mensajes sin responder",
-          "description": "Los clientes escriben por WhatsApp fuera de horario y se van con la competencia."
+          "tag": "Ventas perdidas",
+          "title": "Te escriben de noche y nadie responde.",
+          "description": "El cliente le compra al primero que contesta."
         },
         {
-          "title": "Tareas que se repiten todos los días",
-          "description": "Tu equipo copia datos de un sistema a otro en vez de vender o atender."
+          "tag": "Horas perdidas",
+          "title": "Tu equipo copia y pega entre Excel y plataformas.",
+          "description": "Talento caro haciendo trabajo de robot."
         },
         {
-          "title": "Pauta que no se traduce en ventas",
-          "description": "Inviertes en anuncios pero no sabes cuáles traen clientes."
+          "tag": "Riesgo",
+          "title": "No sabes quién entra a tu empresa ni a qué hora.",
+          "description": "Un solo incidente cuesta más que prevenirlo."
         },
         {
-          "title": "Sistemas que no se hablan",
-          "description": "Inventario, ventas y contabilidad viven en herramientas separadas."
+          "tag": "Pauta quemada",
+          "title": "Pagas anuncios, pero no sabes qué te trae clientes.",
+          "description": "Sin medición, cada peso es una apuesta."
         }
       ],
-      "closing": "Cada uno de estos problemas tiene solución, y empieza con un diagnóstico."
+      "closing": {
+        "text": "No es falta de esfuerzo.",
+        "highlight": "Es falta de sistema."
+      }
     },
     "services": {
-      "title": "Soluciones que impulsan tu crecimiento",
-      "subtitle": "Tecnología, automatización y marketing digital diseñados para resolver los desafíos de tu empresa y acelerar su crecimiento.",
-      "ctaLabel": "Ver detalles del servicio"
+      "eyebrow": "Nuestros servicios",
+      "title": "Cinco soluciones. Un mismo objetivo: que tu empresa crezca."
     },
     "marketing": {
-      "title": "Marketing digital 360°",
-      "subtitle": "Todo lo que tu marca necesita para atraer, convertir y fidelizar clientes en un solo equipo.",
+      "eyebrow": "Marketing digital 360°",
+      "title": "Agencia de marketing digital: todo lo que tu marca necesita para vender",
+      "subtitle": "Contrata un servicio o el ecosistema completo. Cada línea tiene su propia página con alcance, proceso y precios.",
       "hub": {
-        "label": "Ver marketing digital 360°",
+        "label": "Ver marketing digital 360° →",
         "href": "/marketing-digital/"
+      },
+      "hubCard": {
+        "title": "Marketing Digital 360°",
+        "hook": "Estrategia integral: un plan, todos los canales.",
+        "items": [
+          "Auditoría inicial",
+          "Plan trimestral",
+          "Embudo de ventas",
+          "Tablero de resultados"
+        ]
       }
     },
     "calculator": {
-      "title": "¿Cuánto te cuestan hoy las tareas manuales?",
-      "subtitle": "Mueve los controles y calcula lo que pierdes cada mes en tiempo de tu equipo.",
-      "defaultHours": 10,
+      "eyebrow": "Calculadora",
+      "title": "¿Cuánto te cuesta hacerlo a mano?",
+      "subtitle": "Mueve los controles con tus datos. El resultado es lo que hoy pagas por tareas que una automatización o un agente de IA podrían hacer.",
+      "defaultHours": 15,
       "costPerHour": {
-        "default": 25000,
+        "default": 30000,
         "min": 10000,
-        "max": 200000,
+        "max": 150000,
         "step": 5000
       },
       "cta": {
-        "label": "Quiero recuperar ese tiempo",
+        "label": "Quiero recuperar ese dinero",
         "href": "#contacto"
       }
     },
     "results": {
-      "title": "Resultados medibles",
+      "eyebrow": "Resultados",
+      "title": "No te lo decimos nosotros. Te lo dicen nuestros clientes.",
       "stats": [
         {
           "value": "10+",
@@ -400,98 +486,149 @@
         },
         {
           "value": "5+",
-          "label": "Clientes"
+          "label": "Empresas clientes"
         },
         {
           "value": "5+",
           "label": "Años de experiencia"
         },
         {
-          "value": "[X]",
-          "label": "Horas automatizadas al mes"
+          "value": "24/7",
+          "label": "Soporte técnico"
         }
       ],
       "certifications": [
-        "[Certificación 1]",
-        "[Certificación 2]"
+        "[Certificación]",
+        "[Partner]",
+        "[Certificación]"
       ],
       "testimonials": []
     },
     "process": {
-      "title": "Así trabajamos",
+      "eyebrow": "Así trabajamos contigo",
+      "title": "Empezar es fácil. Y el primer paso es gratis.",
       "steps": [
         {
           "order": 1,
           "title": "Entendemos tu negocio",
-          "description": "Analizamos tus procesos, desafíos, objetivos y oportunidades de crecimiento."
+          "description": "Diagnóstico gratuito de procesos, retos y oportunidades."
         },
         {
           "order": 2,
           "title": "Diseñamos la solución",
-          "description": "Definimos la estrategia, tecnología y alcance más adecuados para tus necesidades."
+          "description": "Estrategia, tecnología y alcance con precio cerrado."
         },
         {
           "order": 3,
-          "title": "Desarrollamos e implementamos",
-          "description": "Construimos, configuramos e integramos la solución de forma ágil y segura."
+          "title": "Implementamos",
+          "description": "Construimos e integramos de forma ágil y segura."
         },
         {
           "order": 4,
           "title": "Medimos y optimizamos",
-          "description": "Analizamos resultados, implementamos mejoras y escalamos la solución."
+          "description": "Analizamos resultados y escalamos lo que funciona."
         }
       ],
-      "guarantee": "[Garantía: condiciones por definir]"
+      "guarantee": {
+        "title": "Garantía Orion: [condición de la garantía]",
+        "body": "Si en [N] días no ves [resultado acordado], [lo que hacen ustedes]. Tú no asumes el riesgo.",
+        "cta": {
+          "label": "Empezar sin riesgo",
+          "href": "#contacto"
+        }
+      }
     },
     "shop": {
-      "title": "Soluciones listas para usar",
+      "eyebrow": "Tienda Orion",
+      "title": "Equipos que usamos en nuestros proyectos",
+      "subtitle": "Con instalación y soporte opcional. Stock limitado.",
       "cta": {
-        "label": "Ver la tienda",
+        "label": "Ver todo el catálogo →",
         "href": "/tienda/"
       }
     },
     "blog": {
-      "title": "Guías para empezar",
+      "eyebrow": "Guías y recursos",
+      "title": "Aprende antes de invertir",
+      "subtitle": "Respuestas claras a lo que más nos preguntan las empresas.",
       "cta": {
-        "label": "Ver todas las guías",
+        "label": "Ver todas las guías →",
         "href": "/blog/"
       }
     },
     "faq": {
-      "title": "Preguntas frecuentes",
+      "eyebrow": "Preguntas frecuentes",
+      "title": "Lo que todos preguntan antes de empezar",
       "items": [
         {
-          "question": "¿El diagnóstico tiene algún costo?",
-          "answer": "No. El diagnóstico es gratuito y sin compromiso: revisamos tus procesos y te decimos qué se puede automatizar."
+          "question": "¿El diagnóstico de verdad es gratis?",
+          "answer": "Sí. Revisamos tu operación y tu marketing, y te entregamos un plan con prioridades. Si decides no seguir, el plan es tuyo."
         },
         {
-          "question": "¿Cuánto tiempo toma implementar una solución?",
-          "answer": "Depende del alcance. Después del diagnóstico te entregamos un cronograma con fechas concretas. [Rango típico por confirmar]"
+          "question": "¿Cuánto cuesta un proyecto?",
+          "answer": "Depende del alcance; recibes una propuesta con precio cerrado. Proyectos desde [PRECIO BASE]."
         },
         {
-          "question": "¿Necesito cambiar los sistemas que ya uso?",
-          "answer": "No necesariamente. Siempre que es posible integramos tus herramientas actuales en lugar de reemplazarlas."
+          "question": "¿Cuánto tarda la implementación?",
+          "answer": "[Plazos típicos por servicio]."
         },
         {
-          "question": "¿Trabajan con empresas de cualquier tamaño?",
-          "answer": "Sí. Adaptamos el alcance de cada proyecto al tamaño y al momento de tu empresa."
-        },
-        {
-          "question": "¿Cómo protegen los datos de mis clientes?",
-          "answer": "Tratamos los datos según la Ley 1581 de 2012 y solo los usamos para lo que autorizas."
+          "question": "¿Puedo contratar solo un servicio?",
+          "answer": "Claro. Puedes empezar por uno y sumar los demás cuando lo necesites; todo se integra."
         }
       ]
     },
     "contact": {
-      "title": "Reserva tu diagnóstico gratis",
-      "slots": "Quedan [N] de [10] cupos este mes",
+      "eyebrow": "Diagnóstico gratuito",
+      "title": "Reserva tu diagnóstico antes de que se agoten los cupos del mes.",
+      "slots": {
+        "label": "Cupos de octubre",
+        "value": "[7] de [10] tomados",
+        "progress": 70
+      },
       "benefits": [
-        "Diagnóstico de tus procesos sin costo",
-        "Propuesta personalizada en menos de 24 horas",
-        "Acompañamiento continuo durante la implementación"
+        "Plan de acción con prioridades, tuyo aunque no sigas",
+        "Respuesta en menos de 24 horas",
+        "Equipo multidisciplinario asignado"
       ],
-      "photoAlt": "Michael [Apellido], fundador de Orion Core Tecnologías",
-      "whatsappMessage": "Hola, quiero agendar un diagnóstico gratuito con Orion Core."
+      "person": {
+        "name": "Michael",
+        "role": "[Cargo]",
+        "note": "Revisa personalmente cada diagnóstico"
+      },
+      "photoAlt": "Michael, de Orion Core Tecnologías",
+      "whatsappCta": "Prefiero escribir por WhatsApp",
+      "whatsappMessage": "Hola, quiero agendar un diagnóstico gratuito con Orion Core.",
+      "formOptions": [
+        {
+          "value": "automatizacion-de-procesos",
+          "label": "Automatización"
+        },
+        {
+          "value": "agentes-ia-whatsapp",
+          "label": "Agente IA WhatsApp"
+        },
+        {
+          "value": "software-a-medida",
+          "label": "Software a medida"
+        },
+        {
+          "value": "seguridad-control-de-acceso",
+          "label": "Seguridad y acceso"
+        },
+        {
+          "value": "marketing-digital",
+          "label": "Marketing 360°"
+        },
+        {
+          "value": "compra-de-equipos",
+          "label": "Compra de equipos"
+        },
+        {
+          "value": "no-lo-tengo-claro",
+          "label": "No lo tengo claro"
+        }
+      ]
     }
   }
 }

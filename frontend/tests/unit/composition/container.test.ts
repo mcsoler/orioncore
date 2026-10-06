@@ -62,7 +62,7 @@ describe('createContainer (composition root)', () => {
     expect(home.canonical).toBe('https://orioncore.co/');
 
     const draft = seoFor('/servicios/software-a-medida/');
-    expect(draft.title).toBe('Software Empresarial a Medida | Orion Core');
+    expect(draft.title).toBe('Software empresarial a medida | Orion Core');
     expect(draft.robots).toBe('noindex, follow');
   });
 

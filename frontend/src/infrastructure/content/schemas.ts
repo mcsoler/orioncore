@@ -13,28 +13,37 @@ const serviceSchema = z.object({
   href: text.optional(),
   headline: text,
   description: text,
+  /** Meta description si `description` supera 155 caracteres. */
+  seoDescription: text.optional(),
   items: z.array(text).min(1),
   cta: text,
+  ctaHref: text,
+  linkLabel: text,
 });
 
 const marketingLineSchema = z.object({
   title: text,
   slug: text,
   status,
+  hook: text,
   description: text,
   items: z.array(text).min(1),
 });
+
+const heading = { eyebrow: text, title: text };
 
 /** Forma de content/home/home.es.json. Las reglas de negocio las validan las entidades del dominio. */
 export const siteContentSchema = z.object({
   business: z.object({
     name: text,
     legalName: text,
+    nit: text,
     email: text,
     phoneLabel: text,
     whatsapp: text.nullable(),
     address: text,
     city: text,
+    hours: text,
     googleBusinessUrl: z.string().url().nullable(),
   }),
   pages: z
@@ -61,34 +70,68 @@ export const siteContentSchema = z.object({
           category: text,
           description: text,
           price: z.number().nonnegative().nullable(),
+          oldPrice: z.number().nonnegative().nullable(),
+          badge: text.optional(),
+          stock: z.number().int().nonnegative().nullable(),
           status,
         }),
       )
       .min(1),
   }),
-  cases: z.array(z.object({ client: text, slug: text, summary: text, result: text, status })).min(1),
-  articles: z.array(z.object({ title: text, slug: text, excerpt: text, status })).min(1),
+  cases: z
+    .array(
+      z.object({
+        client: text,
+        slug: text,
+        tag: text,
+        summary: text,
+        result: text,
+        quote: text.optional(),
+        quoteAuthor: text.optional(),
+        status,
+      }),
+    )
+    .min(1),
+  articles: z
+    .array(
+      z.object({
+        title: text,
+        slug: text,
+        category: text,
+        excerpt: text,
+        readingTime: text,
+        seoTitle: text.optional(),
+        status,
+      }),
+    )
+    .min(1),
   home: z.object({
     announcement: z.object({ text, cta }),
     hero: z.object({
       title: text,
-      hook: text,
+      hook: z.object({ before: text, highlight: text, after: text }),
       subtitle: text,
       primaryCta: cta,
       secondaryCta: cta,
       microcopy: text,
+      rating: text,
       socialProof: text,
     }),
     clients: z.object({ title: text, logos: z.array(text).min(1) }),
     pains: z.object({
-      title: text,
-      items: z.array(z.object({ title: text, description: text })).min(1),
-      closing: text,
+      ...heading,
+      items: z.array(z.object({ tag: text, title: text, description: text })).min(1),
+      closing: z.object({ text, highlight: text }),
     }),
-    services: z.object({ title: text, subtitle: text, ctaLabel: text }),
-    marketing: z.object({ title: text, subtitle: text, hub: cta }),
+    services: z.object(heading),
+    marketing: z.object({
+      ...heading,
+      subtitle: text,
+      hub: cta,
+      hubCard: z.object({ title: text, hook: text, items: z.array(text).min(1) }),
+    }),
     calculator: z.object({
-      title: text,
+      ...heading,
       subtitle: text,
       defaultHours: z.number().min(1).max(60),
       costPerHour: z.object({
@@ -100,25 +143,28 @@ export const siteContentSchema = z.object({
       cta,
     }),
     results: z.object({
-      title: text,
+      ...heading,
       stats: z.array(z.object({ value: text, label: text })).min(1),
       certifications: z.array(text),
       testimonials: z.array(z.object({ quote: text, author: text, company: text.optional() })),
     }),
     process: z.object({
-      title: text,
+      ...heading,
       steps: z.array(z.object({ order: z.number().int().positive(), title: text, description: text })).min(1),
-      guarantee: text,
+      guarantee: z.object({ title: text, body: text, cta }),
     }),
-    shop: z.object({ title: text, cta }),
-    blog: z.object({ title: text, cta }),
-    faq: z.object({ title: text, items: z.array(z.object({ question: text, answer: text })).min(1) }),
+    shop: z.object({ ...heading, subtitle: text, cta }),
+    blog: z.object({ ...heading, subtitle: text, cta }),
+    faq: z.object({ ...heading, items: z.array(z.object({ question: text, answer: text })).min(1) }),
     contact: z.object({
-      title: text,
-      slots: text,
+      ...heading,
+      slots: z.object({ label: text, value: text, progress: z.number().min(0).max(100) }),
       benefits: z.array(text).min(1),
+      person: z.object({ name: text, role: text, note: text }),
       photoAlt: text,
+      whatsappCta: text,
       whatsappMessage: text,
+      formOptions: z.array(z.object({ value: text, label: text })).min(1),
     }),
   }),
 });

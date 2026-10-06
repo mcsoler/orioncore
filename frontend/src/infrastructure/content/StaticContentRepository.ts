@@ -39,36 +39,27 @@ export class StaticContentRepository implements ContentRepository, RouteReposito
   async getHome(): Promise<HomeContent> {
     const { home, business } = this.content;
     return {
-      announcement: home.announcement,
-      hero: home.hero,
-      clients: home.clients,
-      pains: home.pains,
+      ...home,
       services: { ...home.services, items: this.services() },
       marketing: { ...home.marketing, items: this.marketingLines() },
-      calculator: home.calculator,
       results: {
-        title: home.results.title,
+        ...home.results,
         cases: this.cases(),
-        stats: home.results.stats,
-        certifications: home.results.certifications,
         testimonials: home.results.testimonials.map((t) => Testimonial.create(t)),
       },
-      process: {
-        title: home.process.title,
-        guarantee: home.process.guarantee,
-        steps: home.process.steps.map((s) => ProcessStep.create(s)),
-      },
+      process: { ...home.process, steps: home.process.steps.map((s) => ProcessStep.create(s)) },
       shop: { ...home.shop, products: this.products() },
       blog: { ...home.blog, articles: this.articles() },
-      faq: { title: home.faq.title, items: home.faq.items.map((f) => Faq.create(f)) },
-      contact: home.contact,
+      faq: { ...home.faq, items: home.faq.items.map((f) => Faq.create(f)) },
       business: {
         name: business.name,
         legalName: business.legalName,
+        nit: business.nit,
         email: business.email,
         phoneLabel: business.phoneLabel,
         address: business.address,
         city: business.city,
+        hours: business.hours,
         ...(business.whatsapp && { whatsapp: PhoneNumber.parse(business.whatsapp) }),
         ...(business.googleBusinessUrl && { googleBusinessUrl: business.googleBusinessUrl }),
       },
@@ -82,16 +73,19 @@ export class StaticContentRepository implements ContentRepository, RouteReposito
       // Los servicios con href propio (Marketing 360° → hub) no tienen página en /servicios/
       ...c.services
         .filter((s) => !s.href)
-        .map((s) => route(Service.create(s).href, s.title, s.status ?? 'draft', 'servicios', s.description)),
+        .map((s) => route(Service.create(s).href, s.title, s.status ?? 'draft', 'servicios', s.seoDescription ?? s.description)),
       ...c.marketingLines.map((m) => route(MarketingLine.create(m).href, m.title, m.status, 'marketing', m.description)),
       ...c.shop.categories.map((cat) =>
         route(ShopCategory.create(cat).href, cat.title, cat.status, 'tienda', `Productos de la categoría ${cat.title}.`, '/tienda/[categoria]/'),
       ),
       ...c.shop.products.map((p) =>
-        route(Product.create({ ...p, price: p.price ?? undefined }).href, p.title, p.status, 'tienda', p.description, '/tienda/[producto]/'),
+        route(Product.create(productProps(p)).href, p.title, p.status, 'tienda', p.description, '/tienda/[producto]/'),
       ),
       ...c.cases.map((cs) => route(CaseStudy.create(cs).href, cs.client, cs.status, 'casos', cs.summary, '/casos/[cliente]/')),
-      ...c.articles.map((a) => route(Article.create(a).href, a.title, a.status, 'blog', a.excerpt, '/blog/[articulo]/')),
+      ...c.articles.map((a) => ({
+        ...route(Article.create(a).href, a.title, a.status, 'blog', a.excerpt, '/blog/[articulo]/'),
+        ...(a.seoTitle && { seoTitle: a.seoTitle }),
+      })),
     ];
   }
 
@@ -104,7 +98,7 @@ export class StaticContentRepository implements ContentRepository, RouteReposito
   }
 
   private products(): Product[] {
-    return this.content.shop.products.map((p) => Product.create({ ...p, price: p.price ?? undefined }));
+    return this.content.shop.products.map((p) => Product.create(productProps(p)));
   }
 
   private cases(): CaseStudy[] {
@@ -114,6 +108,16 @@ export class StaticContentRepository implements ContentRepository, RouteReposito
   private articles(): Article[] {
     return this.content.articles.map((a) => Article.create(a));
   }
+}
+
+/** JSON usa null para "pendiente"; las entidades usan undefined. */
+function productProps(p: SiteContent['shop']['products'][number]) {
+  return {
+    ...p,
+    price: p.price ?? undefined,
+    oldPrice: p.oldPrice ?? undefined,
+    stock: p.stock ?? undefined,
+  };
 }
 
 function route(
