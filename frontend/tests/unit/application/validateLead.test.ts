@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validateLead, CONTACT_FIELDS } from '../../../src/application/use-cases/validateLead';
+import { validateLead, STEP_FIELDS } from '../../../src/application/use-cases/validateLead';
 
 const valid = {
   name: 'Ana',
@@ -22,7 +22,10 @@ describe('validateLead', () => {
     expect(result.lead).toBeUndefined();
   });
 
-  it('expone los campos del paso de contacto para validar por pasos', () => {
-    expect(CONTACT_FIELDS).toEqual(['name', 'whatsapp', 'email']);
+  it('expone los campos de cada paso del formulario (referencia del home)', () => {
+    expect(STEP_FIELDS).toEqual([
+      ['services', 'name', 'whatsapp', 'consent'],
+      ['email'],
+    ]);
   });
 });
