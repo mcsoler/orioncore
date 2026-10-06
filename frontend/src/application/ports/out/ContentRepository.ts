@@ -13,9 +13,10 @@ export interface Cta {
   href: string;
 }
 
-export interface TitledText {
+/** Encabezado común de las secciones del home. */
+export interface SectionHeading {
+  eyebrow: string;
   title: string;
-  description: string;
 }
 
 /** Contenido del home ya convertido a entidades del dominio. */
@@ -24,46 +25,62 @@ export interface HomeContent {
   hero: {
     /** H1 con la palabra clave. */
     title: string;
-    /** Gancho visual (no es el H1). */
-    hook: string;
+    /** Gancho visual (no es el H1); `highlight` se resalta en azul. */
+    hook: { before: string; highlight: string; after: string };
     subtitle: string;
     primaryCta: Cta;
     secondaryCta: Cta;
     microcopy: string;
+    /** Calificación a mostrar, p. ej. "4,9". */
+    rating: string;
     socialProof: string;
   };
   clients: { title: string; logos: string[] };
-  pains: { title: string; items: TitledText[]; closing: string };
-  services: { title: string; subtitle: string; ctaLabel: string; items: Service[] };
-  marketing: { title: string; subtitle: string; hub: Cta; items: MarketingLine[] };
-  calculator: {
-    title: string;
+  pains: SectionHeading & {
+    items: { tag: string; title: string; description: string }[];
+    closing: { text: string; highlight: string };
+  };
+  services: SectionHeading & { items: Service[] };
+  marketing: SectionHeading & {
+    subtitle: string;
+    hub: Cta;
+    /** Tarjeta del hub (Marketing 360°), la primera de las 8. */
+    hubCard: { title: string; hook: string; items: string[] };
+    items: MarketingLine[];
+  };
+  calculator: SectionHeading & {
     subtitle: string;
     defaultHours: number;
     costPerHour: { default: number; min: number; max: number; step: number };
     cta: Cta;
   };
-  results: {
-    title: string;
+  results: SectionHeading & {
     cases: CaseStudy[];
     stats: { value: string; label: string }[];
     certifications: string[];
     testimonials: Testimonial[];
   };
-  process: { title: string; steps: ProcessStep[]; guarantee: string };
-  shop: { title: string; cta: Cta; products: Product[] };
-  blog: { title: string; cta: Cta; articles: Article[] };
-  faq: { title: string; items: Faq[] };
-  contact: {
-    title: string;
-    slots: string;
+  process: SectionHeading & {
+    steps: ProcessStep[];
+    guarantee: { title: string; body: string; cta: Cta };
+  };
+  shop: SectionHeading & { subtitle: string; cta: Cta; products: Product[] };
+  blog: SectionHeading & { subtitle: string; cta: Cta; articles: Article[] };
+  faq: SectionHeading & { items: Faq[] };
+  contact: SectionHeading & {
+    slots: { label: string; value: string; /** 0–100 */ progress: number };
     benefits: string[];
+    person: { name: string; role: string; note: string };
     photoAlt: string;
+    whatsappCta: string;
     whatsappMessage: string;
+    /** Opciones de "¿Qué quieres mejorar primero?". */
+    formOptions: { value: string; label: string }[];
   };
   business: {
     name: string;
     legalName: string;
+    nit: string;
     email: string;
     /** Texto a mostrar; puede ser un marcador `[Teléfono]`. */
     phoneLabel: string;
@@ -71,6 +88,7 @@ export interface HomeContent {
     whatsapp?: PhoneNumber;
     address: string;
     city: string;
+    hours: string;
     googleBusinessUrl?: string;
   };
 }

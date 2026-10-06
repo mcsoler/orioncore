@@ -1,10 +1,10 @@
-import type { HomeViewModel, LinkCardView, ServiceView } from '../dto/HomeViewModel';
+import type { HomeViewModel, MarketingCardView, ServiceView } from '../dto/HomeViewModel';
 import type { GetHomeContentUseCase } from '../ports/in/GetHomeContentUseCase';
 import type { ContentRepository, HomeContent } from '../ports/out/ContentRepository';
-import type { MarketingLine } from '../../domain/entities/MarketingLine';
 import type { Service } from '../../domain/entities/Service';
 
-export const PRICE_PENDING = 'Precio por confirmar';
+/** Precio aún no definido: se marca, no se inventa. */
+export const PRICE_PENDING = '[PRECIO]';
 
 export class MissingSectionError extends Error {
   constructor(readonly section: string) {
@@ -30,51 +30,87 @@ const REQUIRED_LISTS: ReadonlyArray<[string, (c: HomeContent) => readonly unknow
   ['faq', (c) => c.faq.items],
 ];
 
+const number = (n: number) => String(n).padStart(2, '0');
+
 export class GetHomeContent implements GetHomeContentUseCase {
   constructor(private readonly content: ContentRepository) {}
 
   async execute(): Promise<HomeViewModel> {
     const home = await this.content.getHome();
     assertComplete(home);
+    const { marketing, results, process, shop, blog, faq } = home;
 
     return {
       announcement: home.announcement,
       hero: home.hero,
       clients: home.clients,
       pains: home.pains,
-      services: { ...home.services, items: home.services.items.map(toServiceView) },
-      marketing: { ...home.marketing, items: home.marketing.items.map(toServiceView) },
+      services: { eyebrow: home.services.eyebrow, title: home.services.title, items: home.services.items.map(toServiceView) },
+      marketing: {
+        eyebrow: marketing.eyebrow,
+        title: marketing.title,
+        subtitle: marketing.subtitle,
+        hub: marketing.hub,
+        cards: [
+          { ...marketing.hubCard, href: marketing.hub.href },
+          ...marketing.items.map((line) => ({ title: line.title, hook: line.hook ?? line.description, items: line.items, href: line.href })),
+        ].map((card, i): MarketingCardView => ({ number: number(i + 1), ...card })),
+      },
       calculator: home.calculator,
       results: {
-        title: home.results.title,
-        cases: home.results.cases.map((c) => ({ title: c.client, description: c.summary, result: c.result, href: c.href })),
-        stats: home.results.stats,
-        certifications: home.results.certifications,
-        testimonials: home.results.testimonials.map((t) => ({ quote: t.quote, author: t.author, company: t.company })),
+        eyebrow: results.eyebrow,
+        title: results.title,
+        cases: results.cases.map((c) => ({
+          title: c.client,
+          description: c.summary,
+          result: c.result,
+          href: c.href,
+          tag: c.tag,
+          quote: c.quote,
+          quoteAuthor: c.quoteAuthor,
+        })),
+        stats: results.stats,
+        certifications: results.certifications,
+        testimonials: results.testimonials.map((t) => ({ quote: t.quote, author: t.author, company: t.company })),
       },
       process: {
-        title: home.process.title,
-        guarantee: home.process.guarantee,
-        steps: [...home.process.steps]
+        eyebrow: process.eyebrow,
+        title: process.title,
+        guarantee: process.guarantee,
+        steps: [...process.steps]
           .sort((a, b) => a.order - b.order)
-          .map((s) => ({ order: s.order, title: s.title, description: s.description })),
+          .map((s) => ({ order: s.order, number: number(s.order), title: s.title, description: s.description })),
       },
       shop: {
-        title: home.shop.title,
-        cta: home.shop.cta,
-        products: home.shop.products.map((p) => ({
+        eyebrow: shop.eyebrow,
+        title: shop.title,
+        subtitle: shop.subtitle,
+        cta: shop.cta,
+        products: shop.products.map((p) => ({
+          slug: p.slug.value,
           title: p.title,
           description: p.description,
           href: p.href,
           price: p.price?.format() ?? PRICE_PENDING,
+          oldPrice: p.oldPrice?.format(),
+          badge: p.badge,
+          stock: p.stock === undefined ? undefined : `Solo quedan ${p.stock}`,
         })),
       },
       blog: {
-        title: home.blog.title,
-        cta: home.blog.cta,
-        articles: home.blog.articles.map((a): LinkCardView => ({ title: a.title, description: a.excerpt, href: a.href })),
+        eyebrow: blog.eyebrow,
+        title: blog.title,
+        subtitle: blog.subtitle,
+        cta: blog.cta,
+        articles: blog.articles.map((a) => ({
+          title: a.title,
+          description: a.excerpt,
+          href: a.href,
+          category: a.category,
+          readingTime: a.readingTime,
+        })),
       },
-      faq: { title: home.faq.title, items: home.faq.items.map((f) => ({ question: f.question, answer: f.answer })) },
+      faq: { eyebrow: faq.eyebrow, title: faq.title, items: faq.items.map((f) => ({ question: f.question, answer: f.answer })) },
       contact: home.contact,
       business: { ...home.business, whatsapp: home.business.whatsapp?.digits },
     };
@@ -90,14 +126,17 @@ function assertComplete(home: HomeContent): void {
   }
 }
 
-function toServiceView(item: Service | MarketingLine): ServiceView {
+function toServiceView(service: Service, index: number): ServiceView {
   return {
-    title: item.title,
-    description: item.description,
-    items: item.items,
-    href: item.href,
-    ...('badge' in item && item.badge && { badge: item.badge }),
-    ...('headline' in item && item.headline && { headline: item.headline }),
-    ...('cta' in item && item.cta && { cta: item.cta }),
+    number: number(index + 1),
+    title: service.title,
+    description: service.description,
+    items: service.items,
+    href: service.href,
+    ctaHref: service.ctaHref,
+    ...(service.badge && { badge: service.badge }),
+    ...(service.headline && { headline: service.headline }),
+    ...(service.cta && { cta: service.cta }),
+    ...(service.linkLabel && { linkLabel: service.linkLabel }),
   };
 }
