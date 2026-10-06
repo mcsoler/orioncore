@@ -63,9 +63,9 @@ describe('Button', () => {
 });
 
 describe('Section', () => {
-  it('es un <section> etiquetado por su H2 y con el fondo indicado', async () => {
+  it('es un <section> etiquetado por su H2, con eyebrow y el fondo base (navy)', async () => {
     const { document } = await renderAstro(Section, {
-      props: { id: 'servicios', tone: 'light', eyebrow: 'Soluciones', title: 'Nuestros servicios', subtitle: 'Sub' },
+      props: { id: 'servicios', eyebrow: 'Soluciones', title: 'Nuestros servicios', subtitle: 'Sub' },
       slots: { default: '<p>contenido</p>' },
     });
     const section = document.querySelector('section')!;
@@ -73,20 +73,15 @@ describe('Section', () => {
     expect(section.id).toBe('servicios');
     expect(section.getAttribute('aria-labelledby')).toBe(h2.id);
     expect(h2.textContent?.trim()).toBe('Nuestros servicios');
-    expect(section.className).toContain('bg-bg-main');
+    expect(h2.className).toContain('h2');
+    expect(section.querySelector('.eyebrow')!.textContent?.trim()).toBe('Soluciones');
+    expect(section.className).toContain('bg-navy');
     expect(section.textContent).toContain('contenido');
   });
 
-  it('sobre fondo suave el subtítulo no usa muted (4,45:1); usa ink/80 para pasar 4,5:1', async () => {
-    const { document } = await renderAstro(Section, { props: { id: 'x', tone: 'soft', title: 'T', subtitle: 'S' } });
-    const subtitle = document.querySelector('header p:last-child')!;
-    expect(subtitle.className).not.toContain('text-muted');
-    expect(subtitle.className).toContain('text-ink/80');
-  });
-
-  it('tone dark usa el navy de la marca', async () => {
-    const { document } = await renderAstro(Section, { props: { id: 'x', tone: 'dark', title: 'T' } });
-    expect(document.querySelector('section')!.className).toContain('bg-navy');
+  it('tone surface usa la superficie de la referencia', async () => {
+    const { document } = await renderAstro(Section, { props: { id: 'x', tone: 'surface', title: 'T' } });
+    expect(document.querySelector('section')!.className).toContain('bg-surface');
   });
 });
 

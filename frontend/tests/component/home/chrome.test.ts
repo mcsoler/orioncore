@@ -6,12 +6,17 @@ import Header from '../../../src/ui/components/home/Header.astro';
 import Footer from '../../../src/ui/components/home/Footer.astro';
 import WhatsAppFloat from '../../../src/ui/components/home/WhatsAppFloat.astro';
 
-describe('AnnouncementBar', () => {
-  it('muestra los cupos y lleva al formulario de la misma página', async () => {
+const text = (el: Element | null | undefined) => el?.textContent?.replace(/\s+/g, ' ').trim();
+
+describe('AnnouncementBar (escasez)', () => {
+  it('fondo azul, texto de cupos y enlace "Reservar el mío →" al formulario', async () => {
     const { view } = await homeView();
-    const { document } = await renderAstro(AnnouncementBar, { props: view.announcement });
-    expect(document.body.textContent).toContain('quedan [N] de [10] cupos');
-    expect(document.querySelector('a')!.getAttribute('href')).toBe('#contacto');
+    const { document, html } = await renderAstro(AnnouncementBar, { props: view.announcement });
+    expect(document.body.textContent).toContain('Diagnóstico gratuito de octubre: quedan solo [N] de [10] cupos');
+    const link = document.querySelector('a')!;
+    expect(link.getAttribute('href')).toBe('#contacto');
+    expect(text(link)).toBe('Reservar el mío →');
+    expect(html).toContain('bg-brand-blue');
   });
 });
 
@@ -23,17 +28,14 @@ describe('Header', () => {
 
   it('el logo enlaza al inicio y la navegación principal está etiquetada', async () => {
     const { document } = await render();
-    const home = document.querySelector('header a[href="/"]')!;
-    expect(home.getAttribute('aria-label')).toBe('Orion Core Tecnologías, inicio');
+    expect(document.querySelector('header a[href="/"]')!.getAttribute('aria-label')).toBe('Orion Core Tecnologías, inicio');
     expect(document.querySelector('nav[aria-label="Principal"]')).not.toBeNull();
   });
 
   it('muestra Servicios, Marketing digital, Tienda, Casos y Blog desde el RouteRegistry', async () => {
     const { document } = await render();
     const nav = document.querySelector('nav[aria-label="Principal"]')!;
-    for (const label of ['Servicios', 'Marketing digital', 'Tienda', 'Casos', 'Blog']) {
-      expect(nav.textContent).toContain(label);
-    }
+    for (const label of ['Servicios', 'Marketing digital', 'Tienda', 'Casos', 'Blog']) expect(nav.textContent).toContain(label);
     expect(hrefsOf(document)).toEqual(expect.arrayContaining(['/tienda/', '/casos/', '/blog/']));
   });
 
@@ -48,17 +50,20 @@ describe('Header', () => {
       '/servicios/software-a-medida/',
       '/servicios/seguridad-control-de-acceso/',
     ]);
-    expect(hrefsOf(document)).toContain('/marketing-digital/pauta-digital/');
+    expect(hrefsOf(document)).toContain('/marketing-digital/posicionamiento-presencial/');
   });
 
-  it('tiene carrito y CTA "Diagnóstico gratis" hacia /contacto/', async () => {
+  it('carrito con contador (isla) y CTA "Diagnóstico gratis"', async () => {
     const { document } = await render();
-    expect(document.querySelector('a[aria-label^="Carrito"]')!.getAttribute('href')).toBe('/tienda/');
-    const cta = [...document.querySelectorAll('a')].find((a) => a.textContent?.includes('Diagnóstico gratis'))!;
+    const cart = document.querySelector('a[aria-label^="Carrito"]')!;
+    expect(cart.getAttribute('href')).toBe('/tienda/');
+    expect(cart.querySelector('astro-island')).not.toBeNull();
+    const cta = [...document.querySelectorAll('a')].find((a) => text(a) === 'Diagnóstico gratis')!;
     expect(cta.getAttribute('href')).toBe('/contacto/');
+    expect(cta.className).toContain('btn-primary');
   });
 
-  it('el menú móvil se abre con un botón con aria-expanded y aria-controls', async () => {
+  it('menú móvil con aria-expanded y aria-controls', async () => {
     const { document } = await render();
     const button = document.querySelector('button[data-mobile-toggle]')!;
     expect(button.getAttribute('aria-expanded')).toBe('false');
@@ -66,11 +71,9 @@ describe('Header', () => {
     expect(document.getElementById(button.getAttribute('aria-controls')!)).not.toBeNull();
   });
 
-  it('conserva el estilo translúcido (nav-glass + blur) y es sticky', async () => {
+  it('header sólido de la referencia: sticky, fondo navy y borde inferior', async () => {
     const { html } = await render();
-    expect(html).toContain('bg-nav-glass');
-    expect(html).toContain('backdrop-blur');
-    expect(html).toContain('sticky');
+    expect(html).toMatch(/<header[^>]*class="[^"]*sticky[^"]*bg-navy[^"]*border-line/);
   });
 
   it('no tiene href="#"', async () => {
@@ -83,53 +86,53 @@ describe('Footer', () => {
   async function render() {
     const { container, view } = await homeView();
     return renderAstro(Footer, {
-      props: {
-        groups: container.routes.footerSitemap(),
-        business: view.business,
-        whatsappHref: container.whatsappLink(view.business.whatsapp, view.contact.whatsappMessage),
-      },
+      props: { groups: container.routes.footerSitemap(), legal: container.routes.legalLinks(), business: view.business },
     });
   }
 
-  it('muestra el logo y el mapa del sitio desde el RouteRegistry', async () => {
+  it('mapa del sitio con la estructura de la referencia', async () => {
     const { document } = await render();
-    expect(document.querySelector('footer svg')).not.toBeNull();
-    const headings = [...document.querySelectorAll('footer h2')].map((h) => h.textContent?.trim());
-    expect(headings).toEqual(['Servicios', 'Marketing digital', 'Empresa', 'Legal']);
-    expect(hrefsOf(document)).toEqual(expect.arrayContaining(['/privacidad/', '/terminos/', '/contacto/', '/nosotros/']));
+    const headings = [...document.querySelectorAll('footer h2')].map((h) => text(h));
+    expect(headings).toEqual(['Servicios', 'Marketing digital', 'Tienda', 'Empresa']);
+    expect(hrefsOf(document)).toEqual(expect.arrayContaining(['/marketing-digital/', '/tienda/', '/nosotros/', '/contacto/']));
   });
 
-  it('incluye <address> con nombre, teléfono, WhatsApp y correo reales', async () => {
+  it('<address> con nombre, dirección, ciudad, teléfono, correo y horario (NAP)', async () => {
     const { document } = await render();
     const address = document.querySelector('address')!;
-    expect(address.textContent).toContain('Orion Core Tecnologías');
+    expect(address.textContent).toContain('[Dirección], [Barrio]');
+    expect(address.textContent).toContain('Bogotá D.C., Colombia');
     expect(address.querySelector('a[href="tel:+573054195433"]')!.textContent).toContain('+57 305 419 5433');
     expect(address.querySelector('a[href="mailto:orioncoretechnologies@gmail.com"]')).not.toBeNull();
-    expect(address.querySelector('a[href^="https://wa.me/573054195433"]')).not.toBeNull();
+    expect(address.textContent).toContain('Lun a vie');
+    expect(text(document.querySelector('footer strong'))).toBe('Orion Core Tecnologías');
   });
 
-  it('elimina Blockchain, Twitter y los href="#"', async () => {
+  it('barra inferior: razón social, NIT, legales y mapa del sitio', async () => {
+    const { document } = await render();
+    expect(document.body.textContent).toMatch(/© \d{4} Orion Core Tecnologías S\.A\.S\. · NIT \[número\]/);
+    expect(hrefsOf(document)).toEqual(expect.arrayContaining(['/privacidad/', '/terminos/', '/sitemap-index.xml']));
+  });
+
+  it('sin Blockchain, Twitter, href="#" ni enlaces a Google Business inexistentes', async () => {
     const { document } = await render();
     expect(document.body.textContent).not.toMatch(/blockchain|twitter/i);
     expect(hrefsOf(document)).not.toContain('#');
-  });
-
-  it('no publica marcadores [X] de dirección como enlace a Google Business inexistente', async () => {
-    const { document } = await render();
     expect(hrefsOf(document).some((h) => h.includes('google'))).toBe(false);
   });
 });
 
 describe('WhatsAppFloat', () => {
-  it('es un enlace a wa.me con nombre accesible y no tapa contenido (fijo, esquina inferior)', async () => {
+  it('enlace a wa.me, 60 px, verde de WhatsApp, con nombre accesible', async () => {
     const { container, view } = await homeView();
     const href = container.whatsappLink(view.business.whatsapp, view.contact.whatsappMessage);
     const { document } = await renderAstro(WhatsAppFloat, { props: { href } });
     const a = document.querySelector('a')!;
     expect(a.getAttribute('href')).toMatch(/^https:\/\/wa\.me\/573054195433\?text=/);
-    expect(a.getAttribute('aria-label')).toBe('Escríbenos por WhatsApp');
+    expect(a.getAttribute('aria-label')).toBe('Escribir por WhatsApp');
     expect(a.className).toContain('fixed');
-    expect(a.className).toContain('bottom-');
+    expect(a.className).toContain('bg-whatsapp');
+    expect(a.className).toContain('w-[60px]');
   });
 
   it('sin número confirmado no se muestra', async () => {

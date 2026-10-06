@@ -17,6 +17,11 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
     ({ document, html } = await renderPage(IndexPage));
   });
 
+  it('tema oscuro de la referencia en todo el documento', () => {
+    expect(document.body.className).toContain('bg-navy');
+    expect(document.body.className).toContain('text-white');
+  });
+
   it('<html lang="es-CO"> y un solo H1 con la palabra clave', () => {
     expect(document.documentElement.getAttribute('lang')).toBe('es-CO');
     expect(document.querySelectorAll('h1')).toHaveLength(1);
@@ -34,7 +39,7 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
   it('las secciones siguen el orden aprobado', () => {
     const ids = [...document.querySelectorAll('main section[id]')].map((s) => s.id);
     expect(ids).toEqual([
-      'inicio', 'dolores', 'servicios', 'marketing', 'calculadora', 'resultados',
+      'inicio', 'dolores', 'servicios', 'marketing360', 'calculadora', 'resultados',
       'proceso', 'tienda', 'guias', 'preguntas', 'contacto',
     ]);
   });
@@ -43,7 +48,8 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
     const { container } = await homeView();
     const hrefs = [...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')!);
     expect(hrefs).not.toContain('#');
-    const internal = hrefs.filter((h) => h.startsWith('/'));
+    // Las rutas de páginas (no los archivos como /sitemap-index.xml) deben existir en el RouteRegistry
+    const internal = hrefs.filter((h) => h.startsWith('/') && !/\.\w+$/.test(h));
     expect(internal.filter((h) => !container.routes.has(h))).toEqual([]);
     const anchors = hrefs.filter((h) => h.startsWith('#'));
     expect(anchors.filter((a) => !document.getElementById(a.slice(1)))).toEqual([]);
@@ -55,7 +61,7 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
       '/servicios/automatizacion-de-procesos/', '/servicios/agentes-ia-whatsapp/', '/servicios/software-a-medida/',
       '/servicios/seguridad-control-de-acceso/', '/marketing-digital/', '/marketing-digital/analisis-web/',
       '/marketing-digital/branding-digital/', '/marketing-digital/community-manager/',
-      '/marketing-digital/posicionamiento-de-marca/', '/marketing-digital/email-marketing/',
+      '/marketing-digital/posicionamiento-presencial/', '/marketing-digital/email-marketing/',
       '/marketing-digital/pauta-digital/', '/marketing-digital/integraciones-web/', '/tienda/', '/casos/', '/blog/',
     ]) {
       expect(hrefs.has(href), href).toBe(true);
@@ -95,8 +101,10 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
 
   it('fuentes autoalojadas: sin Google Fonts y con precarga del peso del H1', () => {
     expect(html).not.toContain('fonts.googleapis.com');
-    const preloads = [...document.querySelectorAll('link[rel="preload"][as="font"]')];
-    expect(preloads.some((l) => /poppins-latin-700-normal.*\.woff2/.test(l.getAttribute('href')!))).toBe(true);
+    const preloads = [...document.querySelectorAll('link[rel="preload"][as="font"]')].map((l) => l.getAttribute('href')!);
+    // H1 (Inter 700) y gancho del hero (Poppins 700, el LCP)
+    expect(preloads.some((h) => /inter-latin-700-normal.*\.woff2/.test(h))).toBe(true);
+    expect(preloads.some((h) => /poppins-latin-700-normal.*\.woff2/.test(h))).toBe(true);
     expect(preloads.every((l) => l.hasAttribute('crossorigin'))).toBe(true);
   });
 
@@ -109,7 +117,7 @@ describe('Páginas en borrador (plantilla mínima)', () => {
   it('/servicios/{slug}/: H1, intro, CTA, migas y noindex', async () => {
     const { document } = await renderPage(ServicePage, { slug: 'software-a-medida' });
     expect(document.querySelectorAll('h1')).toHaveLength(1);
-    expect(document.querySelector('h1')!.textContent?.trim()).toBe('Software Empresarial a Medida');
+    expect(document.querySelector('h1')!.textContent?.trim()).toBe('Software empresarial a medida');
     expect(document.querySelector('main')!.textContent).toContain('Creamos plataformas digitales');
     expect(document.querySelector('main a[href="/contacto/"]')).not.toBeNull();
     expect(document.querySelector('nav[aria-label="Migas de pan"]')).not.toBeNull();
@@ -127,9 +135,9 @@ describe('Páginas en borrador (plantilla mínima)', () => {
 
   it('/tienda/{slug}/ sirve tanto categorías como productos', async () => {
     const category = await renderPage(ShopItemPage, { slug: 'categoria-ejemplo' });
-    const product = await renderPage(ShopItemPage, { slug: 'producto-ejemplo-1' });
+    const product = await renderPage(ShopItemPage, { slug: 'laptop-empresarial-14' });
     expect(category.document.querySelector('h1')!.textContent?.trim()).toBe('[Categoría]');
-    expect(product.document.querySelector('h1')!.textContent?.trim()).toBe('[Producto 1]');
+    expect(product.document.querySelector('h1')!.textContent?.trim()).toBe('[Laptop empresarial 14"]');
   });
 });
 
