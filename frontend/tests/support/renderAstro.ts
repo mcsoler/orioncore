@@ -20,9 +20,9 @@ type AstroComponent = Parameters<AstroContainer['renderToString']>[0];
 /** Renderiza un componente .astro con el Container API y devuelve su HTML y un DOM para consultarlo. */
 export async function renderAstro(
   component: AstroComponent,
-  options: { props?: Record<string, unknown>; slots?: Record<string, string>; params?: Record<string, string> } = {},
+  options: { props?: object; slots?: Record<string, string>; params?: Record<string, string> } = {},
 ) {
-  const html = await (await container()).renderToString(component, options);
+  const html = await (await container()).renderToString(component, options as Parameters<AstroContainer['renderToString']>[1]);
   const { document } = new JSDOM(`<!doctype html><body>${html}</body>`).window;
   return { html, document };
 }
