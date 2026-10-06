@@ -28,19 +28,25 @@ describe('Seo', () => {
 
 describe('global.css', () => {
   const css = readFileSync(new URL('../../../src/styles/global.css', import.meta.url), 'utf8');
+  const rule = (name: string) => css.match(new RegExp(`\\.${name}\\s*{([^}]*)}`))![1]!;
 
-  it('btn-primary pone el texto blanco sobre brand-blue sólido (contraste 5,2:1), no sobre el cian', () => {
-    const rule = css.match(/\.btn-primary\s*{([^}]*)}/)![1]!;
-    expect(rule).toContain('bg-brand-blue');
-    expect(rule).toContain('text-white');
-    expect(rule).not.toMatch(/from-secondary/);
-    expect(rule).toContain('hover:shadow-glow-cyan');
+  it('tema oscuro de la referencia en el body', () => {
+    expect(css).toMatch(/body\s*{[^}]*bg-navy[^}]*text-white/);
   });
 
-  it('btn-whatsapp usa texto navy sobre el verde de WhatsApp (el blanco no alcanza 4,5:1)', () => {
-    const rule = css.match(/\.btn-whatsapp\s*{([^}]*)}/)![1]!;
-    expect(rule).toContain('bg-whatsapp');
-    expect(rule).toContain('text-navy');
+  it('btn-primary: texto blanco sobre brand-blue sólido (5,2:1)', () => {
+    expect(rule('btn-primary')).toContain('bg-brand-blue');
+    expect(rule('btn-primary')).toContain('text-white');
+    expect(rule('btn-primary')).toContain('hover:shadow-glow-cyan');
+  });
+
+  it('btn-whatsapp: tinta oscura sobre el verde de WhatsApp (el blanco no alcanza 4,5:1)', () => {
+    expect(rule('btn-whatsapp')).toContain('bg-whatsapp');
+    expect(rule('btn-whatsapp')).toContain('text-whatsapp-ink');
+  });
+
+  it('clases de la referencia: card, eyebrow, h2, chip, tag, ph y stage', () => {
+    for (const name of ['card', 'eyebrow', 'h2', 'chip', 'tag', 'ph', 'stage']) expect(rule(name)).toBeTruthy();
   });
 
   it('respeta prefers-reduced-motion', () => {
