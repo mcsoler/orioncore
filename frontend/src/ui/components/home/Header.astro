@@ -1,5 +1,6 @@
 ---
 import type { NavItem } from '../../../domain/routing/RouteRegistry';
+import CartBadge from '../../islands/CartBadge';
 import Icon from '../shared/Icon.astro';
 import Logo from '../shared/Logo.astro';
 
@@ -8,11 +9,11 @@ interface Props {
 }
 
 const { nav } = Astro.props;
-const linkClass = 'block px-4 py-2 text-[14px] font-medium text-white/80 hover:text-white transition-colors font-inter';
+const linkClass = 'block px-4 py-2 text-[15px] text-white/70 hover:text-white transition-colors font-inter';
 ---
 
-<header class="sticky top-0 z-50 bg-nav-glass backdrop-blur-xl border-b border-white/5" data-header>
-  <div class="max-w-7xl mx-auto px-6 lg:px-8 h-[68px] flex items-center justify-between gap-4">
+<header class="sticky top-0 z-50 bg-navy border-b border-line" data-header>
+  <div class="wrap min-h-[72px] flex items-center justify-between gap-4">
     <a href="/" aria-label="Orion Core Tecnologías, inicio" class="shrink-0">
       <Logo tone="dark" />
     </a>
@@ -28,7 +29,7 @@ const linkClass = 'block px-4 py-2 text-[14px] font-medium text-white/80 hover:t
                   data-submenu-toggle
                   aria-expanded="false"
                   aria-controls={`submenu-${i}`}
-                  class="flex items-center gap-1 px-4 py-2 text-[14px] font-medium text-white/80 hover:text-white font-inter"
+                  class="flex items-center gap-1 px-4 py-2 text-[15px] text-white/70 hover:text-white font-inter"
                 >
                   {item.label}
                   <Icon name="chevron-down" class="w-4 h-4" />
@@ -36,11 +37,11 @@ const linkClass = 'block px-4 py-2 text-[14px] font-medium text-white/80 hover:t
                 <ul
                   id={`submenu-${i}`}
                   hidden
-                  class="absolute left-0 top-full mt-2 w-72 rounded-xl bg-navy border border-white/10 py-2 shadow-glow-blue"
+                  class="absolute left-0 top-full mt-2 w-72 rounded-2xl bg-surface border border-line py-2 shadow-[0_24px_48px_rgba(0,0,0,0.45)]"
                 >
                   {item.href && (
                     <li>
-                      <a href={item.href} class:list={[linkClass, 'font-semibold text-secondary']}>
+                      <a href={item.href} class:list={[linkClass, 'font-semibold text-brand-cyan']}>
                         Ver todo {item.label.toLowerCase()}
                       </a>
                     </li>
@@ -67,22 +68,18 @@ const linkClass = 'block px-4 py-2 text-[14px] font-medium text-white/80 hover:t
     </nav>
 
     <div class="flex items-center gap-2">
-      <a href="/tienda/" aria-label="Carrito (ir a la tienda)" class="p-2 text-white/80 hover:text-white">
-        <Icon name="cart" class="w-6 h-6" />
+      <a href="/tienda/" aria-label="Carrito (ir a la tienda)" class="btn-ghost relative w-12 px-0">
+        <Icon name="cart" class="w-5 h-5" />
+        <CartBadge client:idle />
       </a>
-      <a
-        href="/contacto/"
-        class="hidden sm:inline-flex px-5 py-2 border border-secondary/40 text-secondary text-[13px] font-semibold rounded-lg hover:bg-secondary/10 hover:border-secondary hover:shadow-glow-cyan transition-all duration-300 font-inter"
-      >
-        Diagnóstico gratis
-      </a>
+      <a href="/contacto/" class="btn-primary hidden sm:inline-flex">Diagnóstico gratis</a>
       <button
         type="button"
         data-mobile-toggle
         aria-expanded="false"
         aria-controls="menu-movil"
         aria-label="Abrir menú"
-        class="lg:hidden p-2 text-white/80 hover:text-white"
+        class="lg:hidden btn-ghost w-12 px-0"
       >
         <Icon name="menu" class="w-6 h-6" />
       </button>
@@ -94,9 +91,9 @@ const linkClass = 'block px-4 py-2 text-[14px] font-medium text-white/80 hover:t
     id="menu-movil"
     aria-label="Menú móvil"
     hidden
-    class="lg:hidden absolute inset-x-0 top-full bg-navy border-t border-white/10 shadow-glow-blue max-h-[calc(100svh-68px)] overflow-y-auto"
+    class="lg:hidden absolute inset-x-0 top-full bg-navy border-y border-line max-h-[calc(100svh-72px)] overflow-y-auto"
   >
-    <ul class="max-w-7xl mx-auto px-6 py-4 space-y-4">
+    <ul class="wrap py-4 space-y-4">
       {
         nav.map((item) => (
           <li>
@@ -108,10 +105,10 @@ const linkClass = 'block px-4 py-2 text-[14px] font-medium text-white/80 hover:t
               <p class="py-1 text-base font-semibold text-white">{item.label}</p>
             )}
             {item.children.length > 0 && (
-              <ul class="mt-1 border-l border-white/10 pl-4 space-y-1">
+              <ul class="mt-1 border-l border-line pl-4 space-y-1">
                 {item.children.map((child) => (
                   <li>
-                    <a href={child.href} class="block py-1.5 text-sm text-white/80 hover:text-white">
+                    <a href={child.href} class="block py-1.5 text-sm text-white/70 hover:text-white">
                       {child.label}
                     </a>
                   </li>

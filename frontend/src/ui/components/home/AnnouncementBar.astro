@@ -7,11 +7,10 @@ interface Props {
 const { text, cta } = Astro.props;
 ---
 
-<div class="bg-navy text-white text-sm">
-  <p class="max-w-7xl mx-auto px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
+<div class="bg-brand-blue text-white text-sm font-semibold">
+  <p class="wrap flex flex-wrap items-center justify-center gap-3 min-h-[42px] py-2 text-center">
+    <span class="w-2 h-2 rounded-full bg-white animate-pulse-dot" aria-hidden="true"></span>
     <span>{text}</span>
-    <a href={cta.href} class="font-semibold text-secondary underline underline-offset-4 hover:text-electric">
-      {cta.label}
-    </a>
+    <a href={cta.href} class="text-white underline underline-offset-2">{cta.label}</a>
   </p>
 </div>

@@ -1,48 +1,26 @@
 ---
-/**
- * Sección del home: alterna fondos oscuros (navy / degradado del hero) y claros
- * (bg-main / surface-soft) como en el sitio original.
- */
+/** Sección del home con el encabezado de la referencia (eyebrow + h2 + subtítulo). */
 interface Props {
   id: string;
   title: string;
-  tone?: 'dark' | 'light' | 'soft';
+  /** base = navy, surface = superficie (se alternan como en la referencia). */
+  tone?: 'base' | 'surface';
   eyebrow?: string;
   subtitle?: string;
   align?: 'center' | 'left';
   class?: string;
 }
 
-const { id, title, tone = 'light', eyebrow, subtitle, align = 'center', class: className = '' } = Astro.props;
+const { id, title, tone = 'base', eyebrow, subtitle, align = 'center', class: className = '' } = Astro.props;
 const headingId = `${id}-titulo`;
-const isDark = tone === 'dark';
-
-const background = { dark: 'bg-navy', light: 'bg-bg-main', soft: 'bg-surface-soft' }[tone];
 ---
 
-<section id={id} aria-labelledby={headingId} class:list={['py-20 md:py-24 scroll-mt-28', background, className]}>
-  <div class="max-w-[1280px] mx-auto px-6 lg:px-8">
-    <header class:list={['mb-12 md:mb-16', align === 'center' && 'text-center max-w-3xl mx-auto']}>
-      {
-        eyebrow && (
-          <p class:list={['text-xs font-semibold tracking-[0.2em] uppercase mb-4', isDark ? 'text-brand-cyan' : 'text-brand-blue']}>
-            {eyebrow}
-          </p>
-        )
-      }
-      <h2
-        id={headingId}
-        class:list={['text-3xl md:text-5xl font-bold mb-5 font-poppins', isDark ? 'text-white' : 'text-ink']}
-      >
-        {title}
-      </h2>
-      {
-        subtitle && (
-          <p class:list={['text-lg leading-relaxed', { dark: 'text-white/75', light: 'text-muted', soft: 'text-ink/80' }[tone]]}>
-            {subtitle}
-          </p>
-        )
-      }
+<section id={id} aria-labelledby={headingId} class:list={['py-[88px] scroll-mt-20', tone === 'surface' ? 'bg-surface' : 'bg-navy', className]}>
+  <div class="wrap">
+    <header class:list={['mb-9', align === 'center' ? 'text-center max-w-[720px] mx-auto' : 'max-w-[720px]']}>
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2 id={headingId} class="h2">{title}</h2>
+      {subtitle && <p class="text-[17px] text-white/70">{subtitle}</p>}
     </header>
     <slot />
   </div>

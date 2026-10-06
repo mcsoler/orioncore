@@ -1,76 +1,58 @@
 ---
 import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
-import type { FooterGroup } from '../../../domain/routing/RouteRegistry';
-import Logo from '../shared/Logo.astro';
+import type { FooterGroup, Link } from '../../../domain/routing/RouteRegistry';
 
 interface Props {
   groups: FooterGroup[];
+  legal: Link[];
   business: HomeViewModel['business'];
-  whatsappHref?: string;
 }
 
-const { groups, business, whatsappHref } = Astro.props;
+const { groups, legal, business } = Astro.props;
 const year = new Date().getFullYear();
 const tel = business.whatsapp ? `tel:+${business.whatsapp}` : undefined;
+const navLink = 'text-white/70 hover:text-white transition-colors';
 ---
 
-<footer class="bg-hero-from text-white/75 text-sm pb-24 lg:pb-0">
-  <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 grid gap-12 lg:grid-cols-[1.2fr_repeat(4,1fr)]">
-    <div class="space-y-5">
-      <a href="/" aria-label="Orion Core Tecnologías, inicio" class="inline-block">
-        <Logo tone="dark" />
-      </a>
-      <p class="leading-relaxed max-w-xs">
-        Automatización, inteligencia artificial y marketing digital para empresas en Colombia.
-      </p>
-      <address class="not-italic space-y-2">
-        <p class="font-semibold text-white">{business.name}</p>
-        <p>{business.address}, {business.city}, Colombia</p>
-        {tel && (
-          <p>
-            <a href={tel} class="hover:text-white">{business.phoneLabel}</a>
-          </p>
-        )}
-        {whatsappHref && (
-          <p>
-            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="hover:text-white">
-              WhatsApp
-            </a>
-          </p>
-        )}
-        <p>
-          <a href={`mailto:${business.email}`} class="hover:text-white break-all">{business.email}</a>
-        </p>
-        {business.googleBusinessUrl && (
-          <p>
-            <a href={business.googleBusinessUrl} target="_blank" rel="noopener noreferrer" class="hover:text-white">
-              Ver en Google Business
-            </a>
-          </p>
-        )}
+<footer class="border-t border-line pt-14 pb-28 lg:pb-8 text-[15px]">
+  <div class="wrap grid gap-8 grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
+    <div class="flex flex-col gap-2.5">
+      <strong class="font-poppins text-lg">{business.name}</strong>
+      <address class="not-italic text-white/70 leading-relaxed">
+        {business.address}<br />
+        {business.city}, Colombia<br />
+        {tel && <><a href={tel} class={navLink}>{business.phoneLabel}</a><br /></>}
+        <a href={`mailto:${business.email}`} class:list={[navLink, 'break-all']}>{business.email}</a><br />
+        {business.hours}
       </address>
+      {
+        business.googleBusinessUrl && (
+          <a href={business.googleBusinessUrl} target="_blank" rel="noopener noreferrer" class="text-link text-sm">
+            Ver en Google Maps
+          </a>
+        )
+      }
     </div>
-
     {
       groups.map((group) => (
-        <div>
-          <h2 class="text-xs font-semibold tracking-[0.2em] uppercase text-white mb-4">{group.title}</h2>
-          <ul class="space-y-2.5">
-            {group.links.map((link) => (
-              <li>
-                <a href={link.href} class="hover:text-white transition-colors">
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <nav aria-label={group.title} class="flex flex-col gap-2.5">
+          <h2 class="font-inter text-[15px] font-semibold">{group.title}</h2>
+          {group.links.map((link) => (
+            <a href={link.href} class={navLink}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
       ))
     }
   </div>
-  <div class="border-t border-white/10">
-    <p class="max-w-7xl mx-auto px-6 lg:px-8 py-6 text-xs">
-      © {year} {business.name}. Todos los derechos reservados.
-    </p>
+  <div class="wrap mt-8">
+    <div class="pt-5 border-t border-line text-white/70 text-[13px] flex flex-wrap justify-between gap-3">
+      <span>© {year} {business.legalName} · NIT {business.nit}</span>
+      <span class="flex flex-wrap gap-4">
+        {legal.map((link) => <a href={link.href} class={navLink}>{link.label}</a>)}
+        <a href="/sitemap-index.xml" class={navLink}>Mapa del sitio</a>
+      </span>
+    </div>
   </div>
 </footer>
