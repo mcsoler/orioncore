@@ -55,8 +55,11 @@ describe('Header', () => {
 
   it('carrito con contador (isla) y CTA "Diagnóstico gratis"', async () => {
     const { document } = await render();
-    const cart = document.querySelector('a[aria-label^="Carrito"]')!;
+    const cart = document.querySelector('header a[data-cart]')!;
     expect(cart.getAttribute('href')).toBe('/tienda/');
+    // Nombre accesible desde el contenido (incluye el contador), no con aria-label
+    expect(cart.hasAttribute('aria-label')).toBe(false);
+    expect(text(cart.querySelector('.sr-only'))).toBe('Carrito (ir a la tienda)');
     expect(cart.querySelector('astro-island')).not.toBeNull();
     const cta = [...document.querySelectorAll('a')].find((a) => text(a) === 'Diagnóstico gratis')!;
     expect(cta.getAttribute('href')).toBe('/contacto/');

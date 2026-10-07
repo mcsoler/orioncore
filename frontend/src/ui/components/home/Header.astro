@@ -68,7 +68,8 @@ const linkClass = 'block px-4 py-2 text-[15px] text-white/70 hover:text-white tr
     </nav>
 
     <div class="flex items-center gap-2">
-      <a href="/tienda/" aria-label="Carrito (ir a la tienda)" class="btn-ghost relative w-12 px-0">
+      <a href="/tienda/" data-cart class="btn-ghost relative w-12 px-0">
+        <span class="sr-only">Carrito (ir a la tienda)</span>
         <Icon name="cart" class="w-5 h-5" />
         <CartBadge client:idle />
       </a>

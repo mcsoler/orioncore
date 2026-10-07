@@ -34,7 +34,7 @@ export default function CartBadge({ getCount }: CartBadgeProps) {
       >
         {count}
       </span>
-      <span className="sr-only">{`${count} productos en el carrito`}</span>
+      <span className="sr-only">{`, ${count} productos en el carrito`}</span>
     </>
   );
 }

@@ -41,6 +41,6 @@ describe('Carrito (islas)', () => {
 
   it('el contador se anuncia a lectores de pantalla como parte del nombre del carrito', () => {
     render(<CartBadge getCount={new GetCartCount(memoryCart(Cart.from({ a: 3 })))} />);
-    expect(screen.getByText('3 productos en el carrito')).toHaveClass('sr-only');
+    expect(screen.getByText(', 3 productos en el carrito')).toHaveClass('sr-only');
   });
 });
