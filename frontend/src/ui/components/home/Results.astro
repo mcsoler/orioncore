@@ -1,0 +1,67 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+
+type Props = HomeViewModel['results'];
+
+const { eyebrow, title, cases, stats, certifications, testimonials } = Astro.props;
+---
+
+<section id="resultados" aria-labelledby="resultados-titulo" class="bg-surface py-[88px] scroll-mt-20">
+  <div class="wrap">
+    <header class="text-center max-w-[720px] mx-auto mb-9">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 id="resultados-titulo" class="h2">{title}</h2>
+    </header>
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        cases.map((study) => (
+          <article class="card bg-navy overflow-hidden flex flex-col">
+            <div class="ph h-[150px] rounded-none border-0 border-b border-line">[Foto del cliente o proyecto]</div>
+            <div class="p-[22px] flex flex-col gap-2.5 flex-1">
+              {study.tag && <span class="chip self-start">{study.tag}</span>}
+              <p class="font-poppins text-[42px] font-bold text-brand-blue leading-tight">{study.result}</p>
+              <p class="text-white/70">{study.description}</p>
+              {study.quote && (
+                <blockquote class="mt-1.5 pt-3 border-t border-line text-[15px]">
+                  “{study.quote}” {study.quoteAuthor && <span class="text-white/70">— {study.quoteAuthor}</span>}
+                </blockquote>
+              )}
+              <a href={study.href} class="text-link mt-auto" aria-label={`Leer el caso completo: ${study.title}`}>
+                Leer el caso completo →
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    {
+      testimonials.length > 0 && (
+        <ul class="grid gap-5 md:grid-cols-2 mt-9">
+          {testimonials.map((t) => (
+            <li>
+              <figure class="card bg-navy p-6">
+                <blockquote class="mb-3">“{t.quote}”</blockquote>
+                <figcaption class="text-sm text-white/70">{t.author}{t.company && `, ${t.company}`}</figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <dl class="grid grid-cols-2 lg:grid-cols-4 gap-5 mt-9 text-center">
+      {
+        stats.map((stat) => (
+          <div class="flex flex-col-reverse">
+            <dt class="text-white/70">{stat.label}</dt>
+            <dd class="font-poppins text-[40px] font-bold">{stat.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+    <ul class="flex flex-wrap justify-center gap-3.5 mt-7">
+      {certifications.map((cert) => <li data-certification class="ph w-[150px] h-12">{cert}</li>)}
+    </ul>
+  </div>
+</section>

@@ -20,6 +20,12 @@ class ContactResponse(BaseModel):
         from_attributes = True
 
 
+class SlotsResponse(BaseModel):
+    remaining: int
+    taken: int
+    total: int
+
+
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"

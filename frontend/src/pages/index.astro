@@ -1,24 +1,40 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Hero from '../components/Hero.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
-import ServicesSection from '../components/ServicesSection.astro';
-import AboutSection from '../components/AboutSection.astro';
-import ProcessSection from '../components/ProcessSection.astro';
-import FinalCTA from '../components/FinalCTA.astro';
+import { container } from '../composition/container';
+import BaseLayout from '../ui/layouts/BaseLayout.astro';
+import Hero from '../ui/components/home/Hero.astro';
+import ClientLogos from '../ui/components/home/ClientLogos.astro';
+import PainPoints from '../ui/components/home/PainPoints.astro';
+import Services from '../ui/components/home/Services.astro';
+import Marketing360 from '../ui/components/home/Marketing360.astro';
+import LossCalculatorSection from '../ui/components/home/LossCalculatorSection.astro';
+import Results from '../ui/components/home/Results.astro';
+import Process from '../ui/components/home/Process.astro';
+import Shop from '../ui/components/home/Shop.astro';
+import BlogGuides from '../ui/components/home/BlogGuides.astro';
+import Faq from '../ui/components/home/Faq.astro';
+import ContactSection from '../ui/components/home/ContactSection.astro';
+
+const app = container();
+const view = await app.getHomeContent.execute();
+const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whatsappMessage);
 ---
 
-<Layout title="Orion Core Tecnologías - Blockchain e IA">
-  <Navbar />
-  <main>
-    <Hero />
-    <ServicesSection />
-    <AboutSection />
-    <ProcessSection />
-    <FinalCTA />
-    <Contact />
-  </main>
-  <Footer />
-</Layout>
+<BaseLayout seo={app.seoFor('/', app.homeJsonLd(view))} announcement={{ ...view.announcement, slots: view.slots }}>
+  <Hero hero={view.hero} />
+  {/* Oculto hasta tener logos reales de clientes. Para mostrarlo, quitar el comentario. */}
+  {/* <ClientLogos {...view.clients} /> */}
+  <PainPoints {...view.pains} />
+  <Services {...view.services} whatsappHref={whatsappHref} />
+  <Marketing360 {...view.marketing} />
+  <LossCalculatorSection {...view.calculator} />
+  {/* Ocultos hasta tener datos reales (casos, cifras, proceso, guías y FAQ). Para mostrarlos, quitar el comentario.
+  <Results {...view.results} />
+  <Process {...view.process} />
+  */}
+  <Shop {...view.shop} />
+  {/*
+  <BlogGuides {...view.blog} />
+  <Faq {...view.faq} />
+  */}
+  <ContactSection contact={view.contact} slots={view.slots} whatsappHref={whatsappHref} />
+</BaseLayout>

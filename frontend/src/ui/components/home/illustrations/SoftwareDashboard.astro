@@ -1,0 +1,38 @@
+---
+// 03 · Software a medida: dashboard de la empresa en una sola pantalla
+const bars = [
+  [40, 0.4], [55, 0.5], [48, 0.55], [70, 0.7], [62, 0.75], [88, 0.9], [100, 1],
+] as const;
+---
+
+<div class="stage flex items-center p-6" data-illustration aria-hidden="true">
+  <div class="w-full rounded-[14px] border border-line bg-navy overflow-hidden">
+    <div class="flex items-center gap-1.5 px-3 py-2.5 border-b border-line">
+      <span class="w-2.5 h-2.5 rounded-full bg-danger"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-amber"></span>
+      <span class="w-2.5 h-2.5 rounded-full bg-success"></span>
+      <span class="ml-3 text-[11px] text-white/70">app.tuempresa.co/dashboard</span>
+    </div>
+    <div class="flex min-h-[320px]">
+      <div class="hidden sm:flex w-[120px] border-r border-line px-2.5 py-3.5 flex-col gap-2 text-xs text-white/70">
+        <span class="bg-surface-2 text-white px-2 py-1.5 rounded-md">Inicio</span>
+        <span class="px-2 py-1.5">Clientes</span><span class="px-2 py-1.5">Inventario</span>
+        <span class="px-2 py-1.5">Pedidos</span><span class="px-2 py-1.5">Reportes</span>
+      </div>
+      <div class="flex-1 p-3.5 flex flex-col gap-3">
+        <div class="grid grid-cols-3 gap-2">
+          <div class="bg-surface rounded-lg p-2.5"><div class="text-[10px] text-white/70">Ventas hoy</div><strong class="font-poppins text-[17px]">[$X]</strong></div>
+          <div class="bg-surface rounded-lg p-2.5"><div class="text-[10px] text-white/70">Pedidos</div><strong class="font-poppins text-[17px]">[X]</strong></div>
+          <div class="bg-surface rounded-lg p-2.5"><div class="text-[10px] text-white/70">Stock bajo</div><strong class="font-poppins text-[17px] text-amber">[X]</strong></div>
+        </div>
+        <div class="bg-surface rounded-lg p-3 flex items-end gap-1.5 h-[100px]">
+          {bars.map(([height, opacity]) => <div class="flex-1 bg-brand-blue rounded-[3px]" style={`height:${height}%;opacity:${opacity}`}></div>)}
+        </div>
+        <div class="flex flex-col gap-1.5 text-[11px]">
+          <div class="flex justify-between bg-surface px-2.5 py-2 rounded-md"><span>Pedido #[0001]</span><span class="text-success">Despachado</span></div>
+          <div class="flex justify-between bg-surface px-2.5 py-2 rounded-md"><span>Pedido #[0002]</span><span class="text-amber">En proceso</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

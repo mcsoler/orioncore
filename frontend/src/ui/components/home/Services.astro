@@ -1,0 +1,87 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+import AutomationFlow from './illustrations/AutomationFlow.astro';
+import FaceAccess from './illustrations/FaceAccess.astro';
+import MarketingAds from './illustrations/MarketingAds.astro';
+import SoftwareDashboard from './illustrations/SoftwareDashboard.astro';
+import WhatsAppChat from './illustrations/WhatsAppChat.astro';
+import { slugOf } from '../../presenters/homePresenter';
+
+type Props = HomeViewModel['services'] & {
+  /** Destino de los CTA "whatsapp"; sin número confirmado, esos CTA van al formulario. */
+  whatsappHref?: string;
+};
+
+const { eyebrow, title, items, whatsappHref } = Astro.props;
+
+const ILLUSTRATIONS = {
+  'automatizacion-de-procesos': AutomationFlow,
+  'agentes-ia-whatsapp': WhatsAppChat,
+  'software-a-medida': SoftwareDashboard,
+  'seguridad-control-de-acceso': FaceAccess,
+  'marketing-digital': MarketingAds,
+} as const;
+
+const ctaHref = (href: string) => (href === 'whatsapp' ? (whatsappHref ?? '#contacto') : href);
+const isMarketing = (href: string) => href === '/marketing-digital/';
+---
+
+<section id="servicios" aria-labelledby="servicios-titulo" class="bg-navy pt-12 pb-[88px] scroll-mt-20">
+  <div class="wrap flex flex-col gap-24">
+    <header class="text-center max-w-[720px] mx-auto">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 id="servicios-titulo" class="h2">{title}</h2>
+    </header>
+
+    {
+      items.map((service, i) => {
+        const Illustration = ILLUSTRATIONS[slugOf(service.href) as keyof typeof ILLUSTRATIONS] ?? AutomationFlow;
+        return (
+          <article class:list={['grid gap-14 items-center lg:grid-cols-2', i % 2 === 1 && 'lg:[&>*:first-child]:order-2']}>
+            <Illustration />
+            <div class="flex flex-col gap-4">
+              <div class="flex flex-wrap gap-2">
+                <span class="tag bg-surface-2 text-brand-cyan">
+                  {service.number} · {service.title}
+                </span>
+                {service.badge && <span class="tag bg-success/15 text-success">{service.badge}</span>}
+              </div>
+              <h3 class="h2 my-0">{service.headline}</h3>
+              <p class="text-[17px] leading-relaxed text-white/70">{service.description}</p>
+              {isMarketing(service.href) ? (
+                <div class="flex flex-wrap gap-2">
+                  {service.items.map((item) => (
+                    <span class="chip">{item}</span>
+                  ))}
+                </div>
+              ) : (
+                <ul class="flex flex-col gap-4">
+                  {service.items.map((item) => (
+                    <li class="flex gap-2.5 items-start">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="stroke-success shrink-0" stroke-width="2.5" aria-hidden="true">
+                        <path d="m5 12 5 5 9-10" />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:items-center pt-1.5">
+                <a
+                  href={ctaHref(service.ctaHref)}
+                  class="btn-primary"
+                  {...(service.ctaHref === 'whatsapp' && whatsappHref && { target: '_blank', rel: 'noopener noreferrer' })}
+                >
+                  {service.cta}
+                </a>
+                <a href={service.href} data-detail class="text-link">
+                  {service.linkLabel} →
+                </a>
+              </div>
+            </div>
+          </article>
+        );
+      })
+    }
+  </div>
+</section>

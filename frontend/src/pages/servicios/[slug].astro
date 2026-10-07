@@ -1,0 +1,15 @@
+---
+import { container } from '../../composition/container';
+import DraftPageLayout from '../../ui/layouts/DraftPageLayout.astro';
+
+export function getStaticPaths() {
+  return container()
+    .routes.all()
+    .filter((route) => route.section === 'servicios' && route.depth === 2)
+    .map((route) => ({ params: { slug: route.path.split('/')[2] } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<DraftPageLayout path={`/servicios/${slug}/`} />

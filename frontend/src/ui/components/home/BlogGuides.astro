@@ -1,0 +1,36 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+
+type Props = HomeViewModel['blog'];
+
+const { eyebrow, title, subtitle, cta, articles } = Astro.props;
+---
+
+<section id="guias" aria-labelledby="guias-titulo" class="bg-navy py-[88px]">
+  <div class="wrap">
+    <div class="flex flex-wrap justify-between items-end gap-6 mb-8">
+      <header>
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 id="guias-titulo" class="h2">{title}</h2>
+        <p class="text-[17px] text-white/70">{subtitle}</p>
+      </header>
+      <a href={cta.href} class="btn-ghost">{cta.label}</a>
+    </div>
+    <div class="grid gap-5 md:grid-cols-3">
+      {
+        articles.map((article) => (
+          <article class="card overflow-hidden flex flex-col">
+            <div class="ph h-[170px] rounded-none border-0 border-b border-line">[Imagen destacada con texto alt]</div>
+            <div class="p-[22px] flex flex-col gap-2.5 flex-1">
+              {article.category && <span class="chip self-start">{article.category}</span>}
+              <h3 class="font-poppins text-xl leading-snug font-semibold">
+                <a href={article.href} class="text-white hover:underline underline-offset-4">{article.title}</a>
+              </h3>
+              {article.readingTime && <p class="text-sm text-white/70">{article.readingTime}</p>}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

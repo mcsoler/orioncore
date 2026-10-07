@@ -1,0 +1,297 @@
+---
+import { Picture } from 'astro:assets';
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+import heroGlobe from '../../../assets/hero-globe.png';
+import { brandColors as colors } from '../../theme';
+
+interface Props {
+  hero: HomeViewModel['hero'];
+}
+
+const { hero } = Astro.props;
+
+// Red de nodos original (sin cadenas, velas ni tendencia: eran motivos de blockchain/trading)
+const leftLines = [
+  [80, 150, 220, 280, 'p', 'fl', 0.2], [220, 280, 420, 200, 'p', 'fl2', 0.2], [420, 200, 580, 350, 's', 'fl3', 0.18],
+  [580, 350, 750, 220, 's', 'fl', 0.18], [220, 280, 350, 480, 'p', 'fl2', 0.18], [350, 480, 580, 350, 'p', 'fl3', 0.18],
+  [80, 600, 350, 480, 's', 'fl', 0.15], [750, 220, 900, 380, 'p', 'fl2', 0.2], [900, 380, 1050, 260, 's', 'fl3', 0.2],
+  [580, 350, 900, 380, 'p', 'fl', 0.18], [350, 480, 500, 680, 'p', 'fl2', 0.15], [500, 680, 700, 750, 'p', 'fl3', 0.15],
+  [700, 750, 900, 620, 's', 'fl', 0.15], [900, 380, 900, 620, 'p', 'fl2', 0.18],
+  [900, 380, 1150, 280, 's', 'fl', 0.18], [1150, 280, 1350, 350, 's', 'fl2', 0.18], [1050, 260, 1200, 200, 'p', 'fl3', 0.15],
+  [1200, 200, 1380, 280, 'p', 'fl', 0.15], [1150, 280, 1250, 480, 's', 'fl2', 0.18], [1250, 480, 1350, 620, 's', 'fl3', 0.15],
+  [900, 620, 1100, 550, 'p', 'fl', 0.18], [1100, 550, 1300, 480, 'p', 'fl2', 0.15], [1300, 480, 1380, 350, 's', 'fl3', 0.15],
+  [1350, 350, 1380, 280, 's', 'fl', 0.12], [1350, 350, 1350, 620, 'p', 'fl2', 0.12], [1380, 280, 1420, 450, 's', 'fl3', 0.12],
+] as const;
+const hubs = [
+  [220, 280, 5, 's', 'h1', 0.75], [580, 350, 6, 's', 'h2', 0.75], [900, 380, 5, 's', 'h3', 0.7], [350, 480, 4, 'p', 'h4', 0.7],
+  [750, 220, 4, 's', 'h1', 0.65], [900, 620, 4, 'p', 'h2', 0.65], [1150, 280, 5, 's', 'h3', 0.65], [1350, 350, 4, 's', 'h4', 0.6],
+  [1250, 480, 4, 'p', 'h5', 0.6], [1350, 620, 4, 's', 'h1', 0.55], [1380, 280, 3, 'p', 'h2', 0.55],
+] as const;
+const smallNodes = [
+  [80, 150, 3, 's', 'sn', 0.35], [420, 200, 3, 's', 'sn2', 0.35], [1050, 260, 3, 's', 'sn3', 0.35], [80, 600, 3, 'p', 'sn', 0.35],
+  [500, 680, 3, 's', 'sn2', 0.3], [700, 750, 3, 's', 'sn3', 0.3], [1200, 200, 2.5, 's', 'sn', 0.28], [1100, 550, 2.5, 'p', 'sn2', 0.28],
+  [1300, 480, 2.5, 's', 'sn3', 0.28], [1420, 450, 2.5, 's', 'sn', 0.25], [1380, 600, 2, 'p', 'sn2', 0.25],
+] as const;
+const packets = [
+  ['M80,150 L220,280 L580,350', 2.2, 0, 's', 3.5], ['M220,280 L350,480 L700,750', 2.8, 0.5, 'p', 3],
+  ['M580,350 L750,220 L900,380', 1.9, 1, 's', 3.5], ['M350,480 L900,620', 2.5, 0.3, 's', 3],
+  ['M900,380 L1050,260', 1.6, 0.8, 'p', 2.5], ['M80,600 L350,480 L500,680', 2.4, 1.5, 's', 3],
+  ['M900,380 L1150,280 L1350,350', 2.1, 0.4, 's', 3.5], ['M900,620 L1100,550 L1300,480', 2.6, 1.2, 'p', 3],
+  ['M1050,260 L1200,200 L1380,280', 1.8, 0.9, 's', 2.5], ['M1150,280 L1250,480 L1350,620', 3, 0.2, 's', 3],
+] as const;
+// Campo magnético alrededor del globo: [rx, ry, rotación, opacidad, grosor, clase]
+const rings = [
+  [308, 64, 0, 0.3, 1.1, 'mag'], [390, 82, 0, 0.18, 0.85, 'mag2'], [330, 195, -40, 0.22, 1, 'mag3'], [330, 195, 40, 0.22, 1, 'mag3'],
+  [360, 288, -68, 0.16, 0.85, 'mag4'], [360, 288, 68, 0.16, 0.85, 'mag4'], [295, 290, -85, 0.12, 0.75, 'mag5'],
+  [295, 290, 85, 0.12, 0.75, 'mag5'], [435, 98, 0, 0.11, 0.7, 'mag2'], [410, 330, -50, 0.09, 0.65, 'mag5'], [410, 330, 50, 0.09, 0.65, 'mag5'],
+] as const;
+const fill = (c: string) => (c === 's' ? 'fill-secondary' : 'fill-primary');
+const stroke = (c: string) => (c === 's' ? 'stroke-secondary' : 'stroke-primary');
+---
+
+<section id="inicio" aria-label="Presentación" class="relative overflow-hidden bg-navy">
+  <!-- Globo: imagen estática (móvil y fallback) + canvas 3D diferido en escritorio -->
+  <div
+    data-globe
+    data-script="/globe.gl.min.js"
+    data-min-width="1024"
+    data-texture="/earth/earth-blue-marble.jpg"
+    data-bump="/earth/earth-topology.png"
+    data-color={colors.secondary}
+    class="globe pointer-events-none absolute z-[1] w-[320px] h-[320px] -right-24 top-20 opacity-40 lg:opacity-80 lg:w-[600px] lg:h-[600px] lg:right-[-20px] lg:top-1/2 lg:-translate-y-1/2"
+    aria-hidden="true"
+  >
+    <Picture
+      src={heroGlobe}
+      formats={['avif', 'webp']}
+      fallbackFormat="webp"
+      widths={[320, 600]}
+      sizes="(min-width: 1024px) 600px, 320px"
+      alt=""
+      width={600}
+      height={600}
+      loading="eager"
+      fetchpriority="high"
+      data-globe-fallback
+      class="globe-fallback w-full h-full"
+    />
+    <div data-globe-canvas class="globe-canvas absolute inset-0"></div>
+  </div>
+
+  <svg
+    data-node-network
+    class="absolute inset-0 w-full h-full z-[2]"
+    viewBox="0 0 1440 900"
+    preserveAspectRatio="xMidYMid slice"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <defs>
+      <radialGradient id="nebula-right" cx="75%" cy="50%" r="40%">
+        <stop offset="0%" class="stop-secondary" stop-opacity="0.10"></stop>
+        <stop offset="45%" class="stop-primary" stop-opacity="0.06"></stop>
+        <stop offset="100%" class="stop-hero" stop-opacity="0"></stop>
+      </radialGradient>
+      <radialGradient id="nebula-left" cx="22%" cy="52%" r="32%">
+        <stop offset="0%" class="stop-primary" stop-opacity="0.07"></stop>
+        <stop offset="100%" class="stop-hero" stop-opacity="0"></stop>
+      </radialGradient>
+    </defs>
+    <rect x="0" y="0" width="1440" height="900" fill="url(#nebula-right)"></rect>
+    <rect x="0" y="0" width="1440" height="900" fill="url(#nebula-left)"></rect>
+    <g fill="none">
+      {leftLines.map(([x1, y1, x2, y2, c, cls, o]) => <line class:list={[cls, stroke(c)]} x1={x1} y1={y1} x2={x2} y2={y2} stroke-width="1" stroke-opacity={o} />)}
+    </g>
+    {hubs.map(([cx, cy, r, c, cls, o]) => <circle class:list={[cls, fill(c)]} cx={cx} cy={cy} r={r} fill-opacity={o} />)}
+    {smallNodes.map(([cx, cy, r, c, cls, o]) => <circle class:list={[cls, fill(c)]} cx={cx} cy={cy} r={r} fill-opacity={o} />)}
+    {
+      packets.map(([path, dur, begin, c, r]) => (
+        <circle r={r} class={fill(c)} fill-opacity="0.85">
+          <animateMotion dur={`${dur}s`} begin={`${begin}s`} repeatCount="indefinite" path={path} />
+        </circle>
+      ))
+    }
+    <g fill="none" class="hidden lg:inline" stroke-linecap="round">
+      {
+        rings.map(([rx, ry, rot, o, w, cls]) => (
+          <ellipse class:list={[cls, 'stroke-secondary']} cx="1140" cy="450" rx={rx} ry={ry} stroke-width={w} stroke-opacity={o} transform={rot ? `rotate(${rot}, 1140, 450)` : undefined} />
+        ))
+      }
+    </g>
+  </svg>
+
+  <div class="relative z-10 wrap grid lg:grid-cols-2 items-center gap-14 pt-[72px] pb-8 lg:min-h-[600px]">
+    <div class="flex flex-col gap-[22px]">
+      <h1 class="font-inter text-sm font-bold uppercase tracking-[0.12em] leading-normal text-brand-cyan">
+        {hero.title}
+      </h1>
+      <p data-hook class="font-poppins font-bold text-[40px] md:text-[58px] leading-[1.03]" style="text-wrap: balance">
+        {hero.hook.before} <span class="text-brand-blue">{hero.hook.highlight}</span> {hero.hook.after}
+      </p>
+      <p class="text-[19px] leading-[1.55] text-white/70">{hero.subtitle}</p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <a href={hero.primaryCta.href} class="btn-primary btn-lg">{hero.primaryCta.label}</a>
+        <a href={hero.secondaryCta.href} class="btn-ghost btn-lg">{hero.secondaryCta.label}</a>
+      </div>
+      {/*
+        Oculto hasta tener datos reales (valor del diagnóstico, calificación, número de empresas y fotos).
+        Para mostrarlo de nuevo, quitar este comentario.
+      <p class="text-sm text-white/70">{hero.microcopy}</p>
+      <div class="flex items-center gap-3.5 pt-1.5">
+        <div class="flex" aria-hidden="true">
+          {[0, 1, 2, 3].map((i) => (
+            <span class:list={['ph w-10 h-10 rounded-full border-2 border-navy text-[10px]', i > 0 && '-ml-3']}>[foto]</span>
+          ))}
+        </div>
+        <p class="text-sm leading-snug">
+          <span class="text-amber" role="img" aria-label={`Calificación: ${hero.rating} de 5`}>★★★★★</span>
+          <strong>{hero.rating}/5</strong><br />
+          <span class="text-white/70">{hero.socialProof}</span>
+        </p>
+      </div>
+      */}
+    </div>
+    <div class="hidden lg:block" aria-hidden="true"></div>
+  </div>
+</section>
+
+<style>
+  .stop-secondary { stop-color: theme('colors.secondary'); }
+  .stop-primary { stop-color: theme('colors.primary'); }
+  .stop-hero { stop-color: theme('colors.hero-from'); }
+
+  /* Globo: mismo tratamiento visual del original (lo trae la imagen estática; el canvas lo aplica en vivo) */
+  .globe-canvas {
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    filter: brightness(1.6) contrast(0.78) saturate(1.05) opacity(0.4)
+            drop-shadow(0 0 28px rgba(0, 224, 255, 0.25)) drop-shadow(0 0 60px rgba(0, 224, 255, 0.10));
+  }
+  .globe-canvas :global(canvas) { display: block; }
+  .globe :global(.globe-fallback) { transition: opacity 1.2s ease; }
+  .globe.is-live .globe-canvas { opacity: 1; }
+  .globe.is-live :global(.globe-fallback) { opacity: 0; }
+
+  @keyframes ringPulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+  .mag { animation: ringPulse 4s ease-in-out infinite; }
+  .mag2 { animation: ringPulse 4.5s ease-in-out infinite 0.8s; }
+  .mag3 { animation: ringPulse 5s ease-in-out infinite 1.6s; }
+  .mag4 { animation: ringPulse 5.5s ease-in-out infinite 2.4s; }
+  .mag5 { animation: ringPulse 6s ease-in-out infinite 3.2s; }
+
+  @keyframes hubFlash { 0%, 80%, 100% { opacity: 0.45; } 85% { opacity: 0.9; } }
+  @keyframes smallBlink { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.55; } }
+  .h1 { animation: hubFlash 3s ease-in-out infinite; }
+  .h2 { animation: hubFlash 3s ease-in-out infinite 1s; }
+  .h3 { animation: hubFlash 3s ease-in-out infinite 2s; }
+  .h4 { animation: hubFlash 2.5s ease-in-out infinite 0.5s; }
+  .h5 { animation: hubFlash 3.5s ease-in-out infinite 1.5s; }
+  .sn { animation: smallBlink 2s ease-in-out infinite; }
+  .sn2 { animation: smallBlink 2s ease-in-out infinite 0.7s; }
+  .sn3 { animation: smallBlink 2s ease-in-out infinite 1.4s; }
+
+  @keyframes dataFlow {
+    0% { stroke-dashoffset: 400; opacity: 0.05; }
+    50% { opacity: 0.28; }
+    100% { stroke-dashoffset: 0; opacity: 0.05; }
+  }
+  .fl { stroke-dasharray: 400; animation: dataFlow 1.8s linear infinite; }
+  .fl2 { stroke-dasharray: 400; animation: dataFlow 1.8s linear infinite 0.6s; }
+  .fl3 { stroke-dasharray: 400; animation: dataFlow 1.8s linear infinite 1.2s; }
+
+  /* Sin rotación ni animaciones: solo la imagen estática */
+  @media (prefers-reduced-motion: reduce) {
+    .mag, .mag2, .mag3, .mag4, .mag5, .h1, .h2, .h3, .h4, .h5, .sn, .sn2, .sn3, .fl, .fl2, .fl3 { animation: none; }
+  }
+</style>
+
+<script>
+  type GlobeFactory = () => (el: HTMLElement) => GlobeInstance;
+  interface GlobeInstance {
+    [method: string]: (...args: unknown[]) => GlobeInstance;
+  }
+
+  const holder = document.querySelector<HTMLElement>('[data-globe]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reducedMotion) {
+    document.querySelector<SVGSVGElement>('svg[data-node-network]')?.pauseAnimations();
+  } else if (holder && window.matchMedia(`(min-width: ${holder.dataset.minWidth}px)`).matches) {
+    // Solo cuando el hero es visible y el navegador está libre: el LCP es el texto o la imagen estática
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      observer.disconnect();
+      whenIdle(loadGlobe);
+    });
+    observer.observe(holder);
+  }
+
+  function whenIdle(task: () => void) {
+    if ('requestIdleCallback' in window) window.requestIdleCallback(task, { timeout: 4000 });
+    else setTimeout(task, 1500);
+  }
+
+  function loadGlobe() {
+    const script = document.createElement('script');
+    script.src = holder!.dataset.script!;
+    script.onload = initGlobe;
+    document.head.append(script);
+  }
+
+  function initGlobe() {
+    const Globe = (window as unknown as { Globe?: GlobeFactory }).Globe;
+    const canvas = holder?.querySelector<HTMLElement>('[data-globe-canvas]');
+    if (!Globe || !holder || !canvas) return;
+
+    const color = holder.dataset.color!;
+    const arcs = [
+      [40.7, -74, 51.5, -0.1], [51.5, -0.1, 35.7, 139.7], [35.7, 139.7, -33.9, 151.2], [-23.5, -46.6, 40.7, -74],
+      [19.4, -99.1, 48.9, 2.3], [1.3, 103.8, 55.8, 37.6], [25.2, 55.3, 51.5, -0.1], [-33.9, 151.2, 19.4, -99.1],
+    ].map(([startLat, startLng, endLat, endLng]) => ({ startLat, startLng, endLat, endLng }));
+    const points = arcs.flatMap((a) => [{ lat: a.startLat, lng: a.startLng }, { lat: a.endLat, lng: a.endLng }]);
+
+    const globe = Globe()(canvas)
+      .globeImageUrl(holder.dataset.texture)
+      .bumpImageUrl(holder.dataset.bump)
+      .backgroundColor('rgba(0,0,0,0)')
+      .width(600)
+      .height(600)
+      .atmosphereColor(color)
+      .atmosphereAltitude(0.38)
+      .arcsData(arcs)
+      .arcColor(() => [`${color}4d`, `${color}e6`])
+      .arcStroke(0.5)
+      .arcDashLength(0.4)
+      .arcDashGap(0.2)
+      .arcDashAnimateTime(1800)
+      .pointsData(points)
+      .pointColor(() => `${color}e6`)
+      .pointAltitude(0.015)
+      .pointRadius(0.5)
+      .onGlobeReady(() => {
+        holder.classList.add('is-live');
+        startSpin(globe);
+      });
+  }
+
+  /** Rotación continua: la cámara orbita alrededor del globo (como la primera versión). */
+  function startSpin(globe: GlobeInstance) {
+    const instance = globe as unknown as {
+      controls: () => { enabled: boolean; enableZoom: boolean; enablePan: boolean };
+      camera: () => { position: { x: number; z: number; length: () => number }; lookAt: (x: number, y: number, z: number) => void };
+    };
+    Object.assign(instance.controls(), { enabled: false, enableZoom: false, enablePan: false });
+    const camera = instance.camera();
+    const radius = camera.position.length();
+    let angle = Math.atan2(camera.position.x, camera.position.z);
+
+    function spin() {
+      angle += 0.0015; // ≈ 5° por segundo a 60 fps
+      camera.position.x = radius * Math.sin(angle);
+      camera.position.z = radius * Math.cos(angle);
+      camera.lookAt(0, 0, 0);
+      requestAnimationFrame(spin);
+    }
+    requestAnimationFrame(spin);
+  }
+</script>

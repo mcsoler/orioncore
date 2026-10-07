@@ -1,0 +1,58 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+import type { FooterGroup, Link } from '../../../domain/routing/RouteRegistry';
+
+interface Props {
+  groups: FooterGroup[];
+  legal: Link[];
+  business: HomeViewModel['business'];
+}
+
+const { groups, legal, business } = Astro.props;
+const year = new Date().getFullYear();
+const tel = business.whatsapp ? `tel:+${business.whatsapp}` : undefined;
+const navLink = 'text-white/70 hover:text-white transition-colors';
+---
+
+<footer class="border-t border-line pt-14 pb-28 lg:pb-8 text-[15px]">
+  <div class="wrap grid gap-8 grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
+    <div class="flex flex-col gap-2.5">
+      <strong class="font-poppins text-lg">{business.name}</strong>
+      <address class="not-italic text-white/70 leading-relaxed">
+        {business.address}<br />
+        {business.city}, Colombia<br />
+        {tel && <><a href={tel} class={navLink}>{business.phoneLabel}</a><br /></>}
+        <a href={`mailto:${business.email}`} class:list={[navLink, 'break-all']}>{business.email}</a><br />
+        {business.hours}
+      </address>
+      {
+        business.googleBusinessUrl && (
+          <a href={business.googleBusinessUrl} target="_blank" rel="noopener noreferrer" class="text-link text-sm">
+            Ver en Google Maps
+          </a>
+        )
+      }
+    </div>
+    {
+      groups.map((group) => (
+        <nav aria-label={group.title} class="flex flex-col gap-2.5">
+          <h2 class="font-inter text-[15px] font-semibold">{group.title}</h2>
+          {group.links.map((link) => (
+            <a href={link.href} class={navLink}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      ))
+    }
+  </div>
+  <div class="wrap mt-8">
+    <div class="pt-5 border-t border-line text-white/70 text-[13px] flex flex-wrap justify-between gap-3">
+      <span>© {year} {business.legalName} · NIT {business.nit}</span>
+      <span class="flex flex-wrap gap-4">
+        {legal.map((link) => <a href={link.href} class={navLink}>{link.label}</a>)}
+        <a href="/sitemap-index.xml" class={navLink}>Mapa del sitio</a>
+      </span>
+    </div>
+  </div>
+</footer>

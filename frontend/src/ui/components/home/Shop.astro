@@ -1,0 +1,46 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+import AddToCartButton from '../../islands/AddToCartButton';
+
+type Props = HomeViewModel['shop'];
+
+const { eyebrow, title, subtitle, cta, products } = Astro.props;
+---
+
+<section id="tienda" aria-labelledby="tienda-titulo" class="bg-surface py-[88px]">
+  <div class="wrap">
+    <div class="flex flex-wrap justify-between items-end gap-6 mb-8">
+      <header>
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 id="tienda-titulo" class="h2">{title}</h2>
+        <p class="text-[17px] text-white/70">{subtitle}</p>
+      </header>
+      <a href={cta.href} class="btn-ghost">{cta.label}</a>
+    </div>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        products.map((product) => (
+          <article class="card bg-navy p-3.5 flex flex-col gap-[9px]">
+            <a href={product.href} tabindex="-1" aria-hidden="true" class="ph relative h-[170px] no-underline">
+              {product.badge && (
+                <span data-badge class="absolute top-2.5 left-2.5 bg-brand-blue text-white text-xs font-bold px-2 py-1 rounded-md">
+                  {product.badge}
+                </span>
+              )}
+              [Foto del producto]
+            </a>
+            <h3 class="font-inter text-base font-semibold">
+              <a href={product.href} class="text-white hover:underline underline-offset-4">{product.title}</a>
+            </h3>
+            <p class="flex items-baseline gap-2">
+              <span class="font-poppins text-[21px] font-bold">{product.price}</span>
+              {product.oldPrice && <s class="text-[13px] text-white/70">{product.oldPrice}</s>}
+            </p>
+            {product.stock && <p class="text-[13px] text-amber">● {product.stock}</p>}
+            <AddToCartButton client:visible slug={product.slug} name={product.title} />
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

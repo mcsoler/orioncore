@@ -1,0 +1,58 @@
+---
+/**
+ * Plantilla mínima de la fase 1 (H1, intro y CTA) para las rutas que aún no tienen diseño.
+ * Los datos salen del RouteRegistry: publicar la página es cambiar su status en home.es.json.
+ */
+import { container } from '../../composition/container';
+import Breadcrumbs from '../components/shared/Breadcrumbs.astro';
+import Icon from '../components/shared/Icon.astro';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  path: string;
+  /** Destino del CTA; por defecto la página de contacto. */
+  cta?: { label: string; href: string };
+}
+
+const { path, cta = { label: 'Agenda tu diagnóstico gratis', href: '/contacto/' } } = Astro.props;
+const app = container();
+const route = app.routes.get(path);
+// Una página índice lista sus subpáginas (p. ej. /tienda/ → categorías y productos)
+const children = app.routes.all().filter((r) => r.path !== path && r.path.startsWith(path) && r.depth === route.depth + 1);
+---
+
+<BaseLayout seo={app.seoFor(path)}>
+  <section class="bg-navy border-b border-line">
+    <div class="wrap py-16 md:py-24">
+      <Breadcrumbs items={app.routes.breadcrumbsFor(path)} site={app.site.url} tone="dark" />
+      <h1 class="h2 mt-8 max-w-3xl md:text-5xl">{route.title}</h1>
+      {route.description && <p class="mt-2 text-[19px] text-white/70 max-w-2xl leading-relaxed">{route.description}</p>}
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href={cta.href} class="btn-primary btn-lg">{cta.label}</a>
+      </div>
+    </div>
+  </section>
+
+  {
+    children.length > 0 && (
+      <section aria-labelledby="subpaginas" class="bg-surface">
+        <div class="wrap py-16">
+          <h2 id="subpaginas" class="font-poppins text-2xl font-bold mb-8">
+            En esta sección
+          </h2>
+          <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {children.map((child) => (
+              <li>
+                <a href={child.path} class="card bg-navy flex items-center justify-between gap-4 p-5 font-semibold text-white hover:border-brand-blue">
+                  {child.title}
+                  <Icon name="arrow-right" class="w-5 h-5 text-brand-cyan shrink-0" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+  <slot />
+</BaseLayout>

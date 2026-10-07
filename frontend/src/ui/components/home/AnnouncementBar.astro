@@ -1,0 +1,21 @@
+---
+import type { SlotsView } from '../../../application/dto/SlotsView';
+import LiveSlotsText from '../../islands/LiveSlotsText';
+
+interface Props {
+  /** Admite {month}, {remaining} y {total}. */
+  text: string;
+  cta: { label: string; href: string };
+  slots: SlotsView;
+}
+
+const { text, cta, slots } = Astro.props;
+---
+
+<div class="bg-brand-blue text-white text-sm font-semibold">
+  <p class="wrap flex flex-wrap items-center justify-center gap-3 min-h-[42px] py-2 text-center">
+    <span class="w-2 h-2 rounded-full bg-white animate-pulse-dot" aria-hidden="true"></span>
+    <LiveSlotsText client:idle template={text} initial={slots} />
+    <a href={cta.href} class="text-white underline underline-offset-2">{cta.label}</a>
+  </p>
+</div>

@@ -1,0 +1,21 @@
+---
+interface Props {
+  title: string;
+  href?: string;
+  headingLevel?: 2 | 3 | 4;
+  class?: string;
+}
+
+const { title, href, headingLevel = 3, class: className = '' } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3' | 'h4';
+const Wrapper = href ? 'a' : 'div';
+---
+
+<Wrapper href={href} class:list={['card flex flex-col h-full gap-2.5 p-[22px] text-white no-underline', href && 'hover:border-brand-blue', className]}>
+  <slot name="top" />
+  <Heading class="font-poppins text-lg font-semibold">{title}</Heading>
+  <div class="text-sm leading-relaxed text-white/70 flex-1">
+    <slot />
+  </div>
+  <slot name="bottom" />
+</Wrapper>

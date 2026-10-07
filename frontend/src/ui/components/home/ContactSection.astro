@@ -1,0 +1,54 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+import type { SlotsView } from '../../../application/dto/SlotsView';
+import LeadForm from '../../islands/LeadForm';
+import SlotsMeter from '../../islands/SlotsMeter';
+
+interface Props {
+  contact: HomeViewModel['contact'];
+  slots: SlotsView;
+  whatsappHref?: string;
+}
+
+const { contact, slots, whatsappHref } = Astro.props;
+---
+
+<section id="contacto" aria-labelledby="contacto-titulo" class="bg-surface py-[88px] scroll-mt-20">
+  <div class="wrap grid gap-12 items-start lg:grid-cols-2">
+    <div class="flex flex-col gap-[18px]">
+      <p class="eyebrow">{contact.eyebrow}</p>
+      <h2 id="contacto-titulo" class="h2 my-0">{contact.title}</h2>
+      <SlotsMeter client:visible label={contact.slots.label} value={contact.slots.value} initial={slots} />
+      <ul data-benefits class="flex flex-col gap-3">
+        {
+          contact.benefits.map((benefit) => (
+            <li class="flex gap-2.5 items-start">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="stroke-success shrink-0" stroke-width="2.5" aria-hidden="true">
+                <path d="m5 12 5 5 9-10" />
+              </svg>
+              {benefit}
+            </li>
+          ))
+        }
+      </ul>
+      {/*
+        Oculto por ahora: foto, nombre y cargo de quien revisa el diagnóstico. Para mostrarlo, quitar el comentario.
+      <div class="flex items-center gap-3.5">
+        <span class="ph w-[60px] h-[60px] rounded-full shrink-0" role="img" aria-label={contact.photoAlt}>[Foto]</span>
+        <p class="text-[15px]">
+          <strong>{contact.person.name}</strong> · {contact.person.role}<br />
+          <span class="text-white/70">{contact.person.note}</span>
+        </p>
+      </div>
+      */}
+      {
+        whatsappHref && (
+          <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="btn-whatsapp self-start">
+            {contact.whatsappCta}
+          </a>
+        )
+      }
+    </div>
+    <LeadForm client:visible options={contact.formOptions} privacyHref="/privacidad/" />
+  </div>
+</section>

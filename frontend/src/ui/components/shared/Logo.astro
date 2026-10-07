@@ -1,0 +1,75 @@
+---
+/**
+ * Logo actual de Orion Core (extraído de la Navbar original, sin redibujar):
+ * isotipo = constelación de Orión (7 nodos + halo) y wordmark de dos líneas.
+ * tone = tono del FONDO donde se coloca: dark → texto blanco, light → texto ink.
+ */
+import { LOGO_HALO, LOGO_LINE_WIDTH, LOGO_LINES, LOGO_NODES, LOGO_VIEWBOX } from './logoGeometry';
+
+interface Props {
+  variant?: 'full' | 'isotype';
+  tone?: 'dark' | 'light';
+  class?: string;
+}
+
+const { variant = 'full', tone = 'dark', class: className = '' } = Astro.props;
+const isIsotype = variant === 'isotype';
+---
+
+<span class:list={['inline-flex items-center gap-3', className]}>
+  <svg
+    viewBox={LOGO_VIEWBOX}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    class="w-9 h-9 shrink-0"
+    role={isIsotype ? 'img' : undefined}
+    aria-label={isIsotype ? 'Orion Core Tecnologías' : undefined}
+    aria-hidden={isIsotype ? undefined : 'true'}
+  >
+    {LOGO_NODES.map((n) => <circle cx={n.cx} cy={n.cy} r={n.r} class="fill-secondary" opacity={n.opacity} />)}
+    {
+      LOGO_LINES.map((l) => (
+        <line
+          x1={l.x1}
+          y1={l.y1}
+          x2={l.x2}
+          y2={l.y2}
+          class="stroke-secondary"
+          stroke-width={LOGO_LINE_WIDTH}
+          stroke-opacity={l.opacity}
+        />
+      ))
+    }
+    <circle
+      cx={LOGO_HALO.cx}
+      cy={LOGO_HALO.cy}
+      r={LOGO_HALO.r}
+      class="stroke-secondary"
+      stroke-width={LOGO_HALO.strokeWidth}
+      stroke-opacity={LOGO_HALO.opacity}
+      fill="none"
+    />
+  </svg>
+  {
+    !isIsotype && (
+      <span class="leading-tight">
+        <span
+          class:list={[
+            'block font-poppins text-[15px] font-bold tracking-tight',
+            tone === 'dark' ? 'text-white' : 'text-ink',
+          ]}
+        >
+          Orion Core
+        </span>
+        <span
+          class:list={[
+            'block font-inter text-[10px] font-medium tracking-widest uppercase',
+            tone === 'dark' ? 'text-secondary/70' : 'text-primary',
+          ]}
+        >
+          Tecnologías
+        </span>
+      </span>
+    )
+  }
+</span>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  title: string;
+  logos: string[];
+}
+
+const { title, logos } = Astro.props;
+---
+
+<section aria-label="Clientes" class="border-y border-line py-[26px]">
+  <div class="wrap flex flex-wrap items-center justify-between gap-7">
+    <p class="text-sm text-white/70">{title}</p>
+    <ul class="flex flex-wrap gap-3.5">
+      {logos.map((logo) => <li class="ph w-[120px] h-[42px]">{logo}</li>)}
+    </ul>
+  </div>
+</section>

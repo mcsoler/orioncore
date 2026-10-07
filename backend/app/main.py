@@ -7,6 +7,7 @@ from .database import Database
 from .security import validate_settings
 from .routes.auth import router as auth_router
 from .routes.contact import router as contact_router
+from .routes.slots import router as slots_router
 
 CORS_ORIGINS = [o.strip() for o in os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",") if o.strip()]
 
@@ -36,6 +37,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(contact_router)
+app.include_router(slots_router)
 
 
 @app.get("/")

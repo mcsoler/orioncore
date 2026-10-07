@@ -1,0 +1,41 @@
+---
+interface Props {
+  items: { label: string; href: string }[];
+  site?: string;
+  tone?: 'dark' | 'light';
+}
+
+const { items, site = 'https://orioncore.co', tone = 'light' } = Astro.props;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    item: new URL(item.href, site).href,
+  })),
+};
+---
+
+<nav aria-label="Migas de pan" class:list={['text-sm', tone === 'dark' ? 'text-white/75' : 'text-muted']}>
+  <ol class="flex flex-wrap items-center gap-2">
+    {
+      items.map((item, i) =>
+        i === items.length - 1 ? (
+          <li aria-current="page" class:list={['font-medium', tone === 'dark' ? 'text-white' : 'text-ink']}>
+            {item.label}
+          </li>
+        ) : (
+          <li class="flex items-center gap-2">
+            <a href={item.href} class="underline-offset-4 hover:underline">
+              {item.label}
+            </a>
+            <span aria-hidden="true">/</span>
+          </li>
+        ),
+      )
+    }
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

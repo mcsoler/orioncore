@@ -1,0 +1,20 @@
+---
+import { container } from '../composition/container';
+import BaseLayout from '../ui/layouts/BaseLayout.astro';
+
+const app = container();
+---
+
+<BaseLayout seo={app.notFoundSeo()}>
+  <section class="bg-navy">
+    <div class="wrap max-w-3xl py-24 md:py-32 text-center">
+      <p class="font-poppins text-6xl font-bold text-brand-cyan">404</p>
+      <h1 class="h2 mt-4">Página no encontrada</h1>
+      <p class="mt-2 text-white/70">La página que buscas no existe o cambió de dirección.</p>
+      <div class="mt-10 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn-primary">Volver al inicio</a>
+        <a href="/contacto/" class="btn-ghost">Contáctanos</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

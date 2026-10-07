@@ -1,0 +1,26 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+
+type Props = HomeViewModel['faq'];
+
+const { eyebrow, title, items } = Astro.props;
+---
+
+<section id="preguntas" aria-labelledby="preguntas-titulo" class="bg-navy py-[88px]">
+  <div class="wrap max-w-[820px]">
+    <header class="text-center mb-7">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 id="preguntas-titulo" class="h2">{title}</h2>
+    </header>
+    <div class="flex flex-col gap-3">
+      {
+        items.map((item, i) => (
+          <details class="card px-5 py-[18px]" open={i === 0}>
+            <summary class="cursor-pointer list-none font-semibold [&::-webkit-details-marker]:hidden">{item.question}</summary>
+            <p class="mt-2.5 text-white/70">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

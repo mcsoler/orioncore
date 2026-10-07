@@ -1,0 +1,30 @@
+---
+import type { HomeViewModel } from '../../../application/dto/HomeViewModel';
+
+type Props = HomeViewModel['pains'];
+
+const { eyebrow, title, items, closing } = Astro.props;
+---
+
+<section id="dolores" aria-labelledby="dolores-titulo" class="bg-navy pt-10 pb-10">
+  <div class="wrap">
+    <header class="max-w-[720px] mb-8">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 id="dolores-titulo" class="h2">{title}</h2>
+    </header>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        items.map((pain) => (
+          <article class="card p-[22px] flex flex-col gap-2.5">
+            <span class="tag self-start bg-danger/15 text-danger">{pain.tag}</span>
+            <h3 class="font-inter text-[17px] font-bold">{pain.title}</h3>
+            <p class="text-[15px] text-white/70">{pain.description}</p>
+          </article>
+        ))
+      }
+    </div>
+    <p data-closing class="mt-11 text-center font-poppins text-[26px] font-semibold">
+      {closing.text} <span class="text-danger">{closing.highlight}</span>
+    </p>
+  </div>
+</section>
