@@ -3,6 +3,7 @@ import type { LeadField, LeadRequest } from '../../application/dto/LeadRequest';
 import type { SubmitLeadUseCase } from '../../application/ports/in/SubmitLeadUseCase';
 import { STEP_FIELDS, validateLead } from '../../application/use-cases/validateLead';
 import { interactiveUseCases } from '../../composition/interactive';
+import { notifySlotsChanged } from './slotsStore';
 
 export interface LeadFormProps {
   /** Opciones de "¿Qué quieres mejorar primero?". */
@@ -60,6 +61,7 @@ export default function LeadForm({ options, privacyHref, submitLead }: LeadFormP
     const result = await (submitLead ?? interactiveUseCases().submitLead).execute(values);
     if (result.ok) {
       setStatus('sent');
+      notifySlotsChanged();
       return;
     }
     setStatus('idle');

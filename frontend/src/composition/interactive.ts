@@ -2,6 +2,7 @@ import type { AnalyticsTracker } from '../application/ports/out/AnalyticsTracker
 import type { LeadGateway } from '../application/ports/out/LeadGateway';
 import { AddToCart, GetCartCount } from '../application/use-cases/AddToCart';
 import { CalculateLoss } from '../application/use-cases/CalculateLoss';
+import { GetSlots } from '../application/use-cases/GetSlots';
 import { SubmitLead } from '../application/use-cases/SubmitLead';
 import { LossCalculator } from '../domain/services/LossCalculator';
 import { LocalStorageCartRepository } from '../infrastructure/cart/LocalStorageCartRepository';
@@ -9,6 +10,7 @@ import { GtmAnalyticsTracker } from '../infrastructure/analytics/GtmAnalyticsTra
 import { NoopAnalyticsTracker } from '../infrastructure/analytics/NoopAnalyticsTracker';
 import { ConsoleLeadGateway } from '../infrastructure/leads/ConsoleLeadGateway';
 import { OrionApiLeadGateway } from '../infrastructure/leads/OrionApiLeadGateway';
+import { OrionApiSlotsGateway } from '../infrastructure/slots/OrionApiSlotsGateway';
 
 export interface InteractiveConfig {
   /** PUBLIC_API_URL; vacío = mismo dominio. */
@@ -24,7 +26,7 @@ export interface InteractiveConfig {
 
 /**
  * Parte del composition root que necesitan las islas en el navegador
- * (calculadora, formulario y carrito), sin el contenido ni las rutas del sitio.
+ * (calculadora, formulario, carrito y cupos), sin el contenido ni las rutas del sitio.
  */
 export function createInteractiveUseCases(config: InteractiveConfig) {
   const leadGateway: LeadGateway =
@@ -42,6 +44,7 @@ export function createInteractiveUseCases(config: InteractiveConfig) {
     submitLead: new SubmitLead(leadGateway, analytics),
     addToCart: new AddToCart(cart),
     cartCount: new GetCartCount(cart),
+    getSlots: new GetSlots(new OrionApiSlotsGateway({ baseUrl: config.apiUrl, fetch: config.fetch })),
     adapters: { leadGateway, analytics },
   };
 }
