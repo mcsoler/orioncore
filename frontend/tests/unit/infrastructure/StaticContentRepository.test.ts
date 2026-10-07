@@ -94,7 +94,7 @@ describe('StaticContentRepository (content/home/home.es.json)', () => {
     expect(home.pains.title).toBe('Si te pasa al menos una de estas cosas, estás dejando dinero sobre la mesa.');
     expect(home.services.title).toBe('Cinco soluciones. Un mismo objetivo: que tu empresa crezca.');
     expect(home.services.items.map((s) => s.headline)).toEqual([
-      'Recupera hasta [X] horas cada semana.',
+      'Deja de invertir días en lo que debería tomar minutos.',
       'Tu mejor vendedor no duerme, no se enferma y responde en segundos.',
       'Toda tu empresa en una sola pantalla.',
       'Sabe quién entra, cuándo y por dónde. Siempre.',

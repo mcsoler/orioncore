@@ -117,7 +117,7 @@ describe('Services', () => {
       '04 · Seguridad y control de acceso',
       '05 · Marketing digital 360°',
     ]);
-    expect(text(rows[0]!.querySelector('h3'))).toBe('Recupera hasta [X] horas cada semana.');
+    expect(text(rows[0]!.querySelector('h3'))).toBe('Deja de invertir días en lo que debería tomar minutos.');
     for (const row of rows) expect(row.querySelector('[data-illustration][aria-hidden="true"]')).not.toBeNull();
   });
 
