@@ -117,9 +117,11 @@
       "headline": "Toda tu empresa en una sola pantalla.",
       "description": "Basta de 10 archivos de Excel y 5 plataformas que no se hablan. Construimos el sistema que se adapta a cómo trabajas tú, no al revés.",
       "items": [
-        "CRM y sistemas de gestión",
-        "Dashboards y portales empresariales",
-        "Aplicaciones e integraciones personalizadas"
+        "ERP y CRM a la medida de tu operación",
+        "Analítica de datos y dashboards en tiempo real",
+        "Migración de datos sin perder información",
+        "Almacenamiento y despliegue en la nube",
+        "Portales empresariales e integraciones personalizadas"
       ],
       "cta": "Cotizar mi software",
       "ctaHref": "#contacto",

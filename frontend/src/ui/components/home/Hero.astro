@@ -58,7 +58,7 @@ const stroke = (c: string) => (c === 's' ? 'stroke-secondary' : 'stroke-primary'
     data-texture="/earth/earth-blue-marble.jpg"
     data-bump="/earth/earth-topology.png"
     data-color={colors.secondary}
-    class="globe pointer-events-none absolute z-[1] w-[320px] h-[320px] -right-24 top-20 opacity-50 lg:opacity-100 lg:w-[600px] lg:h-[600px] lg:right-[-20px] lg:top-1/2 lg:-translate-y-1/2"
+    class="globe pointer-events-none absolute z-[1] w-[320px] h-[320px] -right-24 top-20 opacity-40 lg:opacity-80 lg:w-[600px] lg:h-[600px] lg:right-[-20px] lg:top-1/2 lg:-translate-y-1/2"
     aria-hidden="true"
   >
     <Picture
@@ -164,7 +164,7 @@ const stroke = (c: string) => (c === 's' ? 'stroke-secondary' : 'stroke-primary'
   .globe-canvas {
     opacity: 0;
     transition: opacity 1.2s ease;
-    filter: brightness(1.6) contrast(0.78) saturate(1.05) opacity(0.55)
+    filter: brightness(1.6) contrast(0.78) saturate(1.05) opacity(0.4)
             drop-shadow(0 0 28px rgba(0, 224, 255, 0.25)) drop-shadow(0 0 60px rgba(0, 224, 255, 0.10));
   }
   .globe-canvas :global(canvas) { display: block; }
@@ -268,10 +268,30 @@ const stroke = (c: string) => (c === 's' ? 'stroke-secondary' : 'stroke-primary'
       .pointColor(() => `${color}e6`)
       .pointAltitude(0.015)
       .pointRadius(0.5)
-      .onGlobeReady(() => holder.classList.add('is-live'));
+      .onGlobeReady(() => {
+        holder.classList.add('is-live');
+        startSpin(globe);
+      });
+  }
 
-    // Rotación continua de la cámara (como el original)
-    const controls = (globe as unknown as { controls: () => Record<string, unknown> }).controls();
-    Object.assign(controls, { enabled: false, enableZoom: false, enablePan: false, autoRotate: true, autoRotateSpeed: 0.2 });
+  /** Rotación continua: la cámara orbita alrededor del globo (como la primera versión). */
+  function startSpin(globe: GlobeInstance) {
+    const instance = globe as unknown as {
+      controls: () => { enabled: boolean; enableZoom: boolean; enablePan: boolean };
+      camera: () => { position: { x: number; z: number; length: () => number }; lookAt: (x: number, y: number, z: number) => void };
+    };
+    Object.assign(instance.controls(), { enabled: false, enableZoom: false, enablePan: false });
+    const camera = instance.camera();
+    const radius = camera.position.length();
+    let angle = Math.atan2(camera.position.x, camera.position.z);
+
+    function spin() {
+      angle += 0.0015; // ≈ 5° por segundo a 60 fps
+      camera.position.x = radius * Math.sin(angle);
+      camera.position.z = radius * Math.cos(angle);
+      camera.lookAt(0, 0, 0);
+      requestAnimationFrame(spin);
+    }
+    requestAnimationFrame(spin);
   }
 </script>
