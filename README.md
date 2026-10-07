@@ -78,7 +78,12 @@ export MONGODB_URL=mongodb://localhost:27017 JWT_SECRET=$(openssl rand -hex 32) 
 uvicorn app.main:app --reload --port 8000     # documentación en http://localhost:8000/docs
 ```
 
-El backend todavía no tiene pruebas automatizadas.
+Pruebas del backend:
+
+```bash
+pip install -r requirements-dev.txt
+pytest -q
+```
 
 ## Todo junto con Docker
 
