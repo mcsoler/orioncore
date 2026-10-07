@@ -8,15 +8,10 @@ describe('CalculateLoss', () => {
   it('devuelve los montos formateados para la UI', () => {
     expect(calculateLoss.execute({ hoursPerWeek: 10, costPerHour: 25_000 })).toEqual({
       ok: true,
-      monthlyLoss: '$1.082.500',
-      annualLoss: '$12.990.000',
-      hoursPerYear: '520',
+      weeklyLoss: '$250.000',
+      monthlyLoss: '$1.125.000',
+      annualLoss: '$13.500.000',
     });
-  });
-
-  it('formatea las horas al año con separador de miles', () => {
-    const result = calculateLoss.execute({ hoursPerWeek: 60, costPerHour: 100_000 });
-    expect(result).toMatchObject({ ok: true, hoursPerYear: '3.118' });
   });
 
   it('devuelve un error por campo si las horas están fuera de rango', () => {

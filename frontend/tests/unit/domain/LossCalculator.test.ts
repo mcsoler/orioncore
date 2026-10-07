@@ -17,34 +17,33 @@ describe('Hours (horas por semana)', () => {
 describe('LossCalculator', () => {
   const calculator = new LossCalculator();
 
-  it('usa 4,33 semanas por mes', () => {
-    expect(WEEKS_PER_MONTH).toBe(4.33);
+  it('usa 4,5 semanas por mes', () => {
+    expect(WEEKS_PER_MONTH).toBe(4.5);
   });
 
-  it('calcula pérdida mensual, anual y horas al año', () => {
+  it('semanal = horas por empleado × costo por hora; mensual = semanal × 4,5; anual = mensual × 12', () => {
     const result = calculator.calculate(Hours.perWeek(10), Money.cop(25_000));
-    expect(result.monthlyLoss.amount).toBe(1_082_500); // 10 × 4,33 × 25.000
-    expect(result.annualLoss.amount).toBe(12_990_000); // mensual × 12
-    expect(result.hoursPerYear).toBe(520); // 10 × 4,33 × 12 = 519,6
+    expect(result.weeklyLoss.amount).toBe(250_000);
+    expect(result.monthlyLoss.amount).toBe(1_125_000);
+    expect(result.annualLoss.amount).toBe(13_500_000);
   });
 
   it('funciona en el límite inferior (1 h/semana)', () => {
     const result = calculator.calculate(Hours.perWeek(1), Money.cop(10_000));
-    expect(result.monthlyLoss.amount).toBe(43_300);
-    expect(result.annualLoss.amount).toBe(519_600);
-    expect(result.hoursPerYear).toBe(52);
+    expect(result.weeklyLoss.amount).toBe(10_000);
+    expect(result.monthlyLoss.amount).toBe(45_000);
+    expect(result.annualLoss.amount).toBe(540_000);
   });
 
   it('funciona en el límite superior (60 h/semana)', () => {
     const result = calculator.calculate(Hours.perWeek(60), Money.cop(100_000));
-    expect(result.monthlyLoss.amount).toBe(25_980_000);
-    expect(result.annualLoss.amount).toBe(311_760_000);
-    expect(result.hoursPerYear).toBe(3_118);
+    expect(result.weeklyLoss.amount).toBe(6_000_000);
+    expect(result.monthlyLoss.amount).toBe(27_000_000);
+    expect(result.annualLoss.amount).toBe(324_000_000);
   });
 
-  it('no acumula errores de flotantes (7 × 4,33 = 30,31)', () => {
-    const result = calculator.calculate(Hours.perWeek(7), Money.cop(10_000));
-    expect(result.monthlyLoss.amount).toBe(303_100);
+  it('no acumula errores de flotantes (7 h × $35.000 × 4,5)', () => {
+    expect(calculator.calculate(Hours.perWeek(7), Money.cop(35_000)).monthlyLoss.amount).toBe(1_102_500);
   });
 
   it('rechaza un costo por hora de cero', () => {
