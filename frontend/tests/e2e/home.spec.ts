@@ -1,8 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
 
 /** Espera a que React hidrate la isla (client:visible): Astro quita el atributo ssr. */
-async function hydrated(page: Page, section: string) {
-  const island = page.locator(`${section} astro-island`);
+async function hydrated(page: Page, islandSelector: string) {
+  const island = page.locator(islandSelector);
   await island.scrollIntoViewIfNeeded();
   await expect(island).not.toHaveAttribute('ssr');
 }
@@ -101,7 +101,7 @@ test('el botón de WhatsApp aparece al salir del hero', async ({ page }) => {
 
 test('calculadora: el slider actualiza el resultado', async ({ page }) => {
   await page.goto('/#calculadora');
-  await hydrated(page, '#calculadora');
+  await hydrated(page, '#calculadora astro-island');
   const hours = page.getByLabel(/Horas a la semana en tareas repetitivas/);
   await hours.focus();
   await page.keyboard.press('ArrowRight'); // 15 → 16 h/semana
@@ -115,7 +115,7 @@ test('formulario: envía el lead al backend con el contrato actual y muestra el 
     await route.fulfill({ status: 200, json: { id: '1' } });
   });
   await page.goto('/#contacto');
-  await hydrated(page, '#contacto');
+  await hydrated(page, '#contacto astro-island:has(form)');
   const form = page.locator('#contacto form');
   await form.getByRole('checkbox', { name: 'Agente IA WhatsApp' }).check();
   await form.getByLabel('Nombre', { exact: true }).fill('Ana Gómez');
@@ -140,6 +140,33 @@ test('carrito: "Agregar al carrito" actualiza el contador del header y se conser
   await expect(badge).toHaveText('2');
   await page.reload();
   await expect(page.getByTestId('cart-count')).toHaveText('2');
+});
+
+test('cupos: la barra de escasez muestra los del backend y baja cuando se envía el formulario', async ({ page }) => {
+  let remaining = 3;
+  await page.route('**/api/slots', (route) => route.fulfill({ json: { remaining, taken: 10 - remaining, total: 10 } }));
+  await page.route('**/api/contact', async (route) => {
+    remaining -= 1;
+    await route.fulfill({ status: 200, json: { id: '1' } });
+  });
+
+  await page.goto('/');
+  const bar = page.locator('body > div').first();
+  await expect(bar).toContainText('quedan solo 3 de 10 cupos');
+
+  await page.goto('/#contacto');
+  await hydrated(page, '#contacto astro-island:has(form)');
+  const form = page.locator('#contacto form');
+  await form.getByRole('checkbox', { name: 'Automatización' }).check();
+  await form.getByLabel('Nombre', { exact: true }).fill('Ana Gómez');
+  await form.getByLabel('WhatsApp', { exact: true }).fill('300 123 4567');
+  await form.getByRole('checkbox', { name: /Acepto la política/ }).check();
+  await form.getByRole('button', { name: /Reservar mi cupo gratis/ }).click();
+  await form.getByLabel('Correo electrónico').fill('ana@empresa.com');
+  await form.getByRole('button', { name: 'Enviar solicitud' }).click();
+
+  await expect(bar).toContainText('quedan solo 2 de 10 cupos');
+  await expect(page.locator('#contacto')).toContainText('8 de 10 tomados');
 });
 
 test('una URL inexistente responde 404', async ({ page }) => {
