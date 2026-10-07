@@ -68,6 +68,14 @@ describe('Hero', () => {
     expect(img.getAttribute('loading')).toBe('eager');
   });
 
+  it('el globo gira de forma continua (como la primera versión) y es más transparente', () => {
+    const source = readFileSync(new URL('../../../src/ui/components/home/Hero.astro', import.meta.url), 'utf8');
+    expect(source).toMatch(/requestAnimationFrame\(spin\)/);
+    expect(source).toContain('camera.lookAt(0, 0, 0)');
+    expect(source).toMatch(/opacity\(0\.4\)/);
+    expect(source).toContain('lg:opacity-80');
+  });
+
   it('respeta prefers-reduced-motion', () => {
     const source = readFileSync(new URL('../../../src/ui/components/home/Hero.astro', import.meta.url), 'utf8');
     expect(source).toMatch(/@media \(prefers-reduced-motion: reduce\)[^}]*animation: none/s);
@@ -121,10 +129,18 @@ describe('Services', () => {
     for (const row of rows) expect(row.querySelector('[data-illustration][aria-hidden="true"]')).not.toBeNull();
   });
 
+  it('el chat del agente de IA es una conversación técnica sobre un ERP', async () => {
+    const { document } = await render();
+    const chat = [...document.querySelectorAll('article')][1]!.querySelector('[data-illustration]')!;
+    expect(chat.textContent).toContain('sistema ERP');
+    expect(chat.textContent).toContain('¡Claro, excelente idea! Tenemos un ERP integrado con diferentes modelos para multiagentes de IA.');
+    expect(chat.textContent).not.toContain('cámaras');
+  });
+
   it('viñetas en los 4 primeros y chips de plataformas en marketing', async () => {
     const { document } = await render();
     const rows = [...document.querySelectorAll('article')];
-    for (const row of rows.slice(0, 4)) expect(row.querySelectorAll('ul li')).toHaveLength(3);
+    expect(rows.slice(0, 4).map((row) => row.querySelectorAll('ul li').length)).toEqual([3, 3, 5, 3]);
     expect([...rows[4]!.querySelectorAll('.chip')].map((c) => text(c))).toEqual(['Meta', 'Google', 'TikTok', 'Pinterest', 'LinkedIn']);
   });
 

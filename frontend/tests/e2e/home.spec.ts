@@ -57,6 +57,18 @@ test.describe('globo 3D diferido', () => {
     await expect(page.locator('[data-globe]')).toHaveClass(/is-live/, { timeout: 15_000 });
   });
 
+  test('el globo gira: dos capturas separadas en el tiempo son distintas', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/');
+    const globe = page.locator('[data-globe]');
+    await expect(globe).toHaveClass(/is-live/, { timeout: 15_000 });
+    await page.waitForTimeout(1500);
+    const before = await globe.screenshot();
+    await page.waitForTimeout(2500);
+    const after = await globe.screenshot();
+    expect(before.equals(after)).toBe(false);
+  });
+
   test('en móvil nunca descarga globe.gl ni las texturas', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 800 });
     const requested: string[] = [];

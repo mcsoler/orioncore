@@ -100,6 +100,13 @@ describe('StaticContentRepository (content/home/home.es.json)', () => {
       'Sabe quién entra, cuándo y por dónde. Siempre.',
       'Más clientes, no solo más likes.',
     ]);
+    expect(home.services.items[2]!.items).toEqual([
+      'ERP y CRM a la medida de tu operación',
+      'Analítica de datos y dashboards en tiempo real',
+      'Migración de datos sin perder información',
+      'Almacenamiento y despliegue en la nube',
+      'Portales empresariales e integraciones personalizadas',
+    ]);
     expect(home.services.items.map((s) => s.ctaHref)).toEqual(['#contacto', 'whatsapp', '#contacto', '#contacto', '#marketing360']);
     expect(home.marketing.items.map((m) => m.title)).toEqual([
       'Análisis web', 'Branding digital', 'Community manager', 'Posicionamiento presencial',
