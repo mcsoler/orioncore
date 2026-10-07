@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import LeadForm from '../../../src/ui/islands/LeadForm';
 import { SubmitLead } from '../../../src/application/use-cases/SubmitLead';
 import { LeadGatewayError, type LeadGateway } from '../../../src/application/ports/out/LeadGateway';
+import { SLOTS_CHANGED } from '../../../src/ui/islands/slotsStore';
 
 const options = [
   { value: 'automatizacion-de-procesos', label: 'Automatización' },
@@ -80,6 +81,18 @@ describe('LeadForm (isla, 2 pasos, referencia del home)', () => {
     expect(submit).toHaveBeenCalledOnce();
     expect(submit.mock.calls[0]![0].services).toEqual(['agentes-ia-whatsapp']);
     expect(await screen.findByRole('status')).toHaveTextContent(/recibimos tu solicitud/i);
+  });
+
+  it('al enviarse avisa que los cupos cambiaron (la barra de escasez se actualiza)', async () => {
+    const onChange = vi.fn();
+    window.addEventListener(SLOTS_CHANGED, onChange);
+    const { user } = setup();
+    await completeStepOne(user);
+    await user.type(screen.getByLabelText('Correo electrónico'), 'ana@empresa.com');
+    await user.click(screen.getByRole('button', { name: 'Enviar solicitud' }));
+    await screen.findByRole('status');
+    expect(onChange).toHaveBeenCalledOnce();
+    window.removeEventListener(SLOTS_CHANGED, onChange);
   });
 
   it('un correo inválido se marca en el paso 2', async () => {
