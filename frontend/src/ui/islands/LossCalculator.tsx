@@ -24,7 +24,7 @@ export default function LossCalculator({ defaultHours, costPerHour, cta, calcula
     <div className="card p-7 flex flex-col gap-5">
       <div className="flex flex-col gap-2">
         <label htmlFor={`${id}-hours`} className="text-[15px]">
-          Horas a la semana en tareas repetitivas: <strong className="block text-xl">{hours} h</strong>
+          Horas a la semana en tareas repetitivas por empleado: <strong className="block text-xl">{hours} h</strong>
         </label>
         <input
           id={`${id}-hours`}
@@ -41,7 +41,7 @@ export default function LossCalculator({ defaultHours, costPerHour, cta, calcula
 
       <div className="flex flex-col gap-2">
         <label htmlFor={`${id}-cost`} className="text-[15px]">
-          Costo por hora de tu equipo (COP): <strong className="block text-xl">{copFormat.format(cost)}</strong>
+          Costo por hora de empleado (COP): <strong className="block text-xl">{copFormat.format(cost)}</strong>
         </label>
         <input
           id={`${id}-cost`}
@@ -61,12 +61,12 @@ export default function LossCalculator({ defaultHours, costPerHour, cta, calcula
           <>
             <p className="text-sm text-white/70">Estás perdiendo aproximadamente</p>
             <p className="font-poppins text-4xl md:text-[44px] font-bold text-danger">
-              <span data-testid="annual-loss">{result.annualLoss}</span>{' '}
-              <span className="text-lg text-white/70 font-normal">al año</span>
+              <span data-testid="monthly-loss">{result.monthlyLoss}</span>{' '}
+              <span className="text-lg text-white/70 font-normal">al mes</span>
             </p>
             <p className="text-sm text-white/70">
-              <span data-testid="monthly-loss">{result.monthlyLoss}</span> al mes ·{' '}
-              <span data-testid="hours-per-year">{result.hoursPerYear}</span> horas al año
+              <span data-testid="weekly-loss">{result.weeklyLoss}</span> a la semana ·{' '}
+              <span data-testid="annual-loss">{result.annualLoss}</span> al año
             </p>
           </>
         ) : (

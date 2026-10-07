@@ -64,13 +64,16 @@ export function createContainer(config: ContainerConfig) {
         .build();
     },
 
-    /** Organization + LocalBusiness + WebSite + FAQPage del home. */
-    homeJsonLd(view: HomeViewModel): JsonLd[] {
+    /**
+     * Organization + LocalBusiness + WebSite del home, y FAQPage solo si el FAQ se muestra
+     * (los datos estructurados deben coincidir con el contenido visible).
+     */
+    homeJsonLd(view: HomeViewModel, { withFaq = false }: { withFaq?: boolean } = {}): JsonLd[] {
       return [
         organizationJsonLd(view.business, SITE.url),
         localBusinessJsonLd(view.business, SITE.url),
         webSiteJsonLd(SITE.name, SITE.url),
-        faqPageJsonLd(view.faq.items),
+        ...(withFaq ? [faqPageJsonLd(view.faq.items)] : []),
       ];
     },
     adapters: interactive.adapters,

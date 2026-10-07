@@ -469,7 +469,7 @@
     "calculator": {
       "eyebrow": "Calculadora",
       "title": "¿Cuánto te cuesta hacerlo a mano?",
-      "subtitle": "Mueve los controles con tus datos. El resultado es lo que hoy pagas por tareas que una automatización o un agente de IA podrían hacer.",
+      "subtitle": "Mueve los controles con los datos de un empleado. El resultado es lo que hoy pagas por tareas repetitivas que podrías resolver con automatización, agentes de IA, software a la medida y análisis de datos.",
       "defaultHours": 15,
       "costPerHour": {
         "default": 30000,
@@ -592,9 +592,10 @@
         "value": "{taken} de {total} tomados"
       },
       "benefits": [
-        "Plan de acción con prioridades, tuyo aunque no sigas",
+        "Plan de acción con prioridades",
         "Respuesta en menos de 24 horas",
-        "Equipo multidisciplinario asignado"
+        "Equipo multidisciplinario asignado",
+        "Asesoría y acompañamiento gratuito"
       ],
       "person": {
         "name": "Michael",

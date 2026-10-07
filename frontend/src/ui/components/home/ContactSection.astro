@@ -31,6 +31,8 @@ const { contact, slots, whatsappHref } = Astro.props;
           ))
         }
       </ul>
+      {/*
+        Oculto por ahora: foto, nombre y cargo de quien revisa el diagnóstico. Para mostrarlo, quitar el comentario.
       <div class="flex items-center gap-3.5">
         <span class="ph w-[60px] h-[60px] rounded-full shrink-0" role="img" aria-label={contact.photoAlt}>[Foto]</span>
         <p class="text-[15px]">
@@ -38,6 +40,7 @@ const { contact, slots, whatsappHref } = Astro.props;
           <span class="text-white/70">{contact.person.note}</span>
         </p>
       </div>
+      */}
       {
         whatsappHref && (
           <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="btn-whatsapp self-start">
