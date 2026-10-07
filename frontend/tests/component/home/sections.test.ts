@@ -283,13 +283,16 @@ describe('ContactSection', () => {
     return renderAstro(ContactSection, { props: { contact: view.contact, slots: view.slots, whatsappHref: await whatsappHref() } });
   }
 
-  it('#contacto con cupos (barra de avance), beneficios y la persona que revisa el diagnóstico', async () => {
+  it('#contacto con cupos (barra de avance) y beneficios', async () => {
     const { document } = await render();
     expect(document.querySelector('section#contacto')).not.toBeNull();
     expect(document.body.textContent).toContain('6 de 10 tomados');
     expect(document.querySelector('[role="progressbar"][aria-valuenow="60"]')).not.toBeNull();
-    expect(document.querySelectorAll('[data-benefits] li')).toHaveLength(3);
-    expect(document.body.textContent).toContain('Revisa personalmente cada diagnóstico');
+    expect(document.querySelectorAll('[data-benefits] li')).toHaveLength(4);
+    // Sin foto, nombre ni cargo por ahora
+    expect(document.body.textContent).not.toContain('Revisa personalmente cada diagnóstico');
+    expect(document.body.textContent).not.toContain('[Foto]');
+    expect(document.body.textContent).not.toContain('[Cargo]');
   });
 
   it('formulario (isla) y "Prefiero escribir por WhatsApp"', async () => {

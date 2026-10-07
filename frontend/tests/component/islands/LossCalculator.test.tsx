@@ -9,24 +9,25 @@ const props = {
   cta: { label: 'Quiero recuperar ese dinero', href: '#contacto' },
 };
 
-const hoursSlider = () => screen.getByLabelText(/horas a la semana/i);
-const costSlider = () => screen.getByLabelText(/costo por hora/i);
+const hoursSlider = () => screen.getByLabelText(/horas a la semana en tareas repetitivas por empleado/i);
+const costSlider = () => screen.getByLabelText(/costo por hora de empleado \(COP\)/i);
 
 describe('LossCalculator (isla)', () => {
-  it('muestra el resultado inicial con los valores por defecto', () => {
+  it('muestra el gasto mensual destacado y el semanal y anual (por empleado)', () => {
     render(<LossCalculator {...props} />);
-    expect(screen.getByTestId('monthly-loss')).toHaveTextContent('$1.082.500');
-    expect(screen.getByTestId('annual-loss')).toHaveTextContent('$12.990.000');
-    expect(screen.getByTestId('hours-per-year')).toHaveTextContent('520');
+    expect(screen.getByTestId('monthly-loss')).toHaveTextContent('$1.125.000');
+    expect(screen.getByTestId('weekly-loss')).toHaveTextContent('$250.000');
+    expect(screen.getByTestId('annual-loss')).toHaveTextContent('$13.500.000');
   });
 
   it('los sliders actualizan el resultado', () => {
     render(<LossCalculator {...props} />);
     fireEvent.change(hoursSlider(), { target: { value: '20' } });
-    expect(screen.getByTestId('monthly-loss')).toHaveTextContent('$2.165.000');
+    expect(screen.getByTestId('weekly-loss')).toHaveTextContent('$500.000');
+    expect(screen.getByTestId('monthly-loss')).toHaveTextContent('$2.250.000');
 
     fireEvent.change(costSlider(), { target: { value: '50000' } });
-    expect(screen.getByTestId('monthly-loss')).toHaveTextContent('$4.330.000');
+    expect(screen.getByTestId('monthly-loss')).toHaveTextContent('$4.500.000');
   });
 
   it('los sliders son controles nativos con límites y valor legible para lectores de pantalla', () => {
@@ -56,11 +57,11 @@ describe('LossCalculator (isla)', () => {
     expect(screen.getByTestId('monthly-loss').closest('[aria-live]')).toHaveAttribute('aria-live', 'polite');
   });
 
-  it('muestra la pérdida anual destacada con los textos de la referencia', () => {
+  it('textos del resultado', () => {
     render(<LossCalculator {...props} />);
     expect(screen.getByText('Estás perdiendo aproximadamente')).toBeInTheDocument();
-    expect(screen.getByTestId('annual-loss').parentElement).toHaveTextContent('$12.990.000 al año');
-    expect(screen.getByTestId('monthly-loss').parentElement).toHaveTextContent('$1.082.500 al mes · 520 horas al año');
+    expect(screen.getByTestId('monthly-loss').parentElement).toHaveTextContent('$1.125.000 al mes');
+    expect(screen.getByTestId('weekly-loss').parentElement).toHaveTextContent('$250.000 a la semana · $13.500.000 al año');
   });
 
   it('muestra el error si el cálculo no es válido', () => {

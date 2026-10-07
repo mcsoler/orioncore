@@ -66,11 +66,12 @@ describe('createContainer (composition root)', () => {
     expect(draft.robots).toBe('noindex, follow');
   });
 
-  it('seoFor() del home incluye Organization, LocalBusiness, WebSite y FAQPage', async () => {
+  it('seoFor() del home incluye Organization, LocalBusiness y WebSite (FAQPage solo si el FAQ está visible)', async () => {
     const container = createContainer(baseConfig);
     const view = await container.getHomeContent.execute();
     const types = container.seoFor('/', container.homeJsonLd(view)).jsonLd.map((j) => j['@type']);
-    expect(types).toEqual(['Organization', 'ProfessionalService', 'WebSite', 'FAQPage']);
+    expect(types).toEqual(['Organization', 'ProfessionalService', 'WebSite']);
+    expect(container.homeJsonLd(view, { withFaq: true }).map((j) => j['@type'])).toContain('FAQPage');
   });
 
   it('notFoundSeo() no se indexa', () => {

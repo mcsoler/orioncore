@@ -22,6 +22,10 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
     expect(document.body.className).toContain('text-white');
   });
 
+  it('resultados, proceso, guías y preguntas frecuentes quedan ocultos hasta tener datos reales', () => {
+    for (const id of ['resultados', 'proceso', 'guias', 'preguntas']) expect(document.getElementById(id), id).toBeNull();
+  });
+
   it('la franja de logos de clientes queda oculta hasta tener logos reales', () => {
     expect(html).not.toContain('Empresas que ya dejaron de perder tiempo');
     expect(html).not.toContain('[Logo]');
@@ -44,8 +48,7 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
   it('las secciones siguen el orden aprobado', () => {
     const ids = [...document.querySelectorAll('main section[id]')].map((s) => s.id);
     expect(ids).toEqual([
-      'inicio', 'dolores', 'servicios', 'marketing360', 'calculadora', 'resultados',
-      'proceso', 'tienda', 'guias', 'preguntas', 'contacto',
+      'inicio', 'dolores', 'servicios', 'marketing360', 'calculadora', 'tienda', 'contacto',
     ]);
   });
 
@@ -96,7 +99,9 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
     const types = [...document.querySelectorAll('script[type="application/ld+json"]')].map(
       (s) => JSON.parse(s.textContent!)['@type'],
     );
-    expect(types).toEqual(expect.arrayContaining(['Organization', 'ProfessionalService', 'WebSite', 'FAQPage']));
+    expect(types).toEqual(expect.arrayContaining(['Organization', 'ProfessionalService', 'WebSite']));
+    // Sin FAQ visible no se publica FAQPage (los datos estructurados deben coincidir con la página)
+    expect(types).not.toContain('FAQPage');
   });
 
   it('usa el logo real como favicon y apple-touch-icon', () => {

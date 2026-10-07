@@ -130,6 +130,23 @@ describe('StaticContentRepository (content/home/home.es.json)', () => {
     expect(home.pains.items).toHaveLength(4);
   });
 
+  it('la calculadora menciona software a la medida, automatización, análisis de datos y agentes de IA', async () => {
+    const { calculator } = await repository().getHome();
+    for (const topic of ['software a la medida', 'automatización', 'análisis de datos', 'agentes de IA']) {
+      expect(calculator.subtitle).toContain(topic);
+    }
+  });
+
+  it('beneficios del diagnóstico: sin "tuyo aunque no sigas" y con asesoría gratuita', async () => {
+    const { contact } = await repository().getHome();
+    expect(contact.benefits).toEqual([
+      'Plan de acción con prioridades',
+      'Respuesta en menos de 24 horas',
+      'Equipo multidisciplinario asignado',
+      'Asesoría y acompañamiento gratuito',
+    ]);
+  });
+
   it('cupos: empiezan en 4 de 10 y los textos usan el mes en curso', async () => {
     const home = await repository().getHome();
     expect(home.slots.remaining).toBe(4);

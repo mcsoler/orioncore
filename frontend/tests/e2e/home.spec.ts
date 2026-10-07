@@ -22,6 +22,18 @@ test.describe('responsive', () => {
   }
 });
 
+test.describe('espaciado', () => {
+  for (const width of WIDTHS) {
+    test(`a ${width}px, entre "¿Cuánto estoy perdiendo?" y "¿Te suena familiar?" no hay más de 80 px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/');
+      const cta = await page.getByRole('link', { name: '¿Cuánto estoy perdiendo?' }).boundingBox();
+      const eyebrow = await page.locator('#dolores .eyebrow').boundingBox();
+      expect(eyebrow!.y - (cta!.y + cta!.height)).toBeLessThanOrEqual(80);
+    });
+  }
+});
+
 test.describe('navegación', () => {
   test('menú móvil: abre con el botón, Escape lo cierra y devuelve el foco', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 800 });
@@ -102,10 +114,11 @@ test('el botón de WhatsApp aparece al salir del hero', async ({ page }) => {
 test('calculadora: el slider actualiza el resultado', async ({ page }) => {
   await page.goto('/#calculadora');
   await hydrated(page, '#calculadora astro-island');
-  const hours = page.getByLabel(/Horas a la semana en tareas repetitivas/);
+  const hours = page.getByLabel(/Horas a la semana en tareas repetitivas por empleado/);
   await hours.focus();
-  await page.keyboard.press('ArrowRight'); // 15 → 16 h/semana
-  await expect(page.getByTestId('hours-per-year')).toHaveText('831');
+  await page.keyboard.press('ArrowRight'); // 15 → 16 h/semana × $30.000
+  await expect(page.getByTestId('weekly-loss')).toHaveText('$480.000');
+  await expect(page.getByTestId('monthly-loss')).toHaveText('$2.160.000');
 });
 
 test('formulario: envía el lead al backend con el contrato actual y muestra el éxito', async ({ page }) => {
