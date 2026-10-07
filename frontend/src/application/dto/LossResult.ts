@@ -4,5 +4,5 @@ export interface LossRequest {
 }
 
 export type LossResult =
-  | { ok: true; monthlyLoss: string; annualLoss: string; hoursPerYear: string }
+  | { ok: true; weeklyLoss: string; monthlyLoss: string; annualLoss: string }
   | { ok: false; errors: Partial<Record<keyof LossRequest, string>> };

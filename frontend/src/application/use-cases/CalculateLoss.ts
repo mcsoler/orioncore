@@ -3,7 +3,7 @@ import type { CalculateLossUseCase } from '../ports/in/CalculateLossUseCase';
 import { InvalidValueError } from '../../domain/errors/DomainError';
 import type { LossCalculator } from '../../domain/services/LossCalculator';
 import { Hours } from '../../domain/value-objects/Hours';
-import { groupThousands, Money } from '../../domain/value-objects/Money';
+import { Money } from '../../domain/value-objects/Money';
 
 export class CalculateLoss implements CalculateLossUseCase {
   constructor(private readonly calculator: LossCalculator) {}
@@ -19,9 +19,9 @@ export class CalculateLoss implements CalculateLossUseCase {
 
     return {
       ok: true,
+      weeklyLoss: loss.weeklyLoss.format(),
       monthlyLoss: loss.monthlyLoss.format(),
       annualLoss: loss.annualLoss.format(),
-      hoursPerYear: groupThousands(loss.hoursPerYear),
     };
   }
 }
