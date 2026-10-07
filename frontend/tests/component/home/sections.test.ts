@@ -280,14 +280,14 @@ describe('Faq', () => {
 describe('ContactSection', () => {
   async function render() {
     const { view } = await homeView();
-    return renderAstro(ContactSection, { props: { contact: view.contact, whatsappHref: await whatsappHref() } });
+    return renderAstro(ContactSection, { props: { contact: view.contact, slots: view.slots, whatsappHref: await whatsappHref() } });
   }
 
   it('#contacto con cupos (barra de avance), beneficios y la persona que revisa el diagnóstico', async () => {
     const { document } = await render();
     expect(document.querySelector('section#contacto')).not.toBeNull();
-    expect(document.body.textContent).toContain('[7] de [10] tomados');
-    expect(document.querySelector('[role="progressbar"][aria-valuenow="70"]')).not.toBeNull();
+    expect(document.body.textContent).toContain('6 de 10 tomados');
+    expect(document.querySelector('[role="progressbar"][aria-valuenow="60"]')).not.toBeNull();
     expect(document.querySelectorAll('[data-benefits] li')).toHaveLength(3);
     expect(document.body.textContent).toContain('Revisa personalmente cada diagnóstico');
   });

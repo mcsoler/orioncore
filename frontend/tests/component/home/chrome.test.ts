@@ -11,8 +11,9 @@ const text = (el: Element | null | undefined) => el?.textContent?.replace(/\s+/g
 describe('AnnouncementBar (escasez)', () => {
   it('fondo azul, texto de cupos y enlace "Reservar el mío →" al formulario', async () => {
     const { view } = await homeView();
-    const { document, html } = await renderAstro(AnnouncementBar, { props: view.announcement });
-    expect(document.body.textContent).toContain('Diagnóstico gratuito de octubre: quedan solo [N] de [10] cupos');
+    const { document, html } = await renderAstro(AnnouncementBar, { props: { ...view.announcement, slots: view.slots } });
+    expect(document.body.textContent).toMatch(/Diagnóstico gratuito de [a-záéíóú]+: quedan solo 4 de 10 cupos/);
+    expect(document.querySelector('astro-island')).not.toBeNull(); // se actualiza con los cupos reales
     const link = document.querySelector('a')!;
     expect(link.getAttribute('href')).toBe('#contacto');
     expect(text(link)).toBe('Reservar el mío →');

@@ -8,13 +8,15 @@ import { Product } from '../../src/domain/entities/Product';
 import { Service } from '../../src/domain/entities/Service';
 import { Testimonial } from '../../src/domain/entities/Testimonial';
 import { PhoneNumber } from '../../src/domain/value-objects/PhoneNumber';
+import { Slots } from '../../src/domain/value-objects/Slots';
 
 const cta = (label: string, href: string) => ({ label, href });
 
 /** Contenido mínimo y válido del home para pruebas de aplicación. */
 export function homeContentFixture(overrides: Partial<HomeContent> = {}): HomeContent {
   return {
-    announcement: { text: 'Quedan [N] cupos', cta: cta('Reservar el mío', '#contacto') },
+    slots: Slots.of({ remaining: 4, total: 10 }),
+    announcement: { text: 'Quedan {remaining} de {total} cupos', cta: cta('Reservar el mío', '#contacto') },
     hero: {
       title: 'Automatización, inteligencia artificial y marketing digital para empresas en Colombia',
       hook: { before: 'Deja de perder', highlight: 'clientes, horas y dinero', after: 'en lo que la tecnología ya resuelve.' },
@@ -98,7 +100,7 @@ export function homeContentFixture(overrides: Partial<HomeContent> = {}): HomeCo
     contact: {
       eyebrow: 'Diagnóstico gratuito',
       title: 'Contacto',
-      slots: { label: 'Cupos de octubre', value: '[7] de [10] tomados', progress: 70 },
+      slots: { label: 'Cupos de {month}', value: '{taken} de {total} tomados' },
       benefits: ['Diagnóstico'],
       person: { name: 'Michael', role: '[Cargo]', note: 'Revisa cada diagnóstico' },
       photoAlt: 'Michael',

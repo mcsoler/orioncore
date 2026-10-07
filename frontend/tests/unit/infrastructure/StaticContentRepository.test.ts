@@ -130,6 +130,14 @@ describe('StaticContentRepository (content/home/home.es.json)', () => {
     expect(home.pains.items).toHaveLength(4);
   });
 
+  it('cupos: empiezan en 4 de 10 y los textos usan el mes en curso', async () => {
+    const home = await repository().getHome();
+    expect(home.slots.remaining).toBe(4);
+    expect(home.slots.total).toBe(10);
+    expect(home.announcement.text).toBe('Diagnóstico gratuito de {month}: quedan solo {remaining} de {total} cupos');
+    expect(home.contact.slots).toEqual({ label: 'Cupos de {month}', value: '{taken} de {total} tomados' });
+  });
+
   it('usa los datos de contacto confirmados', async () => {
     const { business } = await repository().getHome();
     expect(business.email).toBe('orioncoretechnologies@gmail.com');

@@ -81,6 +81,10 @@ describe('GetHomeContent', () => {
     expect(view.results.testimonials[0]).toEqual({ quote: 'Bien', author: '[Nombre]', company: undefined });
   });
 
+  it('entrega los cupos iniciales del contenido (los reales se consultan en el navegador)', async () => {
+    expect((await run(homeContentFixture())).slots).toEqual({ remaining: 4, taken: 6, total: 10, progress: 60 });
+  });
+
   it('entrega el WhatsApp como dígitos para wa.me, o nada si no está confirmado', async () => {
     expect((await run(homeContentFixture())).business.whatsapp).toBe('573001234567');
     const sinNumero = homeContentFixture();
