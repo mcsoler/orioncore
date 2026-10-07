@@ -95,7 +95,7 @@ describe('StaticContentRepository (content/home/home.es.json)', () => {
     expect(home.services.title).toBe('Cinco soluciones. Un mismo objetivo: que tu empresa crezca.');
     expect(home.services.items.map((s) => s.headline)).toEqual([
       'Deja de invertir días en lo que debería tomar minutos.',
-      'Tu mejor vendedor no duerme, no se enferma y responde en segundos.',
+      'Cada mensaje respondido a tiempo es una oportunidad que no se pierde.',
       'Toda tu empresa en una sola pantalla.',
       'Sabe quién entra, cuándo y por dónde. Siempre.',
       'Más clientes, no solo más likes.',
