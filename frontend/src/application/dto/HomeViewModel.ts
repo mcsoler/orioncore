@@ -1,4 +1,5 @@
 import type { HomeContent } from '../ports/out/ContentRepository';
+import type { SlotsView } from './SlotsView';
 
 export interface LinkCardView {
   title: string;
@@ -49,6 +50,7 @@ export interface ArticleView extends LinkCardView {
 
 /** Datos listos para pintar el home: solo texto, números y URLs (sin entidades). */
 export interface HomeViewModel {
+  slots: SlotsView;
   announcement: HomeContent['announcement'];
   hero: HomeContent['hero'];
   clients: HomeContent['clients'];

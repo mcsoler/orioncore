@@ -372,8 +372,12 @@
     }
   ],
   "home": {
+    "slots": {
+      "remaining": 4,
+      "total": 10
+    },
     "announcement": {
-      "text": "Diagnóstico gratuito de octubre: quedan solo [N] de [10] cupos",
+      "text": "Diagnóstico gratuito de {month}: quedan solo {remaining} de {total} cupos",
       "cta": {
         "label": "Reservar el mío →",
         "href": "#contacto"
@@ -584,9 +588,8 @@
       "eyebrow": "Diagnóstico gratuito",
       "title": "Reserva tu diagnóstico antes de que se agoten los cupos del mes.",
       "slots": {
-        "label": "Cupos de octubre",
-        "value": "[7] de [10] tomados",
-        "progress": 70
+        "label": "Cupos de {month}",
+        "value": "{taken} de {total} tomados"
       },
       "benefits": [
         "Plan de acción con prioridades, tuyo aunque no sigas",

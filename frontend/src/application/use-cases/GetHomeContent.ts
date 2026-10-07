@@ -14,7 +14,7 @@ export class MissingSectionError extends Error {
 }
 
 const SECTIONS: ReadonlyArray<keyof HomeContent> = [
-  'announcement', 'hero', 'clients', 'pains', 'services', 'marketing', 'calculator',
+  'slots', 'announcement', 'hero', 'clients', 'pains', 'services', 'marketing', 'calculator',
   'results', 'process', 'shop', 'blog', 'faq', 'contact', 'business',
 ];
 
@@ -41,6 +41,7 @@ export class GetHomeContent implements GetHomeContentUseCase {
     const { marketing, results, process, shop, blog, faq } = home;
 
     return {
+      slots: { remaining: home.slots.remaining, taken: home.slots.taken, total: home.slots.total, progress: home.slots.progress },
       announcement: home.announcement,
       hero: home.hero,
       clients: home.clients,

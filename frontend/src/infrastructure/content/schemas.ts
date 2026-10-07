@@ -106,6 +106,7 @@ export const siteContentSchema = z.object({
     )
     .min(1),
   home: z.object({
+    slots: z.object({ remaining: z.number().int().nonnegative(), total: z.number().int().positive() }),
     announcement: z.object({ text, cta }),
     hero: z.object({
       title: text,
@@ -158,7 +159,7 @@ export const siteContentSchema = z.object({
     faq: z.object({ ...heading, items: z.array(z.object({ question: text, answer: text })).min(1) }),
     contact: z.object({
       ...heading,
-      slots: z.object({ label: text, value: text, progress: z.number().min(0).max(100) }),
+      slots: z.object({ label: text, value: text }),
       benefits: z.array(text).min(1),
       person: z.object({ name: text, role: text, note: text }),
       photoAlt: text,

@@ -7,6 +7,7 @@ import type { Product } from '../../../domain/entities/Product';
 import type { Service } from '../../../domain/entities/Service';
 import type { Testimonial } from '../../../domain/entities/Testimonial';
 import type { PhoneNumber } from '../../../domain/value-objects/PhoneNumber';
+import type { Slots } from '../../../domain/value-objects/Slots';
 
 export interface Cta {
   label: string;
@@ -21,6 +22,9 @@ export interface SectionHeading {
 
 /** Contenido del home ya convertido a entidades del dominio. */
 export interface HomeContent {
+  /** Cupos iniciales del diagnóstico; los reales se consultan al backend en el navegador. */
+  slots: Slots;
+  /** `text` admite {month}, {remaining} y {total}. */
   announcement: { text: string; cta: Cta };
   hero: {
     /** H1 con la palabra clave. */
@@ -68,7 +72,8 @@ export interface HomeContent {
   blog: SectionHeading & { subtitle: string; cta: Cta; articles: Article[] };
   faq: SectionHeading & { items: Faq[] };
   contact: SectionHeading & {
-    slots: { label: string; value: string; /** 0–100 */ progress: number };
+    /** Plantillas con {month}, {remaining}, {taken} y {total}. */
+    slots: { label: string; value: string };
     benefits: string[];
     person: { name: string; role: string; note: string };
     photoAlt: string;

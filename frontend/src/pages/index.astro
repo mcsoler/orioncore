@@ -19,7 +19,7 @@ const view = await app.getHomeContent.execute();
 const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whatsappMessage);
 ---
 
-<BaseLayout seo={app.seoFor('/', app.homeJsonLd(view))} announcement={view.announcement}>
+<BaseLayout seo={app.seoFor('/', app.homeJsonLd(view))} announcement={{ ...view.announcement, slots: view.slots }}>
   <Hero hero={view.hero} />
   {/* Oculto hasta tener logos reales de clientes. Para mostrarlo, quitar el comentario. */}
   {/* <ClientLogos {...view.clients} /> */}
@@ -32,5 +32,5 @@ const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whats
   <Shop {...view.shop} />
   <BlogGuides {...view.blog} />
   <Faq {...view.faq} />
-  <ContactSection contact={view.contact} whatsappHref={whatsappHref} />
+  <ContactSection contact={view.contact} slots={view.slots} whatsappHref={whatsappHref} />
 </BaseLayout>

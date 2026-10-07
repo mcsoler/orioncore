@@ -10,6 +10,7 @@ import { Service } from '../../domain/entities/Service';
 import type { SiteRouteProps } from '../../domain/entities/SiteRoute';
 import { Testimonial } from '../../domain/entities/Testimonial';
 import { PhoneNumber } from '../../domain/value-objects/PhoneNumber';
+import { Slots } from '../../domain/value-objects/Slots';
 import { siteContentSchema, type SiteContent } from './schemas';
 
 export class ContentValidationError extends Error {
@@ -40,6 +41,7 @@ export class StaticContentRepository implements ContentRepository, RouteReposito
     const { home, business } = this.content;
     return {
       ...home,
+      slots: Slots.of(home.slots),
       services: { ...home.services, items: this.services() },
       marketing: { ...home.marketing, items: this.marketingLines() },
       results: {

@@ -11,6 +11,7 @@ import poppinsHook from '@fontsource/poppins/files/poppins-latin-700-normal.woff
 import '../../styles/global.css';
 
 import { brandColors as colors } from '../theme';
+import type { SlotsView } from '../../application/dto/SlotsView';
 import { container, type SeoMeta } from '../../composition/container';
 import AnnouncementBar from '../components/home/AnnouncementBar.astro';
 import Footer from '../components/home/Footer.astro';
@@ -21,7 +22,7 @@ import Seo from '../components/shared/Seo.astro';
 interface Props {
   seo: SeoMeta;
   /** Barra de escasez (solo en el home). */
-  announcement?: { text: string; cta: { label: string; href: string } };
+  announcement?: { text: string; cta: { label: string; href: string }; slots: SlotsView };
 }
 
 const { seo, announcement } = Astro.props;
