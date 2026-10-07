@@ -37,6 +37,7 @@ inventar/
 
 # Notas internas (no se suben)
 PROMPT-*.md
+home-html/
 
 # Generados en el build (scripts/copy-globe-assets.mjs) y cobertura de pruebas
 frontend/public/globe.gl.min.js
