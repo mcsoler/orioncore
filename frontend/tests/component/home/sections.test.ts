@@ -40,15 +40,15 @@ describe('Hero', () => {
     expect(text(hook.querySelector('span'))).toBe('clientes, horas y dinero');
   });
 
-  it('CTA, microcopy de valor y prueba social con calificación', async () => {
-    const { document } = await render();
+  it('CTA principales; el microcopy de valor y la prueba social quedan ocultos hasta tener datos reales', async () => {
+    const { document, html } = await render();
     const links = [...document.querySelectorAll('a')];
     expect(links.find((a) => text(a) === 'Reservar mi diagnóstico gratis')!.getAttribute('href')).toBe('#contacto');
     expect(links.find((a) => text(a) === '¿Cuánto estoy perdiendo?')!.getAttribute('href')).toBe('#calculadora');
-    expect(document.body.textContent).toContain('Valorado en [$X] · Sin compromiso · Respuesta en menos de 24 h');
-    expect(document.body.textContent).toContain('[4,9]/5');
-    expect(document.body.textContent).toContain('Más de [N] empresas ya confían en nosotros');
-    expect(document.querySelector('[aria-label="Calificación: [4,9] de 5"]')).not.toBeNull();
+    expect(html).not.toContain('Valorado en');
+    expect(html).not.toContain('[foto]');
+    expect(html).not.toContain('★★★★★');
+    expect(html).not.toContain('ya confían en nosotros');
   });
 
   it('conserva el globo y la red de nodos (decisión del cliente), sin cadenas ni velas', async () => {

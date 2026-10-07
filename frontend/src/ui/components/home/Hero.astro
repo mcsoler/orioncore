@@ -133,6 +133,9 @@ const stroke = (c: string) => (c === 's' ? 'stroke-secondary' : 'stroke-primary'
         <a href={hero.primaryCta.href} class="btn-primary btn-lg">{hero.primaryCta.label}</a>
         <a href={hero.secondaryCta.href} class="btn-ghost btn-lg">{hero.secondaryCta.label}</a>
       </div>
+      {/*
+        Oculto hasta tener datos reales (valor del diagnóstico, calificación, número de empresas y fotos).
+        Para mostrarlo de nuevo, quitar este comentario.
       <p class="text-sm text-white/70">{hero.microcopy}</p>
       <div class="flex items-center gap-3.5 pt-1.5">
         <div class="flex" aria-hidden="true">
@@ -146,6 +149,7 @@ const stroke = (c: string) => (c === 's' ? 'stroke-secondary' : 'stroke-primary'
           <span class="text-white/70">{hero.socialProof}</span>
         </p>
       </div>
+      */}
     </div>
     <div class="hidden lg:block" aria-hidden="true"></div>
   </div>

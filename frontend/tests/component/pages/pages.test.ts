@@ -22,6 +22,11 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
     expect(document.body.className).toContain('text-white');
   });
 
+  it('la franja de logos de clientes queda oculta hasta tener logos reales', () => {
+    expect(html).not.toContain('Empresas que ya dejaron de perder tiempo');
+    expect(html).not.toContain('[Logo]');
+  });
+
   it('<html lang="es-CO"> y un solo H1 con la palabra clave', () => {
     expect(document.documentElement.getAttribute('lang')).toBe('es-CO');
     expect(document.querySelectorAll('h1')).toHaveLength(1);

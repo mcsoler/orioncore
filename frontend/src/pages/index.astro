@@ -21,7 +21,8 @@ const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whats
 
 <BaseLayout seo={app.seoFor('/', app.homeJsonLd(view))} announcement={view.announcement}>
   <Hero hero={view.hero} />
-  <ClientLogos {...view.clients} />
+  {/* Oculto hasta tener logos reales de clientes. Para mostrarlo, quitar el comentario. */}
+  {/* <ClientLogos {...view.clients} /> */}
   <PainPoints {...view.pains} />
   <Services {...view.services} whatsappHref={whatsappHref} />
   <Marketing360 {...view.marketing} />
