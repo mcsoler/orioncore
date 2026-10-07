@@ -93,6 +93,11 @@ describe('PainPoints', () => {
     expect(cards.map((c) => text(c.querySelector('.tag')))).toEqual(['Ventas perdidas', 'Horas perdidas', 'Riesgo', 'Pauta quemada']);
     expect(text(cards[0]!.querySelector('h3'))).toBe('Te escriben de noche y nadie responde.');
     expect(text(document.querySelector('[data-closing]'))).toBe('No es falta de esfuerzo. Es falta de sistema.');
+    // "Es falta de sistema." en el mismo rojo de las etiquetas de pérdida
+    const highlight = document.querySelector('[data-closing] span')!;
+    expect(text(highlight)).toBe('Es falta de sistema.');
+    expect(highlight.className).toContain('text-danger');
+    expect(cards[0]!.querySelector('.tag')!.className).toContain('text-danger');
   });
 });
 
