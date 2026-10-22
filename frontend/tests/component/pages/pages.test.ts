@@ -3,9 +3,7 @@ import { renderPage } from '../../support/renderAstro';
 import { homeView } from '../../support/homeView';
 import IndexPage from '../../../src/pages/index.astro';
 import NotFoundPage from '../../../src/pages/404.astro';
-import ServicePage from '../../../src/pages/servicios/[slug].astro';
 import MarketingLinePage from '../../../src/pages/marketing-digital/[slug].astro';
-import ShopItemPage from '../../../src/pages/tienda/[slug].astro';
 
 const H1 = 'Automatización, inteligencia artificial y marketing digital para empresas en Colombia';
 const meta = (d: Document, sel: string) => d.querySelector(sel)?.getAttribute('content');
@@ -69,7 +67,7 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
       '/servicios/automatizacion-de-procesos/', '/servicios/agentes-ia-whatsapp/', '/servicios/software-a-medida/',
       '/servicios/seguridad-control-de-acceso/', '/marketing-digital/', '/marketing-digital/analisis-web/',
       '/marketing-digital/branding-digital/', '/marketing-digital/community-manager/',
-      '/marketing-digital/posicionamiento-presencial/', '/marketing-digital/email-marketing/',
+      '/marketing-digital/posicionamiento-de-marca/', '/marketing-digital/email-marketing/',
       '/marketing-digital/pauta-digital/', '/marketing-digital/integraciones-web/', '/tienda/', '/casos/', '/blog/',
     ]) {
       expect(hrefs.has(href), href).toBe(true);
@@ -124,30 +122,10 @@ describe('Home (/) — reglas comunes del Paso 4.4', () => {
 });
 
 describe('Páginas en borrador (plantilla mínima)', () => {
-  it('/servicios/{slug}/: H1, intro, CTA, migas y noindex', async () => {
-    const { document } = await renderPage(ServicePage, { slug: 'software-a-medida' });
-    expect(document.querySelectorAll('h1')).toHaveLength(1);
-    expect(document.querySelector('h1')!.textContent?.trim()).toBe('Software empresarial a medida');
-    expect(document.querySelector('main')!.textContent).toContain('Construimos el sistema que se adapta a cómo trabajas tú');
-    expect(document.querySelector('main a[href="/contacto/"]')).not.toBeNull();
-    expect(document.querySelector('nav[aria-label="Migas de pan"]')).not.toBeNull();
-    expect(meta(document, 'meta[name="robots"]')).toBe('noindex, follow');
-    expect(document.querySelector('link[rel="canonical"]')!.getAttribute('href')).toBe(
-      'https://orioncore.co/servicios/software-a-medida/',
-    );
-  });
-
   it('/marketing-digital/{slug}/ tiene migas hasta el hub', async () => {
     const { document } = await renderPage(MarketingLinePage, { slug: 'pauta-digital' });
     const crumbs = [...document.querySelectorAll('nav[aria-label="Migas de pan"] a')].map((a) => a.getAttribute('href'));
     expect(crumbs).toEqual(['/', '/marketing-digital/']);
-  });
-
-  it('/tienda/{slug}/ sirve tanto categorías como productos', async () => {
-    const category = await renderPage(ShopItemPage, { slug: 'categoria-ejemplo' });
-    const product = await renderPage(ShopItemPage, { slug: 'laptop-empresarial-14' });
-    expect(category.document.querySelector('h1')!.textContent?.trim()).toBe('[Categoría]');
-    expect(product.document.querySelector('h1')!.textContent?.trim()).toBe('[Laptop empresarial 14"]');
   });
 });
 

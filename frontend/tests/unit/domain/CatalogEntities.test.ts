@@ -47,6 +47,42 @@ describe('ShopCategory y Product', () => {
   });
 });
 
+describe('Product (tienda)', () => {
+  it('disponibilidad, envío rápido, instalación, marca y destacado', () => {
+    const product = Product.create({
+      title: 'Cámara', description: 'x', category: 'seguridad', availability: 'backorder',
+      fastShipping: true, installation: true, brand: 'Marca A', featured: true, stockLabel: 'Bajo pedido · 5 días',
+    });
+    expect(product.inStock).toBe(false);
+    expect(product.fastShipping).toBe(true);
+    expect(product.installation).toBe(true);
+    expect(product.brand).toBe('Marca A');
+    expect(product.featured).toBe(true);
+    expect(product.stockLabel).toBe('Bajo pedido · 5 días');
+  });
+
+  it('por defecto está en stock, sin envío rápido ni instalación y no es destacado', () => {
+    const product = Product.create({ title: 'Mouse', description: 'x', category: 'accesorios' });
+    expect(product.inStock).toBe(true);
+    expect(product.fastShipping).toBe(false);
+    expect(product.installation).toBe(false);
+    expect(product.featured).toBe(false);
+  });
+
+  it('calcula el ahorro frente al precio anterior solo con ambos precios', () => {
+    expect(Product.create({ title: 'R', description: 'x', category: 'redes', price: 400_000, oldPrice: 500_000 }).savings?.format()).toBe('$100.000');
+    expect(Product.create({ title: 'R', description: 'x', category: 'redes', price: 400_000 }).savings).toBeUndefined();
+    expect(Product.create({ title: 'R', description: 'x', category: 'redes', oldPrice: 500_000 }).savings).toBeUndefined();
+  });
+
+  it('rechaza un precio anterior menor que el actual o una disponibilidad desconocida', () => {
+    expect(() => Product.create({ title: 'R', description: 'x', category: 'redes', price: 500_000, oldPrice: 400_000 })).toThrow(InvalidValueError);
+    expect(() =>
+      Product.create({ title: 'R', description: 'x', category: 'redes', availability: 'agotado' as never }),
+    ).toThrow(InvalidValueError);
+  });
+});
+
 describe('CaseStudy', () => {
   it('expone href bajo /casos/ y su resultado destacado', () => {
     const study = CaseStudy.create({ client: 'Cliente Uno', summary: 'Automatizamos su CRM.', result: '[X] % menos tiempo' });

@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { GetHomeContent, MissingSectionError, PRICE_PENDING } from '../../../src/application/use-cases/GetHomeContent';
 import type { ContentRepository, HomeContent } from '../../../src/application/ports/out/ContentRepository';
+import { Article } from '../../../src/domain/entities/Article';
 import { ProcessStep } from '../../../src/domain/entities/ProcessStep';
+import { Product } from '../../../src/domain/entities/Product';
 import { homeContentFixture } from '../../support/homeContent';
 
 const repositoryWith = (content: HomeContent): ContentRepository => ({ getHome: async () => content });
@@ -51,6 +53,25 @@ describe('GetHomeContent', () => {
     const [known, pending] = (await run(homeContentFixture())).shop.products;
     expect(known).toMatchObject({ slug: 'kit-chatbot', price: '$1.299.000', oldPrice: '$1.500.000', badge: 'Nuevo', stock: 'Solo quedan 3' });
     expect(pending).toMatchObject({ price: PRICE_PENDING, oldPrice: undefined, badge: undefined, stock: undefined });
+  });
+
+  it('la tienda del home muestra hasta 4 destacados; sin destacados, los primeros 4 del catálogo', async () => {
+    const base = homeContentFixture();
+    const make = (n: number, featured: number[] = []) =>
+      Array.from({ length: n }, (_, i) =>
+        Product.create({ title: `Producto ${i + 1}`, description: 'x', category: 'redes', featured: featured.includes(i) }),
+      );
+    const withFeatured = await run({ ...base, shop: { ...base.shop, products: make(9, [2, 5]) } });
+    expect(withFeatured.shop.products.map((p) => p.slug)).toEqual(['producto-3', 'producto-6']);
+    const withoutFeatured = await run({ ...base, shop: { ...base.shop, products: make(9) } });
+    expect(withoutFeatured.shop.products.map((p) => p.slug)).toEqual(['producto-1', 'producto-2', 'producto-3', 'producto-4']);
+  });
+
+  it('las guías del home son las 3 primeras del blog', async () => {
+    const base = homeContentFixture();
+    const articles = Array.from({ length: 5 }, (_, i) => Article.create({ title: `Guía ${i + 1}`, excerpt: 'x' }));
+    const view = await run({ ...base, blog: { ...base.blog, articles } });
+    expect(view.blog.articles.map((a) => a.title)).toEqual(['Guía 1', 'Guía 2', 'Guía 3']);
   });
 
   it('casos con etiqueta y cita; artículos con categoría y tiempo de lectura', async () => {
