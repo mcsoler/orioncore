@@ -25,14 +25,16 @@
       "title": "Marketing digital 360°",
       "status": "draft",
       "section": "marketing",
-      "description": "Marketing digital 360° en Colombia: pauta, SEO, branding, email y redes en un solo equipo. Diagnóstico gratis con Orion Core."
+      "description": "Estrategia, branding, redes, pauta y email en un solo equipo. Más clientes, no solo más likes. Auditoría gratis.",
+      "seoTitle": "Agencia de Marketing Digital 360° en Colombia | Orion Core"
     },
     {
       "path": "/tienda/",
       "title": "Tienda",
       "status": "draft",
       "section": "tienda",
-      "description": "Soluciones de automatización e inteligencia artificial listas para usar, pensadas para empresas en Colombia."
+      "description": "Laptops, redes Wi‑Fi, cámaras y control de acceso con envío a toda Colombia, garantía e instalación opcional.",
+      "seoTitle": "Tienda de Tecnología para Empresas | Orion Core"
     },
     {
       "path": "/casos/",
@@ -84,6 +86,8 @@
       "status": "draft",
       "headline": "Deja de invertir días en lo que debería tomar minutos.",
       "description": "Transformamos tareas manuales y repetitivas en flujos automáticos, más rápidos, medibles y sin errores. Tu equipo se enfoca en lo que sí genera dinero.",
+      "seoTitle": "Automatización de Procesos para Empresas | Orion Core",
+      "seoDescription": "Elimina tareas manuales: integramos tus plataformas y automatizamos reportes y alertas. Recupera horas cada semana.",
       "items": [
         "Automatización de tareas administrativas",
         "Integración entre plataformas",
@@ -100,7 +104,8 @@
       "badge": "Más solicitado",
       "headline": "Cada mensaje respondido a tiempo es una oportunidad que no se pierde.",
       "description": "El cliente le compra al primero que contesta. Nuestro agente atiende, califica y agenda por WhatsApp 24/7, y solo te pasa los prospectos listos para cerrar.",
-      "seoDescription": "Un agente de IA atiende, califica y agenda por WhatsApp 24/7, y solo te pasa los prospectos listos para cerrar.",
+      "seoTitle": "Agentes de IA para WhatsApp: Atención 24/7 | Orion Core",
+      "seoDescription": "Responde en segundos, califica prospectos y agenda citas por WhatsApp 24/7. Prueba gratis el agente con tu negocio.",
       "items": [
         "Respuestas automáticas inteligentes",
         "Calificación y derivación de prospectos",
@@ -116,6 +121,8 @@
       "status": "draft",
       "headline": "Toda tu empresa en una sola pantalla.",
       "description": "Basta de 10 archivos de Excel y 5 plataformas que no se hablan. Construimos el sistema que se adapta a cómo trabajas tú, no al revés.",
+      "seoTitle": "Software a Medida y CRM para Empresas | Orion Core",
+      "seoDescription": "CRM, dashboards, portales y apps hechos a la medida de tu operación. Cotiza tu software con precio cerrado.",
       "items": [
         "ERP y CRM a la medida de tu operación",
         "Analítica de datos y dashboards en tiempo real",
@@ -133,7 +140,8 @@
       "status": "draft",
       "headline": "Sabe quién entra, cuándo y por dónde. Siempre.",
       "description": "Un solo incidente cuesta más que prevenirlo. Protegemos tus instalaciones, tu información y tus accesos con reconocimiento facial y monitoreo en tiempo real.",
-      "seoDescription": "Protegemos tus instalaciones, tu información y tus accesos con reconocimiento facial y monitoreo en tiempo real.",
+      "seoTitle": "Control de Acceso y Reconocimiento Facial | Orion Core",
+      "seoDescription": "Controla quién entra a tu empresa con reconocimiento facial, permisos y alertas en tiempo real. Evaluación gratuita.",
       "items": [
         "Control de ingreso y permisos",
         "Reconocimiento facial",
@@ -173,7 +181,21 @@
         "Velocidad y SEO",
         "Mapas de calor",
         "Embudo GA4"
-      ]
+      ],
+      "seoTitle": "Análisis y Auditoría Web (UX, SEO y CRO) | Orion Core",
+      "seoDescription": "Descubre por qué tu web no convierte: auditoría de experiencia, velocidad, SEO y embudo con plan de acción.",
+      "hub": {
+        "visual": "Mapa de calor sobre una web",
+        "heading": "Análisis web: descubre por qué tu página no vende",
+        "text": "Auditamos experiencia de usuario, velocidad, SEO y embudo de conversión para decirte exactamente dónde se van tus clientes.",
+        "items": [
+          "Auditoría UX/CRO",
+          "SEO técnico",
+          "Mapas de calor",
+          "Embudo en GA4"
+        ],
+        "cta": "Quiero mi análisis web"
+      }
     },
     {
       "title": "Branding digital",
@@ -186,7 +208,21 @@
         "Paleta y tipografía",
         "Manual de marca",
         "Plantillas para redes"
-      ]
+      ],
+      "seoTitle": "Branding Digital: Diseño de Logo e Identidad | Orion Core",
+      "seoDescription": "Logo, paleta, tipografía y manual de marca para que tu empresa se vea profesional en web y redes.",
+      "hub": {
+        "visual": "Logo y paleta de marca aplicados",
+        "heading": "Branding digital: identidad de marca y diseño de logo",
+        "text": "Creamos una marca que se ve profesional y genera confianza al primer vistazo, lista para web, redes y papelería.",
+        "items": [
+          "Diseño de logo",
+          "Paleta y tipografía",
+          "Manual de marca",
+          "Plantillas para redes"
+        ],
+        "cta": "Quiero mi marca"
+      }
     },
     {
       "title": "Community manager",
@@ -199,11 +235,25 @@
         "Diseño y copy",
         "Reels y stories",
         "Respuesta a la comunidad"
-      ]
+      ],
+      "seoTitle": "Community Manager y Gestión de Redes Sociales | Orion Core",
+      "seoDescription": "Contenido, diseño, reels y gestión de comunidad para tus redes, todos los meses. Planes desde [$X].",
+      "hub": {
+        "visual": "Grilla de Instagram de un cliente",
+        "heading": "Community manager: gestión de redes sociales orgánica",
+        "text": "Tus redes vivas todos los días: calendario, diseño, copy, reels y atención a la comunidad, sin que tengas que pensar en ello.",
+        "items": [
+          "Calendario de contenido",
+          "Diseño y copy",
+          "Reels y stories",
+          "Gestión de comunidad"
+        ],
+        "cta": "Quiero gestión de redes"
+      }
     },
     {
       "title": "Posicionamiento presencial",
-      "slug": "posicionamiento-presencial",
+      "slug": "posicionamiento-de-marca",
       "status": "draft",
       "hook": "Tu marca también en el mundo físico.",
       "description": "Presencia de marca en eventos, puntos de venta y material impreso.",
@@ -212,7 +262,21 @@
         "Activaciones y eventos",
         "Señalética",
         "Brochures y catálogos"
-      ]
+      ],
+      "seoTitle": "Posicionamiento de Marca Presencial y POP | Orion Core",
+      "seoDescription": "Material POP, activaciones, eventos y piezas impresas alineadas con tu marca digital.",
+      "hub": {
+        "visual": "Stand o material POP en un evento",
+        "heading": "Posicionamiento de marca presencial",
+        "text": "Llevamos tu marca al mundo físico con material POP, activaciones, eventos y piezas impresas coherentes con tu identidad digital.",
+        "items": [
+          "Material POP",
+          "Activaciones",
+          "Eventos y ferias",
+          "Brochures y catálogos"
+        ],
+        "cta": "Quiero presencia física"
+      }
     },
     {
       "title": "Email marketing",
@@ -225,7 +289,21 @@
         "Newsletters",
         "Segmentación",
         "Diseño de plantillas"
-      ]
+      ],
+      "seoTitle": "Email Marketing y Automatizaciones | Orion Core",
+      "seoDescription": "Correos que venden solos: bienvenida, recompra y carrito abandonado. Diseño, segmentación y reportes.",
+      "hub": {
+        "visual": "Secuencia de correos automatizada",
+        "heading": "Email marketing: ventas automáticas desde tu base de datos",
+        "text": "Secuencias de bienvenida, recompra y carrito abandonado que venden mientras tu equipo hace otras cosas.",
+        "items": [
+          "Automatizaciones",
+          "Newsletters",
+          "Segmentación",
+          "Diseño de plantillas"
+        ],
+        "cta": "Quiero email marketing"
+      }
     },
     {
       "title": "Pauta multicanal",
@@ -239,7 +317,22 @@
         "TikTok Ads",
         "Pinterest Ads",
         "LinkedIn Ads"
-      ]
+      ],
+      "seoTitle": "Pauta en Meta, Google, TikTok y LinkedIn | Orion Core",
+      "seoDescription": "Campañas en Meta, Google, TikTok, Pinterest y LinkedIn optimizadas por costo por cliente.",
+      "hub": {
+        "visual": "Anuncios en varias plataformas",
+        "heading": "Pauta digital en Meta, Google, TikTok, Pinterest y LinkedIn",
+        "text": "Anuncios donde están tus clientes, con creatividades nuevas y optimización semanal según el costo por cliente, no por likes.",
+        "items": [
+          "Meta Ads",
+          "Google Ads",
+          "TikTok Ads",
+          "Pinterest Ads",
+          "LinkedIn Ads"
+        ],
+        "cta": "Quiero pautar"
+      }
     },
     {
       "title": "Conexiones e integraciones web",
@@ -252,60 +345,305 @@
         "CRM y formularios",
         "Pasarelas de pago",
         "WhatsApp y chat"
-      ]
+      ],
+      "seoTitle": "Integraciones Web: CRM, Pagos y WhatsApp | Orion Core",
+      "seoDescription": "Conectamos tu web con CRM, pasarelas de pago, WhatsApp y API de conversiones para medir cada venta.",
+      "hub": {
+        "visual": "Web conectada a CRM, pagos y WhatsApp",
+        "heading": "Conexiones e integraciones con páginas web",
+        "text": "Tu página deja de ser un folleto: la conectamos a tu CRM, pasarelas de pago, WhatsApp y píxeles de medición.",
+        "items": [
+          "Píxeles y API de conversiones",
+          "CRM y formularios",
+          "Pasarelas de pago",
+          "WhatsApp y chat"
+        ],
+        "cta": "Quiero integrar mi web"
+      }
     }
   ],
   "shop": {
     "categories": [
       {
-        "title": "[Categoría]",
-        "slug": "categoria-ejemplo",
-        "status": "draft"
+        "title": "Laptops",
+        "slug": "laptops",
+        "status": "draft",
+        "description": "Laptops empresariales con garantía oficial y envío a toda Colombia.",
+        "seoText": {
+          "title": "Cómo elegir una laptop para tu empresa",
+          "body": "[Texto único de la categoría Laptops: procesador, memoria y batería según el uso, y enlace a la guía del blog]."
+        }
+      },
+      {
+        "title": "Redes",
+        "slug": "redes",
+        "status": "draft",
+        "description": "Routers Wi‑Fi 6, sistemas en malla y switches para oficinas, con instalación opcional.",
+        "seoText": {
+          "title": "Cómo elegir la red Wi‑Fi de tu oficina",
+          "body": "[Texto único de la categoría Redes: cobertura por metros cuadrados, número de dispositivos y cuándo conviene un sistema en malla]."
+        }
+      },
+      {
+        "title": "Seguridad",
+        "slug": "seguridad",
+        "status": "draft",
+        "description": "Cámaras IP y control de acceso facial con instalación de nuestro equipo técnico.",
+        "seoText": {
+          "title": "Cómo elegir cámaras y control de acceso",
+          "body": "[Texto único de la categoría Seguridad: resolución, almacenamiento, reconocimiento facial y enlace al [servicio de control de acceso](/servicios/seguridad-control-de-acceso/)]."
+        }
+      },
+      {
+        "title": "Accesorios",
+        "slug": "accesorios",
+        "status": "draft",
+        "description": "Monitores, teclados, mouse y accesorios para puestos de trabajo productivos.",
+        "seoText": {
+          "title": "Accesorios para un puesto de trabajo productivo",
+          "body": "[Texto único de la categoría Accesorios: ergonomía, monitores y combos para equipos de trabajo]."
+        }
+      },
+      {
+        "title": "Smart office",
+        "slug": "smart-office",
+        "status": "draft",
+        "description": "Domótica y dispositivos inteligentes para automatizar tu oficina.",
+        "seoText": {
+          "title": "Cómo automatizar tu oficina",
+          "body": "[Texto único de la categoría Smart office: iluminación, energía y sensores, y enlace al [servicio de automatización](/servicios/automatizacion-de-procesos/)]."
+        }
       }
     ],
     "products": [
       {
         "title": "[Laptop empresarial 14\"]",
         "slug": "laptop-empresarial-14",
-        "category": "categoria-ejemplo",
+        "category": "laptops",
         "description": "[Descripción del producto]",
         "price": null,
         "oldPrice": null,
         "badge": "Más vendido",
         "stock": null,
+        "stockLabel": "En stock · llega en [N] días",
+        "availability": "in_stock",
+        "fastShipping": false,
+        "installation": false,
+        "brand": "[Marca A]",
+        "sku": "[XXXX]",
+        "featured": true,
+        "benefits": [
+          "[Beneficio 1: procesador para multitarea]",
+          "[Beneficio 2: batería de N horas]",
+          "[Beneficio 3: garantía en Colombia]"
+        ],
+        "variants": [
+          "8 GB RAM",
+          "16 GB RAM",
+          "32 GB RAM"
+        ],
+        "specs": [
+          {
+            "label": "Procesador",
+            "value": "[Detalle]"
+          },
+          {
+            "label": "Memoria",
+            "value": "[N] GB"
+          },
+          {
+            "label": "Almacenamiento",
+            "value": "[N] GB SSD"
+          },
+          {
+            "label": "Garantía",
+            "value": "[N] meses"
+          },
+          {
+            "label": "En la caja",
+            "value": "[Contenido]"
+          }
+        ],
         "status": "draft"
       },
       {
-        "title": "[Router Wi‑Fi 6 malla]",
+        "title": "[Laptop ultraliviana 13\"]",
+        "slug": "laptop-ultraliviana-13",
+        "category": "laptops",
+        "description": "[Descripción del producto]",
+        "price": null,
+        "oldPrice": null,
+        "stock": null,
+        "stockLabel": "Últimas [N] unidades",
+        "availability": "in_stock",
+        "fastShipping": false,
+        "installation": false,
+        "brand": "[Marca B]",
+        "sku": "[XXXX]",
+        "status": "draft"
+      },
+      {
+        "title": "[Router Wi‑Fi 6 malla x3]",
         "slug": "router-wifi-6-malla",
-        "category": "categoria-ejemplo",
+        "category": "redes",
         "description": "[Descripción del producto]",
         "price": null,
         "oldPrice": null,
         "badge": "-[X]%",
         "stock": null,
+        "stockLabel": "En stock · envío 24 h",
+        "availability": "in_stock",
+        "fastShipping": true,
+        "installation": false,
+        "brand": "[Marca C]",
+        "sku": "[XXXX]",
+        "featured": true,
+        "benefits": [
+          "[Beneficio 1: cobertura hasta X m²]",
+          "[Beneficio 2: hasta N dispositivos]",
+          "[Beneficio 3: configuración desde app]"
+        ],
+        "variants": [
+          "1 nodo",
+          "Pack x2",
+          "Pack x3"
+        ],
+        "specs": [
+          {
+            "label": "Estándar",
+            "value": "[Wi‑Fi 6 / 802.11ax]"
+          },
+          {
+            "label": "Cobertura",
+            "value": "[X] m²"
+          },
+          {
+            "label": "Puertos",
+            "value": "[Detalle]"
+          },
+          {
+            "label": "Garantía",
+            "value": "[N] meses"
+          },
+          {
+            "label": "En la caja",
+            "value": "[Contenido]"
+          }
+        ],
+        "bundle": [
+          "switch-8-puertos-poe"
+        ],
+        "questions": [
+          {
+            "question": "¿Sirve para una oficina de 2 pisos?",
+            "answer": "[Respuesta]"
+          },
+          {
+            "question": "¿Incluye instalación?",
+            "answer": "[Respuesta]"
+          }
+        ],
         "status": "draft"
       },
       {
-        "title": "[Terminal facial de acceso]",
-        "slug": "terminal-facial-de-acceso",
-        "category": "categoria-ejemplo",
+        "title": "[Switch 8 puertos PoE]",
+        "slug": "switch-8-puertos-poe",
+        "category": "redes",
         "description": "[Descripción del producto]",
         "price": null,
         "oldPrice": null,
-        "badge": "Nuevo",
         "stock": null,
+        "stockLabel": "En stock",
+        "availability": "in_stock",
+        "fastShipping": false,
+        "installation": false,
+        "brand": "[Marca C]",
+        "sku": "[XXXX]",
         "status": "draft"
       },
       {
         "title": "[Cámara IP exterior 4MP]",
         "slug": "camara-ip-exterior-4mp",
-        "category": "categoria-ejemplo",
+        "category": "seguridad",
+        "description": "[Descripción del producto]",
+        "price": null,
+        "oldPrice": null,
+        "badge": "Nuevo",
+        "stock": null,
+        "stockLabel": "En stock · incluye instalación",
+        "availability": "in_stock",
+        "fastShipping": false,
+        "installation": true,
+        "brand": "[Marca A]",
+        "sku": "[XXXX]",
+        "featured": true,
+        "status": "draft"
+      },
+      {
+        "title": "[Control de acceso facial]",
+        "slug": "control-de-acceso-facial",
+        "category": "seguridad",
+        "description": "[Descripción del producto]",
+        "price": null,
+        "oldPrice": null,
+        "badge": "B2B",
+        "stock": null,
+        "stockLabel": "Bajo pedido · [N] días",
+        "availability": "backorder",
+        "fastShipping": false,
+        "installation": true,
+        "brand": "[Marca B]",
+        "sku": "[XXXX]",
+        "featured": true,
+        "status": "draft"
+      },
+      {
+        "title": "[Kit teclado + mouse]",
+        "slug": "kit-teclado-mouse",
+        "category": "accesorios",
         "description": "[Descripción del producto]",
         "price": null,
         "oldPrice": null,
         "badge": "Combo",
         "stock": null,
+        "stockLabel": "En stock",
+        "availability": "in_stock",
+        "fastShipping": false,
+        "installation": false,
+        "brand": "[Marca A]",
+        "sku": "[XXXX]",
+        "status": "draft"
+      },
+      {
+        "title": "[Monitor 27\" QHD]",
+        "slug": "monitor-27-qhd",
+        "category": "accesorios",
+        "description": "[Descripción del producto]",
+        "price": null,
+        "oldPrice": null,
+        "stock": null,
+        "stockLabel": "En stock",
+        "availability": "in_stock",
+        "fastShipping": false,
+        "installation": false,
+        "brand": "[Marca B]",
+        "sku": "[XXXX]",
+        "status": "draft"
+      },
+      {
+        "title": "[Kit domótica oficina]",
+        "slug": "kit-domotica-oficina",
+        "category": "smart-office",
+        "description": "[Descripción del producto]",
+        "price": null,
+        "oldPrice": null,
+        "stock": null,
+        "stockLabel": "En stock",
+        "availability": "in_stock",
+        "fastShipping": false,
+        "installation": true,
+        "brand": "[Marca C]",
+        "sku": "[XXXX]",
         "status": "draft"
       }
     ]
@@ -350,6 +688,124 @@
       "seoTitle": "Precio de un chatbot de IA para WhatsApp | Orion Core",
       "readingTime": "[N] min de lectura · Actualizado [fecha]",
       "excerpt": "Qué incluye un agente de IA para WhatsApp, de qué depende su precio y cómo calcular su retorno en una empresa colombiana.",
+      "chip": "Agentes de IA · Guía 2026",
+      "lead": "Precios reales, qué incluye cada rango y cómo calcular si te conviene. Escrito por el equipo que los implementa.",
+      "author": "michael",
+      "published": "[fecha]",
+      "updated": "[fecha]",
+      "updatedIso": "2026-10-01",
+      "image": "[Imagen destacada 1200×630 · alt: “Agente de IA respondiendo en WhatsApp Business”]",
+      "quickAnswer": "En Colombia, un agente de IA para WhatsApp cuesta entre [$X] y [$Y] al mes, más una configuración inicial de [$Z]. El precio depende del volumen de conversaciones, las integraciones (CRM, agenda, inventario) y si incluye calificación de prospectos.",
+      "sections": [
+        {
+          "id": "rangos",
+          "title": "Rangos de precio",
+          "paragraphs": [
+            "[Párrafo explicativo de 120–200 palabras con la palabra clave principal y variaciones naturales: “chatbot WhatsApp precio”, “bot de WhatsApp para empresas”…]"
+          ],
+          "table": {
+            "columns": [
+              "Tipo",
+              "Precio mensual",
+              "Para quién"
+            ],
+            "rows": [
+              [
+                "Chatbot de menús",
+                "[$X]",
+                "[Perfil]"
+              ],
+              [
+                "Agente de IA",
+                "[$X]",
+                "[Perfil]"
+              ],
+              [
+                "Agente integrado a CRM/ERP",
+                "[$X]",
+                "[Perfil]"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "factores",
+          "title": "Qué hace subir o bajar el costo",
+          "paragraphs": [
+            "[Contenido con listas, ejemplos y enlaces internos a [automatización de procesos](/servicios/automatizacion-de-procesos/) y [software a medida](/servicios/software-a-medida/)]."
+          ]
+        },
+        {
+          "id": "roi",
+          "title": "Cómo calcular si te conviene",
+          "paragraphs": [
+            "[Fórmula sencilla y enlace a la [calculadora de ahorro](/#calculadora)]."
+          ]
+        },
+        {
+          "id": "errores",
+          "title": "Errores al contratar",
+          "paragraphs": [
+            "[Contenido]."
+          ]
+        }
+      ],
+      "inlineCta": {
+        "after": "rangos",
+        "title": "¿Quieres saber cuánto costaría el tuyo?",
+        "text": "Cotización en 24 horas, sin compromiso.",
+        "label": "Ver planes del agente",
+        "href": "/servicios/agentes-ia-whatsapp/#precios"
+      },
+      "related": [
+        "chatbot-vs-agente-de-ia",
+        "automatizar-facturacion-electronica-dian",
+        "senales-de-que-tu-empresa-necesita-un-crm"
+      ],
+      "status": "draft"
+    },
+    {
+      "title": "Chatbot vs. agente de IA: diferencias reales",
+      "slug": "chatbot-vs-agente-de-ia",
+      "category": "Agentes de IA",
+      "seoTitle": "Chatbot vs. agente de IA: diferencias reales | Orion Core",
+      "readingTime": "[N] min de lectura · Actualizado [fecha]",
+      "excerpt": "En qué se diferencia un chatbot de menús de un agente de IA, cuándo conviene cada uno y cuánto cuestan.",
+      "chip": "Agentes de IA · Guía 2026",
+      "lead": "Qué hace cada uno, cuándo conviene y cuánto cuesta. Sin tecnicismos.",
+      "author": "michael",
+      "published": "[fecha]",
+      "updated": "[fecha]",
+      "updatedIso": "2026-10-01",
+      "image": "[Imagen destacada 1200×630 · alt: “Comparación entre un chatbot de menús y un agente de IA”]",
+      "quickAnswer": "Un chatbot de menús responde con opciones fijas; un agente de IA entiende lenguaje natural, consulta tu información y toma acciones como agendar o registrar en tu CRM.",
+      "sections": [
+        {
+          "id": "diferencias",
+          "title": "Diferencias principales",
+          "paragraphs": [
+            "[Contenido]."
+          ]
+        },
+        {
+          "id": "cuando",
+          "title": "Cuándo conviene cada uno",
+          "paragraphs": [
+            "[Contenido con enlace a [agentes de IA para WhatsApp](/servicios/agentes-ia-whatsapp/)]."
+          ]
+        }
+      ],
+      "inlineCta": {
+        "after": "diferencias",
+        "title": "¿Quieres ver un agente de IA en acción?",
+        "text": "Demo con la información de tu negocio.",
+        "label": "Ver agentes de IA",
+        "href": "/servicios/agentes-ia-whatsapp/"
+      },
+      "related": [
+        "cuanto-cuesta-un-chatbot-de-ia-para-whatsapp",
+        "senales-de-que-tu-empresa-necesita-un-crm"
+      ],
       "status": "draft"
     },
     {
@@ -359,6 +815,92 @@
       "seoTitle": "Automatizar la facturación electrónica DIAN | Orion Core",
       "readingTime": "[N] min de lectura · Actualizado [fecha]",
       "excerpt": "Paso a paso para conectar tu sistema de ventas con la facturación electrónica de la DIAN y dejar de emitir facturas a mano.",
+      "chip": "Automatización · Guía 2026",
+      "lead": "Qué necesitas, cuánto tiempo ahorras y cómo conectar tu sistema de ventas con la DIAN paso a paso.",
+      "author": "michael",
+      "published": "[fecha]",
+      "updated": "[fecha]",
+      "updatedIso": "2026-10-01",
+      "image": "[Imagen destacada 1200×630 · alt: “Factura electrónica generada automáticamente”]",
+      "quickAnswer": "Para automatizar la facturación electrónica DIAN necesitas un proveedor tecnológico habilitado y una integración que tome cada venta de tu sistema y genere la factura sin digitarla. Una pyme ahorra entre [N] y [N] horas al mes.",
+      "sections": [
+        {
+          "id": "requisitos",
+          "title": "Qué necesitas",
+          "paragraphs": [
+            "[Contenido: habilitación ante la DIAN, proveedor tecnológico y datos de tus ventas]."
+          ]
+        },
+        {
+          "id": "pasos",
+          "title": "Paso a paso",
+          "paragraphs": [
+            "[Contenido con el flujo y enlace a [automatización de procesos](/servicios/automatizacion-de-procesos/)]."
+          ]
+        },
+        {
+          "id": "errores",
+          "title": "Errores comunes",
+          "paragraphs": [
+            "[Contenido]."
+          ]
+        }
+      ],
+      "inlineCta": {
+        "after": "requisitos",
+        "title": "¿Quieres dejar de facturar a mano?",
+        "text": "Te mostramos el flujo con tus propios datos.",
+        "label": "Ver automatización de procesos",
+        "href": "/servicios/automatizacion-de-procesos/"
+      },
+      "related": [
+        "cuanto-cuesta-un-chatbot-de-ia-para-whatsapp",
+        "senales-de-que-tu-empresa-necesita-un-crm"
+      ],
+      "status": "draft"
+    },
+    {
+      "title": "5 señales de que tu empresa necesita un CRM",
+      "slug": "senales-de-que-tu-empresa-necesita-un-crm",
+      "category": "Software",
+      "seoTitle": "5 señales de que tu empresa necesita un CRM | Orion Core",
+      "readingTime": "[N] min de lectura · Actualizado [fecha]",
+      "excerpt": "Clientes que se olvidan, vendedores sin seguimiento y reportes a mano: cómo saber si llegó el momento de un CRM.",
+      "chip": "Software · Guía 2026",
+      "lead": "Si reconoces tres o más, tu equipo está perdiendo ventas por falta de sistema.",
+      "author": "michael",
+      "published": "[fecha]",
+      "updated": "[fecha]",
+      "updatedIso": "2026-10-01",
+      "image": "[Imagen destacada 1200×630 · alt: “Tablero de un CRM con el embudo de ventas”]",
+      "quickAnswer": "Tu empresa necesita un CRM cuando los clientes se pierden entre chats y hojas de cálculo, nadie sabe en qué va cada negocio y los reportes de ventas se arman a mano.",
+      "sections": [
+        {
+          "id": "senales",
+          "title": "Las 5 señales",
+          "paragraphs": [
+            "[Contenido]."
+          ]
+        },
+        {
+          "id": "siguiente-paso",
+          "title": "Qué hacer después",
+          "paragraphs": [
+            "[Contenido con enlace a [software a medida](/servicios/software-a-medida/)]."
+          ]
+        }
+      ],
+      "inlineCta": {
+        "after": "senales",
+        "title": "¿Un CRM hecho a tu medida?",
+        "text": "Cotización con precio cerrado.",
+        "label": "Ver software a medida",
+        "href": "/servicios/software-a-medida/"
+      },
+      "related": [
+        "chatbot-vs-agente-de-ia",
+        "automatizar-facturacion-electronica-dian"
+      ],
       "status": "draft"
     },
     {
@@ -368,6 +910,48 @@
       "seoTitle": "Control de acceso facial: guía para empresas | Orion Core",
       "readingTime": "[N] min de lectura · Actualizado [fecha]",
       "excerpt": "Cómo funciona el control de acceso con reconocimiento facial, qué necesita tu empresa y qué cuidar con los datos personales.",
+      "chip": "Seguridad · Guía 2026",
+      "lead": "Cómo funciona, qué equipos necesitas y qué exige la ley con los datos biométricos de tus empleados.",
+      "author": "michael",
+      "published": "[fecha]",
+      "updated": "[fecha]",
+      "updatedIso": "2026-10-01",
+      "image": "[Imagen destacada 1200×630 · alt: “Terminal de reconocimiento facial en la entrada de una oficina”]",
+      "quickAnswer": "Un control de acceso con reconocimiento facial identifica a cada persona por su rostro, abre solo las puertas que le corresponden y registra cada ingreso. Necesitas terminales faciales, cerraduras y la autorización de datos biométricos de cada persona (Ley 1581 de 2012).",
+      "sections": [
+        {
+          "id": "como-funciona",
+          "title": "Cómo funciona",
+          "paragraphs": [
+            "[Contenido]."
+          ]
+        },
+        {
+          "id": "equipos",
+          "title": "Qué equipos necesitas",
+          "paragraphs": [
+            "[Contenido con enlace a la [tienda](/tienda/)]."
+          ]
+        },
+        {
+          "id": "datos",
+          "title": "Datos personales y biometría",
+          "paragraphs": [
+            "[Contenido sobre la Ley 1581 de 2012]."
+          ]
+        }
+      ],
+      "inlineCta": {
+        "after": "como-funciona",
+        "title": "¿Quieres saber qué necesita tu empresa?",
+        "text": "Evaluación de seguridad gratis.",
+        "label": "Ver control de acceso",
+        "href": "/servicios/seguridad-control-de-acceso/"
+      },
+      "related": [
+        "cuanto-cuesta-un-chatbot-de-ia-para-whatsapp",
+        "automatizar-facturacion-electronica-dian"
+      ],
       "status": "draft"
     }
   ],

@@ -1,0 +1,76 @@
+---
+/** Galería + caja de compra de la ficha de producto. */
+import type { ProductPageView } from '../../../application/dto/PageViews';
+import ProductBuyBox from '../../islands/ProductBuyBox';
+import ProductGallery from '../../islands/ProductGallery';
+import Icon from '../shared/Icon.astro';
+
+interface Props {
+  view: ProductPageView;
+  /** Enlace de WhatsApp con la pregunta sobre el producto. */
+  whatsappHref?: string;
+}
+
+const { view, whatsappHref } = Astro.props;
+---
+
+<div class="grid gap-7 lg:gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+  <ProductGallery client:visible shots={view.gallery} badge={view.badge} />
+
+  <div class="flex flex-col gap-[18px]">
+    <p class="flex flex-wrap gap-2 text-[13px]">
+      <span class="font-semibold text-brand-cyan">{view.brand}</span>
+      <span class="text-white/70">· SKU {view.sku}</span>
+    </p>
+    <h1 class="font-poppins text-[28px] md:text-[34px] font-bold leading-[1.15]">{view.title}</h1>
+    <a href="#resenas" class="flex items-center gap-2 text-[15px] text-white/70 hover:text-white">
+      <span class="text-brand-cyan" aria-hidden="true">★★★★★</span>
+      {view.rating} · {view.reviewsCount} reseñas
+    </a>
+
+    <div class="flex flex-col gap-1">
+      <p class="flex flex-wrap items-baseline gap-3">
+        <span class="font-poppins text-[38px] font-bold" data-testid="price">{view.price}</span>
+        {view.oldPrice && <s class="text-white/70">{view.oldPrice}</s>}
+        {view.savings && <span class="font-semibold text-success">Ahorras {view.savings}</span>}
+      </p>
+      <p class="text-[15px] text-white/70">{view.installments}</p>
+    </div>
+
+    <ul class="list-disc pl-[18px] leading-[1.75] text-white/70">
+      {view.benefits.map((benefit) => <li>{benefit}</li>)}
+    </ul>
+
+    <ProductBuyBox client:visible slug={view.slug} title={view.title} variants={view.variants} />
+
+    <p class="flex items-center gap-2.5 bg-surface border border-line rounded-xl px-3.5 py-3 text-sm">
+      <span class:list={['w-2.5 h-2.5 rounded-full shrink-0', view.inStock ? 'bg-amber' : 'bg-white/40']} aria-hidden="true"></span>
+      <span>
+        <strong>{view.inStock ? view.stockNotice.strong : 'Bajo pedido'}</strong> · {view.stockNotice.text} <strong>{view.stockNotice.day}</strong>
+      </span>
+    </p>
+
+    <a
+      href={whatsappHref ?? '/contacto/'}
+      class="inline-flex items-center justify-center gap-2 w-full min-h-[52px] rounded-xl border border-whatsapp font-semibold text-white hover:bg-whatsapp/10"
+      {...(whatsappHref && { target: '_blank', rel: 'noopener noreferrer' })}
+    >
+      <Icon name="whatsapp" class="w-5 h-5 text-whatsapp" />
+      ¿Dudas? Habla con un asesor
+    </a>
+
+    <ul class="grid grid-cols-2 gap-3">
+      {
+        view.perks.map((perk) => (
+          <li class="flex items-center gap-2.5 text-sm text-white/70">
+            <Icon name={perk.icon} class="w-5 h-5 text-brand-cyan shrink-0" />
+            {perk.text}
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="flex flex-wrap gap-2" aria-label="Medios de pago">
+      {view.payments.map((method) => <li class="ph w-16 h-[34px] text-[11px]">{method}</li>)}
+    </ul>
+  </div>
+</div>

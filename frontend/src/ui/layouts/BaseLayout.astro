@@ -11,6 +11,7 @@ import poppinsHook from '@fontsource/poppins/files/poppins-latin-700-normal.woff
 import '../../styles/global.css';
 
 import { brandColors as colors } from '../theme';
+import type { StoreView } from '../../application/dto/PageViews';
 import type { SlotsView } from '../../application/dto/SlotsView';
 import { container, type SeoMeta } from '../../composition/container';
 import AnnouncementBar from '../components/home/AnnouncementBar.astro';
@@ -18,17 +19,26 @@ import Footer from '../components/home/Footer.astro';
 import Header from '../components/home/Header.astro';
 import WhatsAppFloat from '../components/home/WhatsAppFloat.astro';
 import Seo from '../components/shared/Seo.astro';
+import StoreHeader from '../components/shop/StoreHeader.astro';
+import CartDrawer from '../islands/CartDrawer';
+import FreeShippingBar from '../islands/FreeShippingBar';
 
 interface Props {
   seo: SeoMeta;
   /** Barra de escasez (solo en el home). */
   announcement?: { text: string; cta: { label: string; href: string }; slots: SlotsView };
+  /** Páginas de la tienda: barra de envío gratis, header con buscador y carrito lateral. */
+  store?: StoreView;
+  /** La ficha de producto tiene su barra fija inferior: el botón flotante no se superpone. */
+  hideWhatsAppFloat?: boolean;
 }
 
-const { seo, announcement } = Astro.props;
+const { seo, announcement, store, hideWhatsAppFloat = false } = Astro.props;
 const app = container();
 const view = await app.getHomeContent.execute();
 const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whatsappMessage);
+const checkoutHref = app.whatsappLink(view.business.whatsapp, 'Hola, quiero comprar en la tienda.');
+const cartStore = store && { products: store.products, ...(store.freeShippingFrom && { freeShippingFrom: store.freeShippingFrom }) };
 ---
 
 <!doctype html>
@@ -52,11 +62,23 @@ const whatsappHref = app.whatsappLink(view.business.whatsapp, view.contact.whats
       Saltar al contenido
     </a>
     {announcement && <AnnouncementBar {...announcement} />}
-    <Header nav={app.routes.navigation()} />
+    {
+      store && cartStore ? (
+        <>
+          <div class="bg-surface-2 border-b border-line">
+            <FreeShippingBar client:idle store={cartStore} />
+          </div>
+          <StoreHeader store={store} />
+        </>
+      ) : (
+        <Header nav={app.routes.navigation()} />
+      )
+    }
     <main id="contenido">
       <slot />
     </main>
     <Footer groups={app.routes.footerSitemap()} legal={app.routes.legalLinks()} business={view.business} />
-    <WhatsAppFloat href={whatsappHref} />
+    {!hideWhatsAppFloat && <WhatsAppFloat href={whatsappHref} />}
+    {store && <CartDrawer client:idle store={store} checkoutHref={checkoutHref} />}
   </body>
 </html>

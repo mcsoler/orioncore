@@ -1,0 +1,72 @@
+---
+import type { ServicePageView } from '../../../application/dto/PageViews';
+import AutomationFlow from '../home/illustrations/AutomationFlow.astro';
+import FaceAccess from '../home/illustrations/FaceAccess.astro';
+import SoftwareDashboard from '../home/illustrations/SoftwareDashboard.astro';
+import WhatsAppChat from '../home/illustrations/WhatsAppChat.astro';
+
+interface Props {
+  view: ServicePageView;
+  /** Destino de los CTA "whatsapp"; sin número confirmado van al formulario. */
+  whatsappHref?: string;
+}
+
+const { view, whatsappHref } = Astro.props;
+const { hero } = view;
+
+const ILLUSTRATIONS = {
+  'automatizacion-de-procesos': AutomationFlow,
+  'agentes-ia-whatsapp': WhatsAppChat,
+  'software-a-medida': SoftwareDashboard,
+  'seguridad-control-de-acceso': FaceAccess,
+} as const;
+const Illustration = ILLUSTRATIONS[view.slug as keyof typeof ILLUSTRATIONS] ?? AutomationFlow;
+
+const resolve = (href: string) => (href === 'whatsapp' ? (whatsappHref ?? '#contacto') : href);
+const external = (href: string) => (href === 'whatsapp' && whatsappHref ? { target: '_blank', rel: 'noopener noreferrer' } : {});
+const incoming = 'bg-surface rounded-xl rounded-bl-[3px] px-2.5 py-2 text-xs self-start max-w-[85%]';
+const outgoing = 'bg-surface-2 rounded-xl rounded-br-[3px] px-2.5 py-2 text-xs self-end max-w-[85%]';
+---
+
+<section id="inicio" aria-labelledby="servicio-titulo" class="pt-8 pb-16">
+  <div class="wrap grid gap-12 items-center lg:grid-cols-2">
+    <div class="flex flex-col gap-5">
+      {view.badge && <span class="tag self-start bg-success/15 text-success">{view.badge}</span>}
+      <h1 id="servicio-titulo" class="font-poppins font-bold text-[40px] md:text-[52px] leading-[1.05]" style="text-wrap: balance">
+        {hero.title.before}
+        <span class="text-brand-blue">{hero.title.highlight}</span>
+        {hero.title.after}
+      </h1>
+      <p class="text-[19px] leading-[1.55] text-white/70">{hero.intro}</p>
+      <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3">
+        <a href={resolve(hero.primaryCta.href)} class="btn-primary btn-lg" {...external(hero.primaryCta.href)}>{hero.primaryCta.label}</a>
+        <a href={resolve(hero.secondaryCta.href)} class="btn-ghost btn-lg" {...external(hero.secondaryCta.href)}>{hero.secondaryCta.label}</a>
+      </div>
+      <p data-proof class="flex flex-wrap gap-5 text-sm text-white/70">
+        <span><span class="text-amber" aria-hidden="true">★★★★★</span> {hero.rating}</span>
+        {hero.proof.map((item) => <span>{item}</span>)}
+      </p>
+    </div>
+    {
+      hero.chat ? (
+        <div class="stage flex items-center justify-center min-h-[440px]" data-chat aria-hidden="true">
+          <div class="w-[250px] h-[420px] rounded-[34px] border-8 border-surface-2 bg-navy px-3 py-4 flex flex-col gap-2.5">
+            <div class="flex items-center gap-2 pb-2.5 border-b border-line">
+              <span class="w-[30px] h-[30px] rounded-full bg-whatsapp" />
+              <span class="text-[13px]">
+                <strong>{hero.chat.name}</strong>
+                <br />
+                <span class="text-success text-[11px]">{hero.chat.status}</span>
+              </span>
+            </div>
+            {hero.chat.messages.map((m) => (
+              <div class={m.from === 'client' ? incoming : outgoing}>{m.text}</div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <Illustration />
+      )
+    }
+  </div>
+</section>

@@ -1,13 +1,26 @@
 import type { HomeViewModel } from '../application/dto/HomeViewModel';
+import type { ArticlePageView, MarketingHubView, ProductPageView, ServicePageView, ShopPageView } from '../application/dto/PageViews';
+import { GetArticlePage } from '../application/use-cases/GetArticlePage';
 import { GetHomeContent } from '../application/use-cases/GetHomeContent';
+import { GetMarketingHub } from '../application/use-cases/GetMarketingHub';
+import { GetProductPage } from '../application/use-cases/GetProductPage';
+import { GetServicePage } from '../application/use-cases/GetServicePage';
+import { GetShopPage, GetStore } from '../application/use-cases/GetShopPage';
 import content from '../content/home/home.es.json';
+import pages from '../content/pages/pages.es.json';
 import { RouteRegistry } from '../domain/routing/RouteRegistry';
 import { StaticContentRepository } from '../infrastructure/content/StaticContentRepository';
 import {
+  articleJsonLd,
+  collectionPageJsonLd,
+  confirmedFaqs,
   faqPageJsonLd,
   localBusinessJsonLd,
   organizationJsonLd,
+  productJsonLd,
+  serviceJsonLd,
   webSiteJsonLd,
+  type BusinessSeo,
 } from '../infrastructure/seo/jsonLd';
 import { SeoMetaBuilder, type JsonLd, type SeoMeta, type SiteSeo } from '../infrastructure/seo/SeoMetaBuilder';
 import { WhatsAppLinkBuilder } from '../infrastructure/whatsapp/WhatsAppLinkBuilder';
@@ -29,12 +42,25 @@ const TITLE_SUFFIX = ' | Orion Core';
  * Los casos de uso reciben sus puertos por constructor (inyección de dependencias).
  */
 export function createContainer(config: ContainerConfig) {
-  const contentRepository = new StaticContentRepository(content);
+  const contentRepository = new StaticContentRepository(content, pages);
   const interactive = createInteractiveUseCases(config);
   const routes = RouteRegistry.create(contentRepository.getRoutes());
+  const getHomeContent = new GetHomeContent(contentRepository);
+  const business = async (): Promise<BusinessSeo> => (await getHomeContent.execute()).business;
+  /** FAQPage solo con las preguntas que ya tienen respuesta real. */
+  const faqJsonLd = (items: { question: string; answer: string }[]) => {
+    const answered = confirmedFaqs(items);
+    return answered.length > 0 ? [faqPageJsonLd(answered)] : [];
+  };
 
   return {
-    getHomeContent: new GetHomeContent(contentRepository),
+    getHomeContent,
+    getServicePage: new GetServicePage(contentRepository),
+    getMarketingHub: new GetMarketingHub(contentRepository),
+    getShopPage: new GetShopPage(contentRepository),
+    getStore: new GetStore(contentRepository),
+    getProductPage: new GetProductPage(contentRepository),
+    getArticlePage: new GetArticlePage(contentRepository),
     calculateLoss: interactive.calculateLoss,
     submitLead: interactive.submitLead,
     routes,
@@ -74,6 +100,49 @@ export function createContainer(config: ContainerConfig) {
         localBusinessJsonLd(view.business, SITE.url),
         webSiteJsonLd(SITE.name, SITE.url),
         ...(withFaq ? [faqPageJsonLd(view.faq.items)] : []),
+      ];
+    },
+
+    /** Service + FAQPage (preguntas respondidas) de /servicios/{slug}/. */
+    async serviceJsonLd(view: ServicePageView): Promise<JsonLd[]> {
+      const route = routes.get(view.path);
+      return [
+        serviceJsonLd({ name: view.name, description: route.description ?? view.description, path: view.path }, await business(), SITE.url),
+        ...faqJsonLd(view.faq.items),
+      ];
+    },
+
+    /** Service con el catálogo de las líneas (OfferCatalog) + FAQPage del hub. */
+    async marketingHubJsonLd(view: MarketingHubView, path = '/marketing-digital/'): Promise<JsonLd[]> {
+      const route = routes.get(path);
+      const catalog = view.rows.filter((row) => routes.has(row.href)).map((row) => ({ name: row.title, path: row.href }));
+      return [
+        serviceJsonLd({ name: view.hero.title, description: route.description ?? route.title, path, catalog }, await business(), SITE.url),
+        ...faqJsonLd(view.faq.items),
+      ];
+    },
+
+    shopJsonLd(view: ShopPageView, path: string): JsonLd[] {
+      const route = routes.get(path);
+      const items = view.items.map((item) => ({ name: item.title, path: item.href }));
+      return [collectionPageJsonLd({ name: view.title, description: route.description ?? view.intro, path, items }, SITE.url)];
+    },
+
+    productJsonLd(view: ProductPageView): JsonLd[] {
+      const block = productJsonLd(
+        { name: view.title, description: view.description, path: view.path, sku: view.sku, brand: view.brand, price: view.priceValue, inStock: view.inStock },
+        SITE.url,
+      );
+      return block ? [block] : [];
+    },
+
+    async articleJsonLd(view: ArticlePageView): Promise<JsonLd[]> {
+      return [
+        articleJsonLd(
+          { title: view.title, description: view.excerpt, path: view.path, author: view.author, updatedIso: view.updatedIso },
+          await business(),
+          SITE.url,
+        ),
       ];
     },
     adapters: interactive.adapters,

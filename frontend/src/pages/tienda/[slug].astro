@@ -1,6 +1,14 @@
 ---
+/** /tienda/{slug}/ sirve categorías (catálogo filtrado) y productos (ficha): comparten nivel de URL. */
 import { container } from '../../composition/container';
-import DraftPageLayout from '../../ui/layouts/DraftPageLayout.astro';
+import CatalogBrowser from '../../ui/islands/CatalogBrowser';
+import StickyAddToCart from '../../ui/islands/StickyAddToCart';
+import Breadcrumbs from '../../ui/components/shared/Breadcrumbs.astro';
+import ProductMain from '../../ui/components/shop/ProductMain.astro';
+import ProductMore from '../../ui/components/shop/ProductMore.astro';
+import ShopFooterBlocks from '../../ui/components/shop/ShopFooterBlocks.astro';
+import ShopHero from '../../ui/components/shop/ShopHero.astro';
+import BaseLayout from '../../ui/layouts/BaseLayout.astro';
 
 export function getStaticPaths() {
   return container()
@@ -10,6 +18,46 @@ export function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
+const path = `/tienda/${slug}/`;
+const app = container();
+const route = app.routes.get(path);
+const isCategory = route.pattern === '/tienda/[categoria]/';
+const store = app.getStore.execute();
+
+const category = isCategory ? app.getShopPage.execute(slug) : undefined;
+const product = isCategory ? undefined : app.getProductPage.execute(slug!);
+const home = await app.getHomeContent.execute();
+const whatsappHref = product && app.whatsappLink(home.business.whatsapp, `Hola, tengo una pregunta sobre ${product.title}.`);
+// Migas: Inicio / Tienda / Categoría / Producto
+const productCrumbs = product && [
+  ...app.routes.breadcrumbsFor('/tienda/'),
+  product.category,
+  { label: product.title, href: product.path },
+];
 ---
 
-<DraftPageLayout path={`/tienda/${slug}/`} />
+{
+  category && (
+    <BaseLayout seo={app.seoFor(path, app.shopJsonLd(category, path))} store={store}>
+      <ShopHero view={category} breadcrumbs={app.routes.breadcrumbsFor(path)} site={app.site.url} />
+      <section id="catalogo" aria-label="Catálogo" class="wrap pt-7 pb-[18px] scroll-mt-24">
+        <CatalogBrowser client:idle items={category.items} brands={category.brands} priceRanges={category.priceRanges} scope={category.scope} />
+      </section>
+      <ShopFooterBlocks view={category} />
+    </BaseLayout>
+  )
+}
+{
+  product && productCrumbs && (
+    <BaseLayout seo={app.seoFor(path, app.productJsonLd(product))} store={store} hideWhatsAppFloat>
+      <div class="wrap pt-5 pb-24">
+        <div class="mb-5">
+          <Breadcrumbs items={productCrumbs} site={app.site.url} tone="dark" />
+        </div>
+        <ProductMain view={product} whatsappHref={whatsappHref} />
+        <ProductMore view={product} />
+      </div>
+      <StickyAddToCart client:idle slug={product.slug} title={product.title} price={product.price} variant={product.variants[Math.min(1, product.variants.length - 1)]} />
+    </BaseLayout>
+  )
+}

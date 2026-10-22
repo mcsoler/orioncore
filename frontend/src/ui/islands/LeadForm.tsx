@@ -9,6 +9,15 @@ export interface LeadFormProps {
   /** Opciones de "¿Qué quieres mejorar primero?". */
   options: { value: string; label: string }[];
   privacyHref: string;
+  /**
+   * Servicios ya elegidos (formularios cortos de las páginas de servicio y del hub):
+   * se omite la pregunta y el paso 1 queda en nombre + WhatsApp.
+   */
+  preset?: string[];
+  /** Texto del botón del paso 1. */
+  submitLabel?: string;
+  /** Pide "Sitio web o Instagram" (auditoría de marketing); se envía dentro del mensaje. */
+  websiteField?: boolean;
   /** Inyectable para pruebas; por defecto, el caso de uso SubmitLead. */
   submitLead?: SubmitLeadUseCase;
 }
@@ -20,10 +29,18 @@ const inputClass =
   'w-full rounded-[10px] border border-line bg-navy min-h-[46px] px-3.5 text-[15px] text-white placeholder:text-white/50 focus:border-brand-cyan focus:outline-none aria-[invalid=true]:border-danger';
 
 /** Formulario de diagnóstico en 2 pasos (referencia del home): primero lo esencial, después el correo. */
-export default function LeadForm({ options, privacyHref, submitLead }: LeadFormProps) {
+export default function LeadForm({
+  options,
+  privacyHref,
+  submitLead,
+  preset,
+  submitLabel = 'Reservar mi cupo gratis →',
+  websiteField = false,
+}: LeadFormProps) {
   const id = useId();
   const [step, setStep] = useState<1 | 2>(1);
-  const [values, setValues] = useState<LeadRequest>(EMPTY);
+  const [values, setValues] = useState<LeadRequest>(() => ({ ...EMPTY, services: preset ?? [] }));
+  const [website, setWebsite] = useState('');
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
   const stepHeading = useRef<HTMLHeadingElement>(null);
@@ -58,7 +75,9 @@ export default function LeadForm({ options, privacyHref, submitLead }: LeadFormP
   async function send(event: FormEvent) {
     event.preventDefault();
     setStatus('sending');
-    const result = await (submitLead ?? interactiveUseCases().submitLead).execute(values);
+    const site = website.trim();
+    const message = site ? [`Sitio web o Instagram: ${site}`, values.message].filter(Boolean).join('\n') : values.message;
+    const result = await (submitLead ?? interactiveUseCases().submitLead).execute({ ...values, message });
     if (result.ok) {
       setStatus('sent');
       notifySlotsChanged();
@@ -104,6 +123,7 @@ export default function LeadForm({ options, privacyHref, submitLead }: LeadFormP
 
       {step === 1 ? (
         <>
+          {!preset && (
           <fieldset aria-describedby={errors.services ? errorId('services') : undefined}>
             <legend className="font-semibold mb-2.5">¿Qué quieres mejorar primero?</legend>
             <div className="flex flex-wrap gap-2">
@@ -122,14 +142,20 @@ export default function LeadForm({ options, privacyHref, submitLead }: LeadFormP
             </div>
             {errors.services && <ErrorText id={errorId('services')}>{errors.services}</ErrorText>}
           </fieldset>
+          )}
           <Field label="Nombre" htmlFor={fieldId('name')} error={errors.name} errorId={errorId('name')}>
             <input {...a11y('name')} type="text" autoComplete="name" placeholder="Tu nombre" value={values.name} onChange={(e) => set('name', e.target.value)} className={inputClass} />
           </Field>
+          {websiteField && (
+            <Field label="Sitio web o Instagram" htmlFor={`${id}-website`}>
+              <input id={`${id}-website`} type="text" inputMode="url" placeholder="https://" value={website} onChange={(e) => setWebsite(e.target.value)} className={inputClass} />
+            </Field>
+          )}
           <Field label="WhatsApp" htmlFor={fieldId('whatsapp')} error={errors.whatsapp} errorId={errorId('whatsapp')}>
             <input {...a11y('whatsapp')} type="tel" inputMode="tel" autoComplete="tel" placeholder="+57 300 000 0000" value={values.whatsapp} onChange={(e) => set('whatsapp', e.target.value)} className={inputClass} />
           </Field>
           <button type="submit" className="btn-primary w-full min-h-[54px]">
-            Reservar mi cupo gratis →
+            {submitLabel}
           </button>
           <div>
             <label className="flex gap-2 text-[13px] text-white/70">

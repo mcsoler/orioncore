@@ -1,0 +1,37 @@
+---
+/** Header de la tienda (diseño de orioncore.html): logo "Tecnologías · Tienda", buscador, Servicios y carrito. */
+import type { StoreView } from '../../../application/dto/PageViews';
+import CartButton from '../../islands/CartButton';
+import Icon from '../shared/Icon.astro';
+import Logo from '../shared/Logo.astro';
+
+interface Props {
+  store: StoreView;
+}
+
+const { store } = Astro.props;
+---
+
+<header class="sticky top-0 z-50 bg-navy border-b border-line" data-header>
+  <div class="wrap flex flex-wrap items-center gap-x-5 gap-y-3 min-h-[72px] py-3">
+    <a href="/" aria-label="Orion Core Tecnologías, inicio" class="shrink-0">
+      <Logo tone="dark" subtitle="Tecnologías · Tienda" />
+    </a>
+    <form action="/tienda/" method="get" role="search" class="order-last w-full md:order-none md:w-auto md:flex-1 md:min-w-[220px]">
+      <label class="flex items-center gap-2.5 bg-surface border border-line rounded-xl px-3.5 min-h-[46px] focus-within:border-brand-cyan">
+        <Icon name="search" class="w-5 h-5 text-white/70 shrink-0" />
+        <span class="sr-only">Buscar productos</span>
+        <input
+          type="search"
+          name="q"
+          placeholder="Busca laptops, routers, cámaras…"
+          class="flex-1 bg-transparent border-0 text-white text-[15px] placeholder:text-white/50 focus:outline-none"
+        />
+      </label>
+    </form>
+    <a href="/#servicios" class="hidden md:inline text-[15px] text-white/70 hover:text-white ml-auto md:ml-0">Servicios</a>
+    <div class="ml-auto md:ml-0">
+      <CartButton client:idle store={{ products: store.products, ...(store.freeShippingFrom && { freeShippingFrom: store.freeShippingFrom }) }} />
+    </div>
+  </div>
+</header>

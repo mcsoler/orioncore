@@ -1,0 +1,43 @@
+---
+/** Texto SEO de la categoría, venta B2B y barra de confianza del catálogo. */
+import type { ShopPageView } from '../../../application/dto/PageViews';
+import RichText from '../page/RichText.astro';
+import Icon from '../shared/Icon.astro';
+
+interface Props {
+  view: ShopPageView;
+}
+
+const { seoText, b2b, trust } = Astro.props.view;
+---
+
+<div class="wrap pb-16 flex flex-col gap-[18px]">
+  <section class="card p-6 flex flex-col gap-2.5" aria-labelledby="tienda-guia">
+    <h2 id="tienda-guia" class="font-poppins text-[22px] font-bold">{seoText.title}</h2>
+    <RichText text={seoText.body} class="text-white/70 leading-[1.7]" />
+  </section>
+  <div class="card bg-surface-2 p-6 flex flex-wrap items-center justify-between gap-4">
+    <div>
+      <strong class="text-lg">{b2b.title}</strong>
+      <p class="text-white/70">{b2b.text}</p>
+    </div>
+    <a href={b2b.cta.href} class="btn-primary">{b2b.cta.label}</a>
+  </div>
+</div>
+
+<section class="border-t border-line py-8" aria-label="Por qué comprar con nosotros">
+  <ul class="wrap grid gap-4 grid-cols-2 lg:grid-cols-4">
+    {
+      trust.map((item) => (
+        <li class="flex items-center gap-3">
+          <Icon name={item.icon} class="w-[22px] h-[22px] text-brand-cyan shrink-0" />
+          <span>
+            <strong>{item.title}</strong>
+            <br />
+            <span class="text-sm text-white/70">{item.text}</span>
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</section>

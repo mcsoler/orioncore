@@ -1,6 +1,13 @@
 ---
 import { container } from '../../composition/container';
-import DraftPageLayout from '../../ui/layouts/DraftPageLayout.astro';
+import Breadcrumbs from '../../ui/components/shared/Breadcrumbs.astro';
+import ContactBand from '../../ui/components/page/ContactBand.astro';
+import FaqSection from '../../ui/components/page/FaqSection.astro';
+import PlansSection from '../../ui/components/page/PlansSection.astro';
+import ServiceHero from '../../ui/components/service/ServiceHero.astro';
+import ServiceProof from '../../ui/components/service/ServiceProof.astro';
+import ServiceSections from '../../ui/components/service/ServiceSections.astro';
+import BaseLayout from '../../ui/layouts/BaseLayout.astro';
 
 export function getStaticPaths() {
   return container()
@@ -10,6 +17,20 @@ export function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
+const app = container();
+const view = app.getServicePage.execute(slug!);
+const home = await app.getHomeContent.execute();
+const whatsappHref = app.whatsappLink(home.business.whatsapp, `Hola, quiero probar ${view.name.toLowerCase()}.`);
 ---
 
-<DraftPageLayout path={`/servicios/${slug}/`} />
+<BaseLayout seo={app.seoFor(view.path, await app.serviceJsonLd(view))}>
+  <div class="wrap pt-6">
+    <Breadcrumbs items={app.routes.breadcrumbsFor(view.path)} site={app.site.url} tone="dark" />
+  </div>
+  <ServiceHero view={view} whatsappHref={whatsappHref} />
+  <ServiceSections view={view} />
+  <PlansSection id="precios" plans={view.pricing} />
+  <ServiceProof view={view} />
+  <FaqSection id="preguntas" faq={view.faq} />
+  <ContactBand band={view.contact} options={home.contact.formOptions} preset={[view.slug]} />
+</BaseLayout>

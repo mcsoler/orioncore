@@ -9,10 +9,12 @@ import { LOGO_HALO, LOGO_LINE_WIDTH, LOGO_LINES, LOGO_NODES, LOGO_VIEWBOX } from
 interface Props {
   variant?: 'full' | 'isotype';
   tone?: 'dark' | 'light';
+  /** Segunda línea del wordmark ("Tecnologías · Tienda" en la tienda). */
+  subtitle?: string;
   class?: string;
 }
 
-const { variant = 'full', tone = 'dark', class: className = '' } = Astro.props;
+const { variant = 'full', tone = 'dark', subtitle = 'Tecnologías', class: className = '' } = Astro.props;
 const isIsotype = variant === 'isotype';
 ---
 
@@ -67,7 +69,7 @@ const isIsotype = variant === 'isotype';
             tone === 'dark' ? 'text-secondary/70' : 'text-primary',
           ]}
         >
-          Tecnologías
+          {subtitle}
         </span>
       </span>
     )

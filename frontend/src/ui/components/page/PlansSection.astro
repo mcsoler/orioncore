@@ -1,0 +1,49 @@
+---
+import type { PlansView } from '../../../application/dto/PageViews';
+
+interface Props {
+  id: string;
+  plans: PlansView;
+  /** Destino de los botones de cada plan. */
+  href?: string;
+}
+
+const { id, plans, href = '#contacto' } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-titulo`} class="bg-surface py-[72px] scroll-mt-20">
+  <div class="wrap">
+    <header class="text-center mb-8">
+      <h2 id={`${id}-titulo`} class="h2">{plans.title}</h2>
+      <p class="text-white/70">{plans.note}</p>
+    </header>
+    <div class="grid gap-5 lg:grid-cols-3">
+      {
+        plans.plans.map((plan) => (
+          <article
+            data-plan
+            class:list={[
+              'card bg-navy p-7 flex flex-col gap-3.5 relative',
+              plan.badge && 'border-2 border-brand-blue mt-3.5 lg:mt-0',
+            ]}
+          >
+            {plan.badge && <span class="tag absolute -top-3.5 left-7 bg-brand-blue text-white">{plan.badge}</span>}
+            <h3 class="font-poppins text-xl font-semibold">{plan.name}</h3>
+            <p class="font-poppins text-4xl font-bold">
+              {plan.price}
+              {plan.period && <span class="text-[15px] font-normal text-white/70">{plan.period}</span>}
+            </p>
+            <ul class="list-disc pl-[18px] text-white/70 leading-[1.8]">
+              {plan.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+            <a href={href} class:list={['mt-auto', plan.badge ? 'btn-primary' : 'btn-ghost']}>
+              {plan.cta}
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,33 @@
+---
+import type { FaqView } from '../../../application/dto/PageViews';
+
+interface Props {
+  id: string;
+  faq: FaqView;
+  /** Fondo de la sección: surface (por defecto) o navy. */
+  tone?: 'surface' | 'navy';
+}
+
+const { id, faq, tone = 'surface' } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-titulo`} class:list={['py-[72px] scroll-mt-20', tone === 'surface' ? 'bg-surface' : 'bg-navy']}>
+  <div class="wrap max-w-[860px]">
+    <h2 id={`${id}-titulo`} class="h2 text-center">{faq.title}</h2>
+    <div class="mt-6 flex flex-col gap-3">
+      {
+        faq.items.map((item, i) => (
+          <details class:list={['card px-5 py-[18px] group', tone === 'surface' ? 'bg-navy' : 'bg-surface']} open={i === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold [&::-webkit-details-marker]:hidden">
+              {item.question}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" class="shrink-0 text-brand-cyan transition-transform group-open:rotate-180">
+                <path d="M6 9l6 6l6 -6" />
+              </svg>
+            </summary>
+            <p class="mt-2.5 text-white/70">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,6 +1,7 @@
 import type { HomeViewModel, MarketingCardView, ServiceView } from '../dto/HomeViewModel';
 import type { GetHomeContentUseCase } from '../ports/in/GetHomeContentUseCase';
 import type { ContentRepository, HomeContent } from '../ports/out/ContentRepository';
+import type { Product } from '../../domain/entities/Product';
 import type { Service } from '../../domain/entities/Service';
 
 /** Precio aún no definido: se marca, no se inventa. */
@@ -87,7 +88,7 @@ export class GetHomeContent implements GetHomeContentUseCase {
         title: shop.title,
         subtitle: shop.subtitle,
         cta: shop.cta,
-        products: shop.products.map((p) => ({
+        products: featured(shop.products).map((p) => ({
           slug: p.slug.value,
           title: p.title,
           description: p.description,
@@ -103,7 +104,7 @@ export class GetHomeContent implements GetHomeContentUseCase {
         title: blog.title,
         subtitle: blog.subtitle,
         cta: blog.cta,
-        articles: blog.articles.map((a) => ({
+        articles: blog.articles.slice(0, HOME_ARTICLES).map((a) => ({
           title: a.title,
           description: a.excerpt,
           href: a.href,
@@ -116,6 +117,15 @@ export class GetHomeContent implements GetHomeContentUseCase {
       business: { ...home.business, whatsapp: home.business.whatsapp?.digits },
     };
   }
+}
+
+const HOME_PRODUCTS = 4;
+const HOME_ARTICLES = 3;
+
+/** El home muestra los destacados; si no hay ninguno marcado, los primeros del catálogo. */
+function featured(products: readonly Product[]): Product[] {
+  const marked = products.filter((p) => p.featured);
+  return (marked.length > 0 ? marked : products).slice(0, HOME_PRODUCTS);
 }
 
 function assertComplete(home: HomeContent): void {

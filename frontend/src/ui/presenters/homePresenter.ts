@@ -8,7 +8,7 @@ const ICONS_BY_SLUG: Record<string, string> = {
   'analisis-web': 'chart',
   'branding-digital': 'palette',
   'community-manager': 'users',
-  'posicionamiento-presencial': 'megaphone',
+  'posicionamiento-de-marca': 'megaphone',
   'email-marketing': 'mail',
   'pauta-digital': 'megaphone',
   'integraciones-web': 'plug',

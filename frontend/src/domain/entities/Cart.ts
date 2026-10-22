@@ -1,3 +1,5 @@
+import { InvalidValueError } from '../errors/DomainError';
+import { Money } from '../value-objects/Money';
 import { Slug } from '../value-objects/Slug';
 
 /** Carrito de la tienda: unidades por producto (slug). Inmutable. */
@@ -17,11 +19,22 @@ export class Cart {
     return new Cart(new Map(valid));
   }
 
-  add(productSlug: string): Cart {
+  add(productSlug: string, quantity = 1): Cart {
+    if (!Number.isInteger(quantity) || quantity < 1) {
+      throw new InvalidValueError('quantity', 'debe ser un entero mayor que 0');
+    }
     const slug = Slug.of(productSlug).value;
     const items = new Map(this.items);
-    items.set(slug, (items.get(slug) ?? 0) + 1);
+    items.set(slug, (items.get(slug) ?? 0) + quantity);
     return new Cart(items);
+  }
+
+  /** Subtotal con los precios conocidos; los productos sin precio no suman (aún no tienen uno). */
+  subtotal(priceOf: (slug: string) => Money | undefined): Money {
+    return [...this.items].reduce((sum, [slug, qty]) => {
+      const price = priceOf(slug);
+      return price ? sum.add(price.multiply(qty)) : sum;
+    }, Money.cop(0));
   }
 
   quantityOf(productSlug: string): number {

@@ -1,5 +1,19 @@
 ---
-import DraftPageLayout from '../../ui/layouts/DraftPageLayout.astro';
+import { container } from '../../composition/container';
+import CatalogBrowser from '../../ui/islands/CatalogBrowser';
+import ShopFooterBlocks from '../../ui/components/shop/ShopFooterBlocks.astro';
+import ShopHero from '../../ui/components/shop/ShopHero.astro';
+import BaseLayout from '../../ui/layouts/BaseLayout.astro';
+
+const path = '/tienda/';
+const app = container();
+const view = app.getShopPage.execute();
 ---
 
-<DraftPageLayout path="/tienda/" />
+<BaseLayout seo={app.seoFor(path, app.shopJsonLd(view, path))} store={app.getStore.execute()}>
+  <ShopHero view={view} breadcrumbs={app.routes.breadcrumbsFor(path)} site={app.site.url} />
+  <section id="catalogo" aria-label="Catálogo" class="wrap pt-7 pb-[18px] scroll-mt-24">
+    <CatalogBrowser client:idle items={view.items} brands={view.brands} priceRanges={view.priceRanges} scope={view.scope} />
+  </section>
+  <ShopFooterBlocks view={view} />
+</BaseLayout>

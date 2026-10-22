@@ -1,0 +1,25 @@
+---
+import type { ContactBandView } from '../../../application/dto/PageViews';
+import LeadForm from '../../islands/LeadForm';
+
+interface Props {
+  band: ContactBandView;
+  /** Opciones del formulario del home (para validar los servicios elegidos). */
+  options: { value: string; label: string }[];
+  /** Servicio(s) ya elegidos según la página. */
+  preset: string[];
+  websiteField?: boolean;
+}
+
+const { band, options, preset, websiteField = false } = Astro.props;
+---
+
+<section id="contacto" aria-labelledby="contacto-titulo" class="bg-surface py-[72px] scroll-mt-20">
+  <div class="wrap grid gap-10 items-center lg:grid-cols-2">
+    <div class="flex flex-col gap-3.5">
+      <h2 id="contacto-titulo" class="h2 my-0">{band.title}</h2>
+      <p class="text-[17px] text-white/70">{band.text}</p>
+    </div>
+    <LeadForm client:visible options={options} preset={preset} submitLabel={band.submitLabel} websiteField={websiteField} privacyHref="/privacidad/" />
+  </div>
+</section>

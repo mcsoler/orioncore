@@ -1,0 +1,60 @@
+---
+/** Caso de éxito y enlazado interno (servicios relacionados y guías). */
+import type { ServicePageView } from '../../../application/dto/PageViews';
+
+interface Props {
+  view: ServicePageView;
+}
+
+const { case: study, related } = Astro.props.view;
+const linkCard = 'card flex items-center justify-between gap-4 px-[18px] py-4 text-white hover:border-brand-blue transition-colors';
+---
+
+<section aria-labelledby="caso-titulo" class="py-[72px]">
+  <div class="wrap">
+    <div class="card p-8 flex flex-wrap gap-8 items-center">
+      <div class="ph flex-[1_1_300px] h-[220px]" role="img" aria-label={study.photo}>{study.photo}</div>
+      <div class="flex-[2_1_400px] flex flex-col gap-3">
+        <span class="chip self-start">{study.chip}</span>
+        <h2 id="caso-titulo" class="font-poppins text-[30px] font-bold leading-tight">{study.title}</h2>
+        <p class="text-white/70">“{study.quote}” — {study.author}</p>
+        <a href={study.href} class="text-link self-start">Leer el caso completo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section aria-label="Contenido relacionado" class="pb-[72px]">
+  <div class="wrap grid gap-8 lg:grid-cols-2">
+    <div>
+      <h2 class="font-poppins text-2xl font-bold mb-3.5">Servicios relacionados</h2>
+      <ul class="flex flex-col gap-2.5">
+        {
+          related.services.map((link) => (
+            <li>
+              <a class={linkCard} href={link.href}>
+                {link.label}
+                <span class="text-brand-blue" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h2 class="font-poppins text-2xl font-bold mb-3.5">Guías recomendadas</h2>
+      <ul class="flex flex-col gap-2.5">
+        {
+          related.guides.map((link) => (
+            <li>
+              <a class={linkCard} href={link.href}>
+                {link.label}
+                <span class="text-brand-blue" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

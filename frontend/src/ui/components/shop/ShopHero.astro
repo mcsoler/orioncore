@@ -1,0 +1,51 @@
+---
+import type { ShopPageView } from '../../../application/dto/PageViews';
+import Breadcrumbs from '../shared/Breadcrumbs.astro';
+
+interface Props {
+  view: ShopPageView;
+  breadcrumbs: { label: string; href: string }[];
+  site: string;
+}
+
+const { view, breadcrumbs, site } = Astro.props;
+const { combo } = view;
+---
+
+<section class="wrap pt-7" aria-labelledby="tienda-titulo">
+  <div class="mb-4">
+    <Breadcrumbs items={breadcrumbs} site={site} tone="dark" />
+  </div>
+  <h1 id="tienda-titulo" class="font-poppins text-[32px] md:text-[40px] font-bold leading-[1.1] mb-2.5">{view.title}</h1>
+  <p class="text-[17px] leading-relaxed text-white/70 mb-6 max-w-[820px]">{view.intro}</p>
+  <div class="card p-6 md:p-8 flex flex-wrap items-center justify-between gap-7">
+    <div class="max-w-[560px] flex flex-col gap-3">
+      <span class="chip self-start text-brand-cyan border-brand-cyan">{combo.chip}</span>
+      <h2 class="font-poppins text-[28px] md:text-[34px] font-bold leading-[1.1]">{combo.title}</h2>
+      <p class="text-[17px] text-white/70">{combo.text}</p>
+      <a href={combo.cta.href} class="btn-primary self-start">{combo.cta.label}</a>
+    </div>
+    <div class="ph w-[420px] max-w-full h-[220px]" aria-hidden="true">{combo.photo}</div>
+  </div>
+</section>
+
+<nav class="wrap pt-7" aria-label="Categorías">
+  <ul class="flex flex-wrap gap-2.5">
+    {
+      view.tabs.map((tab) => (
+        <li>
+          <a
+            href={tab.href}
+            aria-current={tab.current ? 'page' : undefined}
+            class:list={[
+              'inline-flex items-center min-h-11 px-[18px] rounded-xl font-semibold text-[15px] transition-colors',
+              tab.current ? 'bg-brand-blue text-white' : 'bg-surface text-white border border-line hover:border-brand-blue',
+            ]}
+          >
+            {tab.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

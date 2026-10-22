@@ -1,0 +1,142 @@
+---
+/**
+ * Plantilla de artículo: respuesta rápida (fragmento destacado), índice, secciones numeradas,
+ * CTA dentro del contenido, autor (E-E-A-T) y lateral con relacionados (no sticky).
+ */
+import type { ArticlePageView } from '../../../application/dto/PageViews';
+import RichText from '../page/RichText.astro';
+
+interface Props {
+  view: ArticlePageView;
+  /** WhatsApp de la empresa; sin número confirmado, el CTA lateral va a la página de contacto. */
+  whatsappHref?: string;
+}
+
+const { view, whatsappHref } = Astro.props;
+const { author } = view;
+---
+
+<article class="wrap pt-7 pb-[72px] flex flex-wrap gap-12 items-start">
+  <div class="flex-[999_1_560px] min-w-0 max-w-[760px] flex flex-col gap-[22px]">
+    <header class="flex flex-col gap-4">
+      <span class="chip self-start">{view.chip}</span>
+      <h1 class="font-poppins font-bold text-[34px] md:text-[46px] leading-[1.08]" style="text-wrap: balance">{view.title}</h1>
+      <p class="text-[19px] leading-relaxed text-white/70">{view.lead}</p>
+      <div class="flex items-center gap-3 py-3.5 border-y border-line">
+        <span class="ph w-12 h-12 rounded-full text-[10px] shrink-0" aria-hidden="true">[Foto]</span>
+        <p class="text-sm leading-normal">
+          <a href={author.href} class="font-semibold text-white hover:underline underline-offset-4">{author.name}</a> · {author.role}
+          <br />
+          <span class="text-white/70">
+            Publicado {view.published} · Actualizado <time datetime={view.updatedIso}>{view.updated}</time> · {view.readingTime}
+          </span>
+        </p>
+      </div>
+    </header>
+
+    <div class="ph h-[220px] md:h-[340px] px-4" role="img" aria-label={view.image}>{view.image}</div>
+
+    <div class="card p-[22px] border-brand-blue" data-quick-answer>
+      <strong class="font-poppins text-lg">Respuesta rápida</strong>
+      <p class="mt-2 leading-[1.65]">{view.quickAnswer}</p>
+    </div>
+
+    <nav aria-label="Contenido del artículo" class="card p-5">
+      <strong>En este artículo</strong>
+      <ol class="mt-2.5 pl-5 list-decimal leading-[1.9] text-white/70">
+        {
+          view.sections.map((section) => (
+            <li>
+              <a href={`#${section.id}`} class="text-brand-cyan hover:underline underline-offset-4">
+                {section.title}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    {
+      view.sections.map((section) => (
+        <>
+          <h2 id={section.id} class="font-poppins text-[26px] md:text-[30px] font-bold mt-3 scroll-mt-24">
+            {section.number}. {section.title}
+          </h2>
+          {section.paragraphs.map((paragraph) => (
+            <RichText text={paragraph} class="text-lg leading-[1.7]" />
+          ))}
+          {section.table && (
+            <div class="overflow-x-auto rounded-xl border border-line">
+              <table class="w-full min-w-[520px] border-collapse text-base">
+                <thead>
+                  <tr class="bg-surface">
+                    {section.table.columns.map((column) => (
+                      <th scope="col" class="text-left p-3.5">
+                        {column}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {section.table.rows.map((row) => (
+                    <tr class="border-t border-line">
+                      {row.map((cell, i) => (
+                        <td class:list={['p-3.5', i === row.length - 1 && 'text-white/70']}>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {section.id === view.inlineCta.after && (
+            <aside aria-label={view.inlineCta.title} class="card bg-surface-2 p-6 flex flex-wrap items-center gap-5">
+              <div class="flex-1 min-w-[240px]">
+                <strong class="font-poppins text-xl">{view.inlineCta.title}</strong>
+                <p class="mt-1 text-white/70">{view.inlineCta.text}</p>
+              </div>
+              <a href={view.inlineCta.href} class="btn-primary">
+                {view.inlineCta.label}
+              </a>
+            </aside>
+          )}
+        </>
+      ))
+    }
+
+    <section aria-label="Sobre el autor" class="card p-[22px] flex gap-4 items-start">
+      <span class="ph w-[72px] h-[72px] rounded-full shrink-0" aria-hidden="true">[Foto]</span>
+      <div>
+        <strong>Sobre el autor</strong>
+        <p class="mt-1.5 text-white/70 leading-relaxed">{author.bio}</p>
+        {author.linkedin && <a href={author.linkedin} target="_blank" rel="noopener noreferrer" class="text-link text-sm">LinkedIn →</a>}
+      </div>
+    </section>
+  </div>
+
+  <aside aria-label="Relacionados" class="flex-[1_1_280px] flex flex-col gap-4">
+    <div class="card p-[22px] flex flex-col gap-3 border-brand-blue">
+      <strong class="font-poppins text-[19px]">{view.sideCta.title}</strong>
+      <span class="text-[15px] text-white/70">{view.sideCta.text}</span>
+      <a
+        href={whatsappHref ?? '/contacto/'}
+        class="btn-primary"
+        {...(whatsappHref && { target: '_blank', rel: 'noopener noreferrer' })}
+      >
+        {view.sideCta.label}
+      </a>
+    </div>
+    {
+      view.related.length > 0 && (
+        <nav aria-label="Artículos relacionados" class="card p-[22px] flex flex-col gap-3">
+          <strong>Artículos relacionados</strong>
+          {view.related.map((link) => (
+            <a href={link.href} class="text-white hover:text-brand-cyan">
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      )
+    }
+  </aside>
+</article>
