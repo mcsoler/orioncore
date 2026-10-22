@@ -1,6 +1,6 @@
 import type { AnalyticsTracker } from '../application/ports/out/AnalyticsTracker';
 import type { LeadGateway } from '../application/ports/out/LeadGateway';
-import { AddToCart, GetCartCount } from '../application/use-cases/AddToCart';
+import { AddToCart, GetCartCount, GetCartSummary } from '../application/use-cases/AddToCart';
 import { CalculateLoss } from '../application/use-cases/CalculateLoss';
 import { GetSlots } from '../application/use-cases/GetSlots';
 import { SubmitLead } from '../application/use-cases/SubmitLead';
@@ -44,6 +44,7 @@ export function createInteractiveUseCases(config: InteractiveConfig) {
     submitLead: new SubmitLead(leadGateway, analytics),
     addToCart: new AddToCart(cart),
     cartCount: new GetCartCount(cart),
+    cartSummary: new GetCartSummary(cart),
     getSlots: new GetSlots(new OrionApiSlotsGateway({ baseUrl: config.apiUrl, fetch: config.fetch })),
     adapters: { leadGateway, analytics },
   };

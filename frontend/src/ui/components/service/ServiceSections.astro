@@ -1,0 +1,126 @@
+---
+/** Cuerpo de la plantilla de servicio: índice, qué es, cómo funciona, funcionalidades y comparativa. */
+import type { ServicePageView } from '../../../application/dto/PageViews';
+
+interface Props {
+  view: ServicePageView;
+}
+
+const { view } = Astro.props;
+const { whatIs, howItWorks, features, comparison } = view;
+
+const PAGE_INDEX = [
+  { id: 'que-es', label: 'Qué es' },
+  { id: 'como-funciona', label: 'Cómo funciona' },
+  { id: 'funcionalidades', label: 'Funcionalidades' },
+  { id: 'comparativa', label: 'Comparativa' },
+  { id: 'precios', label: 'Precios' },
+  { id: 'preguntas', label: 'Preguntas frecuentes' },
+];
+---
+
+<nav aria-label="En esta página" class="border-y border-line bg-surface">
+  <div class="wrap flex flex-wrap gap-2 py-3.5 text-sm">
+    <span class="self-center mr-1.5 text-white/70">En esta página:</span>
+    {
+      PAGE_INDEX.map((item) => (
+        <a class="chip hover:border-brand-blue hover:text-white" href={`#${item.id}`}>
+          {item.label}
+        </a>
+      ))
+    }
+  </div>
+</nav>
+
+<section id="que-es" aria-labelledby="que-es-titulo" class="pt-[72px] pb-10 scroll-mt-20">
+  <div class="wrap grid gap-12 items-start lg:grid-cols-2">
+    <div>
+      <h2 id="que-es-titulo" class="h2 mt-0">{whatIs.title}</h2>
+      <p class="text-lg leading-[1.65]">{whatIs.body}</p>
+    </div>
+    <div class="flex flex-col gap-3.5">
+      <h3 class="font-poppins text-[22px] font-semibold">Problemas que resuelve</h3>
+      {
+        whatIs.problems.map((problem) => (
+          <div class="card p-[18px] flex gap-3.5 items-start">
+            <span class="tag bg-danger/15 text-danger">Antes</span>
+            <span>{problem}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona" aria-labelledby="como-funciona-titulo" class="pt-10 pb-[72px] scroll-mt-20">
+  <div class="wrap">
+    <h2 id="como-funciona-titulo" class="h2">{howItWorks.title}</h2>
+    <ol class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        howItWorks.steps.map((step) => (
+          <li class="card p-6 flex flex-col gap-2.5">
+            <span class="font-poppins text-[28px] font-bold text-brand-blue" aria-hidden="true">
+              {step.number}
+            </span>
+            <h3 class="font-poppins text-lg font-semibold">{step.title}</h3>
+            <p class="text-white/70">{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<section id="funcionalidades" aria-labelledby="funcionalidades-titulo" class="bg-surface py-[72px] scroll-mt-20">
+  <div class="wrap">
+    <h2 id="funcionalidades-titulo" class="h2">{features.title}</h2>
+    <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        features.items.map((feature) => (
+          <div class="card bg-navy p-[22px]">
+            <h3 class="font-poppins text-lg font-semibold mb-1.5">{feature.title}</h3>
+            <p class="text-white/70">{feature.text}</p>
+          </div>
+        ))
+      }
+    </div>
+    <h3 class="font-poppins text-[22px] font-semibold mt-9 mb-3">Se integra con</h3>
+    <ul class="flex flex-wrap gap-2">{features.integrations.map((item) => <li class="chip">{item}</li>)}</ul>
+  </div>
+</section>
+
+<section id="comparativa" aria-labelledby="comparativa-titulo" class="py-[72px] scroll-mt-20">
+  <div class="wrap">
+    <h2 id="comparativa-titulo" class="h2">{comparison.title}</h2>
+    <div class="mt-6 overflow-x-auto rounded-2xl border border-line">
+      <table class="w-full min-w-[620px] border-collapse text-base">
+        <thead>
+          <tr class="bg-surface">
+            {
+              comparison.columns.map((column, i) => (
+                <th scope="col" class:list={['text-left p-4', i === 2 && 'text-brand-cyan']}>
+                  {column}
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody>
+          {
+            comparison.rows.map(([criterion, traditional, ours]) => (
+              <tr class="border-t border-line">
+                <th scope="row" class="text-left p-4 font-semibold">
+                  {criterion}
+                </th>
+                <td class="p-4 text-white/70">{traditional}</td>
+                <td class="p-4">{ours}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <h3 class="font-poppins text-[22px] font-semibold mt-9 mb-3">Ideal para</h3>
+    <ul class="flex flex-wrap gap-2">{comparison.idealFor.map((item) => <li class="chip">{item}</li>)}</ul>
+  </div>
+</section>

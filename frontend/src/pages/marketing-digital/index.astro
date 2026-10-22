@@ -1,5 +1,26 @@
 ---
-import DraftPageLayout from '../../ui/layouts/DraftPageLayout.astro';
+import { container } from '../../composition/container';
+import ContactBand from '../../ui/components/page/ContactBand.astro';
+import FaqSection from '../../ui/components/page/FaqSection.astro';
+import PlansSection from '../../ui/components/page/PlansSection.astro';
+import HubHero from '../../ui/components/marketing/HubHero.astro';
+import HubLines from '../../ui/components/marketing/HubLines.astro';
+import Breadcrumbs from '../../ui/components/shared/Breadcrumbs.astro';
+import BaseLayout from '../../ui/layouts/BaseLayout.astro';
+
+const path = '/marketing-digital/';
+const app = container();
+const view = app.getMarketingHub.execute();
+const home = await app.getHomeContent.execute();
 ---
 
-<DraftPageLayout path="/marketing-digital/" />
+<BaseLayout seo={app.seoFor(path, await app.marketingHubJsonLd(view, path))}>
+  <div class="wrap pt-6">
+    <Breadcrumbs items={app.routes.breadcrumbsFor(path)} site={app.site.url} tone="dark" />
+  </div>
+  <HubHero hero={view.hero} />
+  <HubLines rows={view.rows} />
+  <PlansSection id="planes" plans={view.plans} />
+  <FaqSection id="preguntas" faq={view.faq} tone="navy" />
+  <ContactBand band={view.contact} options={home.contact.formOptions} preset={['marketing-digital']} websiteField />
+</BaseLayout>

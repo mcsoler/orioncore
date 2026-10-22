@@ -4,4 +4,5 @@ import { defineCollection } from 'astro:content';
 // (infraestructura) para que el dominio no dependa de Astro.
 export const collections = {
   home: defineCollection({ type: 'data' }),
+  pages: defineCollection({ type: 'data' }),
 };

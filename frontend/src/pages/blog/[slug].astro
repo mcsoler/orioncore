@@ -1,6 +1,8 @@
 ---
 import { container } from '../../composition/container';
-import DraftPageLayout from '../../ui/layouts/DraftPageLayout.astro';
+import ArticleTemplate from '../../ui/components/blog/ArticleTemplate.astro';
+import Breadcrumbs from '../../ui/components/shared/Breadcrumbs.astro';
+import BaseLayout from '../../ui/layouts/BaseLayout.astro';
 
 export function getStaticPaths() {
   return container()
@@ -10,6 +12,15 @@ export function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
+const app = container();
+const view = app.getArticlePage.execute(slug!);
+const home = await app.getHomeContent.execute();
+const whatsappHref = app.whatsappLink(home.business.whatsapp, 'Hola, quiero probar un agente de IA con la información de mi negocio.');
 ---
 
-<DraftPageLayout path={`/blog/${slug}/`} />
+<BaseLayout seo={app.seoFor(view.path, await app.articleJsonLd(view))}>
+  <div class="wrap pt-5">
+    <Breadcrumbs items={app.routes.breadcrumbsFor(view.path)} site={app.site.url} tone="dark" />
+  </div>
+  <ArticleTemplate view={view} whatsappHref={whatsappHref} />
+</BaseLayout>

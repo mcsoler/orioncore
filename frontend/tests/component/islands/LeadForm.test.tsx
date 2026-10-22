@@ -121,3 +121,50 @@ describe('LeadForm (isla, 2 pasos, referencia del home)', () => {
     expect(screen.getByRole('checkbox', { name: 'Agente IA WhatsApp' })).toBeChecked();
   });
 });
+
+describe('LeadForm corto (páginas de servicio y hub de marketing)', () => {
+  it('con el servicio ya elegido no pregunta servicios y usa el texto del botón de la página', async () => {
+    const submit = vi.fn<LeadGateway['submit']>(async () => {});
+    const user = userEvent.setup();
+    render(
+      <LeadForm
+        options={options}
+        privacyHref="/privacidad/"
+        preset={['agentes-ia-whatsapp']}
+        submitLabel="Quiero mi demo gratis"
+        submitLead={new SubmitLead({ submit }, { track: () => {} })}
+      />,
+    );
+    expect(screen.queryByRole('group', { name: '¿Qué quieres mejorar primero?' })).toBeNull();
+    await user.type(screen.getByLabelText('Nombre'), 'Ana Gómez');
+    await user.type(screen.getByLabelText('WhatsApp'), '300 123 4567');
+    await user.click(screen.getByRole('checkbox', { name: /política de tratamiento de datos/ }));
+    await user.click(screen.getByRole('button', { name: 'Quiero mi demo gratis' }));
+    await user.type(screen.getByLabelText('Correo electrónico'), 'ana@empresa.co');
+    await user.click(screen.getByRole('button', { name: 'Enviar solicitud' }));
+    expect(submit).toHaveBeenCalledWith(expect.objectContaining({ services: ['agentes-ia-whatsapp'], name: 'Ana Gómez' }));
+  });
+
+  it('la auditoría de marketing pide el sitio web o Instagram y lo envía en el mensaje', async () => {
+    const submit = vi.fn<LeadGateway['submit']>(async () => {});
+    const user = userEvent.setup();
+    render(
+      <LeadForm
+        options={options}
+        privacyHref="/privacidad/"
+        preset={['marketing-digital']}
+        submitLabel="Quiero mi auditoría"
+        websiteField
+        submitLead={new SubmitLead({ submit }, { track: () => {} })}
+      />,
+    );
+    await user.type(screen.getByLabelText('Nombre'), 'Ana Gómez');
+    await user.type(screen.getByLabelText('Sitio web o Instagram'), '@mimarca');
+    await user.type(screen.getByLabelText('WhatsApp'), '300 123 4567');
+    await user.click(screen.getByRole('checkbox', { name: /política de tratamiento de datos/ }));
+    await user.click(screen.getByRole('button', { name: 'Quiero mi auditoría' }));
+    await user.type(screen.getByLabelText('Correo electrónico'), 'ana@empresa.co');
+    await user.click(screen.getByRole('button', { name: 'Enviar solicitud' }));
+    expect(submit).toHaveBeenCalledWith(expect.objectContaining({ message: 'Sitio web o Instagram: @mimarca' }));
+  });
+});

@@ -1,0 +1,16 @@
+---
+import { richText } from '../../presenters/richText';
+
+interface Props {
+  text: string;
+  class?: string;
+}
+
+const { text, class: className } = Astro.props;
+---
+
+<p class={className}>
+  {
+    richText(text).map((segment) => (segment.href ? <a href={segment.href} class="text-link">{segment.text}</a> : segment.text))
+  }
+</p>

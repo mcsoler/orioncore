@@ -51,7 +51,7 @@ describe('Header', () => {
       '/servicios/software-a-medida/',
       '/servicios/seguridad-control-de-acceso/',
     ]);
-    expect(hrefsOf(document)).toContain('/marketing-digital/posicionamiento-presencial/');
+    expect(hrefsOf(document)).toContain('/marketing-digital/posicionamiento-de-marca/');
   });
 
   it('carrito con contador (isla) y CTA "Diagnóstico gratis"', async () => {

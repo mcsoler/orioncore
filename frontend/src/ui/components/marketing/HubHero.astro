@@ -1,0 +1,37 @@
+---
+import type { MarketingHubView } from '../../../application/dto/PageViews';
+
+interface Props {
+  hero: MarketingHubView['hero'];
+}
+
+const { hero } = Astro.props;
+---
+
+<section id="inicio" aria-labelledby="hub-titulo" class="pt-8 pb-14">
+  <div class="wrap grid gap-12 items-center lg:grid-cols-2">
+    <div class="flex flex-col gap-5">
+      <h1 id="hub-titulo" class="font-poppins font-bold text-[40px] md:text-[52px] leading-[1.05]" style="text-wrap: balance">{hero.title}</h1>
+      <p class="text-[19px] leading-[1.55] text-white/70">
+        {hero.intro.before} <strong class="text-white">{hero.intro.strong}</strong>{hero.intro.after}
+      </p>
+      <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3">
+        <a href={hero.primaryCta.href} class="btn-primary btn-lg">{hero.primaryCta.label}</a>
+        <a href={hero.secondaryCta.href} class="btn-ghost btn-lg">{hero.secondaryCta.label}</a>
+      </div>
+      <p class="text-sm text-white/70">{hero.scarcity}</p>
+    </div>
+    <div class="stage grid grid-cols-3 gap-3 min-h-[400px]" aria-hidden="true">
+      <div class="ph row-span-2 p-2.5">{hero.stage.reel}</div>
+      <div class="ph p-2.5">{hero.stage.logo}</div>
+      <div class="ph p-2.5">{hero.stage.post}</div>
+      <div class="card col-span-2 bg-navy p-4 flex flex-col gap-1.5">
+        <span class="text-xs text-white/70">{hero.stage.metricLabel}</span>
+        <span class="font-poppins text-[30px] font-bold">{hero.stage.metricValue}</span>
+        <svg width="100%" height="40" viewBox="0 0 300 40" preserveAspectRatio="none" fill="none">
+          <path d="M0 36 50 30 100 32 150 20 200 16 250 8 300 2" class="stroke-brand-cyan" stroke-width="2.5"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>

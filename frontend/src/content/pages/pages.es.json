@@ -1,0 +1,1224 @@
+{
+  "services": {
+    "agentes-ia-whatsapp": {
+      "hero": {
+        "title": {
+          "before": "Agentes de IA para WhatsApp: atiende, califica y vende",
+          "highlight": "24/7",
+          "after": ""
+        },
+        "intro": "Un asistente con inteligencia artificial que responde a tus clientes en segundos, filtra a los que de verdad van a comprar y les agenda la cita, incluso a las 3 de la mañana.",
+        "primaryCta": {
+          "label": "Probar el agente en WhatsApp",
+          "href": "whatsapp"
+        },
+        "secondaryCta": {
+          "label": "Ver planes y precios",
+          "href": "#precios"
+        },
+        "rating": "[4,9]/5",
+        "proof": [
+          "Implementación en [N] semanas",
+          "Sin contratos largos"
+        ],
+        "chat": {
+          "name": "Tu empresa",
+          "status": "responde al instante",
+          "messages": [
+            {
+              "from": "client",
+              "text": "Hola, ¿cuánto cuesta el plan para 3 usuarios?"
+            },
+            {
+              "from": "agent",
+              "text": "¡Hola! El plan Pro cuesta [$X]/mes. ¿Para qué tipo de negocio lo necesitas?"
+            },
+            {
+              "from": "client",
+              "text": "Una clínica dental"
+            },
+            {
+              "from": "agent",
+              "text": "Perfecto. Te agendo una demo con un asesor mañana a las 10:00. ✓"
+            }
+          ]
+        }
+      },
+      "whatIs": {
+        "title": "¿Qué es un agente de IA para WhatsApp?",
+        "body": "Un agente de IA para WhatsApp es un asistente virtual que entiende lenguaje natural, responde preguntas de tus clientes, recopila sus datos y los registra en tu CRM o agenda de forma automática. A diferencia de un chatbot de menús, conversa como una persona y aprende de la información de tu negocio.",
+        "problems": [
+          "Mensajes sin responder fuera de horario y clientes que se van con la competencia.",
+          "Tu equipo responde 50 veces al día las mismas preguntas de precio y horario.",
+          "Vendedores perdiendo tiempo con curiosos en lugar de clientes listos para comprar."
+        ]
+      },
+      "howItWorks": {
+        "title": "Cómo funciona un agente de IA en WhatsApp Business",
+        "steps": [
+          {
+            "title": "El cliente escribe",
+            "text": "Desde un anuncio, tu web o tu número de WhatsApp Business."
+          },
+          {
+            "title": "La IA responde",
+            "text": "Con la información de tus productos, precios y políticas."
+          },
+          {
+            "title": "Califica al prospecto",
+            "text": "Identifica intención de compra, presupuesto y urgencia."
+          },
+          {
+            "title": "Agenda o deriva",
+            "text": "Crea la cita, registra en tu CRM y avisa a tu vendedor."
+          }
+        ]
+      },
+      "features": {
+        "title": "Funcionalidades incluidas",
+        "items": [
+          {
+            "title": "Respuestas automáticas inteligentes",
+            "text": "Entiende preguntas escritas de mil formas, también notas de voz."
+          },
+          {
+            "title": "Calificación de prospectos",
+            "text": "Puntúa cada conversación y prioriza a quien está listo para comprar."
+          },
+          {
+            "title": "Derivación a humano",
+            "text": "Pasa la conversación a tu equipo con todo el contexto."
+          },
+          {
+            "title": "Agenda automática",
+            "text": "Citas, demos y visitas técnicas sin intercambiar diez mensajes."
+          },
+          {
+            "title": "Consulta de inventario",
+            "text": "Precios y disponibilidad en tiempo real desde tu sistema."
+          },
+          {
+            "title": "Reportes y métricas",
+            "text": "Conversaciones, leads, citas y ventas atribuidas al agente."
+          }
+        ],
+        "integrations": [
+          "WhatsApp Business API",
+          "HubSpot",
+          "Google Calendar",
+          "Shopify",
+          "WooCommerce",
+          "Google Sheets",
+          "Tu CRM o ERP"
+        ]
+      },
+      "comparison": {
+        "title": "Agente de IA vs. atención tradicional",
+        "columns": [
+          "Criterio",
+          "Atención tradicional",
+          "Agente de IA Orion"
+        ],
+        "rows": [
+          [
+            "Horario",
+            "Horario de oficina",
+            "24/7, festivos incluidos"
+          ],
+          [
+            "Tiempo de respuesta",
+            "Minutos u horas",
+            "Segundos"
+          ],
+          [
+            "Conversaciones simultáneas",
+            "Una por persona",
+            "Ilimitadas"
+          ],
+          [
+            "Registro en CRM",
+            "Manual",
+            "Automático"
+          ],
+          [
+            "Costo mensual",
+            "[Salario + prestaciones]",
+            "Desde [$X]"
+          ]
+        ],
+        "idealFor": [
+          "Clínicas y consultorios",
+          "Inmobiliarias",
+          "Tiendas online",
+          "Concesionarios",
+          "Educación",
+          "Servicios técnicos"
+        ]
+      },
+      "pricing": {
+        "title": "Planes y precios del agente de IA",
+        "note": "Precios en pesos colombianos, IVA no incluido. Configuración inicial: [$X].",
+        "plans": [
+          {
+            "name": "Básico",
+            "price": "[$X]",
+            "period": "/mes",
+            "items": [
+              "[N] conversaciones/mes",
+              "Preguntas frecuentes",
+              "Derivación a humano"
+            ],
+            "cta": "Elegir Básico"
+          },
+          {
+            "name": "Pro",
+            "price": "[$X]",
+            "period": "/mes",
+            "badge": "Más elegido",
+            "items": [
+              "[N] conversaciones/mes",
+              "Calificación de prospectos",
+              "Agenda + CRM",
+              "Reportes mensuales"
+            ],
+            "cta": "Elegir Pro"
+          },
+          {
+            "name": "Empresa",
+            "price": "A medida",
+            "items": [
+              "Conversaciones ilimitadas",
+              "Integración con ERP e inventario",
+              "Varios números y sedes"
+            ],
+            "cta": "Hablar con ventas"
+          }
+        ]
+      },
+      "case": {
+        "chip": "Caso de éxito · [Industria]",
+        "title": "[Cliente] respondió el [X]% de sus mensajes fuera de horario",
+        "quote": "[Testimonio real del cliente]",
+        "author": "[Nombre, Cargo]",
+        "photo": "[Foto del cliente · alt descriptivo]"
+      },
+      "faq": {
+        "title": "Preguntas frecuentes sobre agentes de IA para WhatsApp",
+        "items": [
+          {
+            "question": "¿Necesito WhatsApp Business API?",
+            "answer": "[Respuesta: qué necesita el cliente y si ustedes lo gestionan]."
+          },
+          {
+            "question": "¿El agente puede equivocarse o inventar información?",
+            "answer": "[Respuesta: cómo se entrena con tu información y cuándo deriva a un humano]."
+          },
+          {
+            "question": "¿Cuánto tarda la implementación?",
+            "answer": "[Plazo típico]."
+          },
+          {
+            "question": "¿Puedo seguir respondiendo yo cuando quiera?",
+            "answer": "Sí. Puedes tomar cualquier conversación en el momento que lo necesites."
+          },
+          {
+            "question": "¿Qué pasa con los datos de mis clientes?",
+            "answer": "[Respuesta: tratamiento según la Ley 1581 de 2012 y dónde se almacenan]."
+          }
+        ]
+      },
+      "related": {
+        "services": [
+          {
+            "label": "Automatización de procesos",
+            "href": "/servicios/automatizacion-de-procesos/"
+          },
+          {
+            "label": "Software y CRM a medida",
+            "href": "/servicios/software-a-medida/"
+          },
+          {
+            "label": "Pauta digital para atraer más chats",
+            "href": "/marketing-digital/pauta-digital/"
+          }
+        ],
+        "guides": [
+          {
+            "label": "¿Cuánto cuesta un chatbot de IA para WhatsApp en Colombia?",
+            "href": "/blog/cuanto-cuesta-un-chatbot-de-ia-para-whatsapp/"
+          },
+          {
+            "label": "Chatbot vs. agente de IA: diferencias reales",
+            "href": "/blog/chatbot-vs-agente-de-ia/"
+          }
+        ]
+      },
+      "contact": {
+        "title": "Prueba tu agente de IA antes de pagar",
+        "text": "Te mostramos una demo con la información de tu negocio. Solo [N] demos personalizadas por semana.",
+        "submitLabel": "Quiero mi demo gratis"
+      }
+    },
+    "automatizacion-de-procesos": {
+      "hero": {
+        "title": {
+          "before": "Automatización de procesos para empresas: recupera",
+          "highlight": "horas cada semana",
+          "after": ""
+        },
+        "intro": "Conectamos tus plataformas y convertimos tareas manuales, reportes y alertas en flujos automáticos, medibles y sin errores. Tu equipo deja de copiar y pegar y se enfoca en lo que sí genera dinero.",
+        "primaryCta": {
+          "label": "Quiero automatizar procesos",
+          "href": "#contacto"
+        },
+        "secondaryCta": {
+          "label": "Ver planes y precios",
+          "href": "#precios"
+        },
+        "rating": "[4,9]/5",
+        "proof": [
+          "Primer flujo en [N] semanas",
+          "Sin contratos largos"
+        ]
+      },
+      "whatIs": {
+        "title": "¿Qué es la automatización de procesos?",
+        "body": "La automatización de procesos consiste en que el software haga por sí solo las tareas repetitivas de tu empresa: pasar datos entre plataformas, generar reportes, enviar alertas o actualizar inventarios. Cada flujo sigue reglas claras, deja registro de lo que hizo y avisa a una persona cuando algo requiere una decisión.",
+        "problems": [
+          "Tu equipo pasa horas copiando datos entre Excel, el ERP y el correo.",
+          "Los reportes llegan tarde, con errores o dependen de una sola persona.",
+          "Te enteras de los problemas cuando el cliente ya se quejó."
+        ]
+      },
+      "howItWorks": {
+        "title": "Cómo automatizamos un proceso de tu empresa",
+        "steps": [
+          {
+            "title": "Mapeamos el proceso",
+            "text": "Medimos cuánto tiempo y dinero consume hoy cada tarea."
+          },
+          {
+            "title": "Diseñamos el flujo",
+            "text": "Definimos reglas, integraciones y quién aprueba qué."
+          },
+          {
+            "title": "Lo construimos",
+            "text": "Conectamos tus plataformas y probamos con datos reales."
+          },
+          {
+            "title": "Medimos y ajustamos",
+            "text": "Un tablero muestra las horas ahorradas cada mes."
+          }
+        ]
+      },
+      "features": {
+        "title": "Qué podemos automatizar",
+        "items": [
+          {
+            "title": "Tareas administrativas",
+            "text": "Facturas, conciliaciones, órdenes de compra y cuentas por cobrar."
+          },
+          {
+            "title": "Integración entre plataformas",
+            "text": "Tu ERP, CRM, tienda online y hojas de cálculo hablando entre sí."
+          },
+          {
+            "title": "Reportes automáticos",
+            "text": "Indicadores que llegan solos a tu correo o WhatsApp cada mañana."
+          },
+          {
+            "title": "Alertas en tiempo real",
+            "text": "Avisos cuando el inventario baja, un pago falla o un pedido se retrasa."
+          },
+          {
+            "title": "Aprobaciones y flujos",
+            "text": "Solicitudes que pasan por las personas correctas sin perseguir a nadie."
+          },
+          {
+            "title": "Documentos y firmas",
+            "text": "Contratos, cotizaciones y certificados generados y enviados sin intervención."
+          }
+        ],
+        "integrations": [
+          "Siigo",
+          "Alegra",
+          "SAP Business One",
+          "Google Workspace",
+          "Microsoft 365",
+          "HubSpot",
+          "Tu CRM o ERP"
+        ]
+      },
+      "comparison": {
+        "title": "Proceso automatizado vs. proceso manual",
+        "columns": [
+          "Criterio",
+          "Proceso manual",
+          "Automatización Orion"
+        ],
+        "rows": [
+          [
+            "Tiempo por tarea",
+            "Minutos u horas",
+            "Segundos"
+          ],
+          [
+            "Errores de digitación",
+            "Frecuentes",
+            "Prácticamente cero"
+          ],
+          [
+            "Horario",
+            "Horario de oficina",
+            "24/7"
+          ],
+          [
+            "Trazabilidad",
+            "Depende de quién lo hizo",
+            "Registro de cada paso"
+          ],
+          [
+            "Costo mensual",
+            "[Horas del equipo × costo]",
+            "Desde [$X]"
+          ]
+        ],
+        "idealFor": [
+          "Distribuidoras",
+          "Contabilidad y finanzas",
+          "Logística",
+          "Retail",
+          "Salud",
+          "Servicios profesionales"
+        ]
+      },
+      "pricing": {
+        "title": "Planes y precios de automatización",
+        "note": "Precios en pesos colombianos, IVA no incluido. Diagnóstico inicial gratis.",
+        "plans": [
+          {
+            "name": "Flujo",
+            "price": "[$X]",
+            "period": "/mes",
+            "items": [
+              "1 proceso automatizado",
+              "Hasta [N] integraciones",
+              "Soporte por WhatsApp"
+            ],
+            "cta": "Elegir Flujo"
+          },
+          {
+            "name": "Operación",
+            "price": "[$X]",
+            "period": "/mes",
+            "badge": "Más elegido",
+            "items": [
+              "Hasta [N] procesos",
+              "Reportes y alertas",
+              "Tablero de horas ahorradas",
+              "Ajustes mensuales"
+            ],
+            "cta": "Elegir Operación"
+          },
+          {
+            "name": "Empresa",
+            "price": "A medida",
+            "items": [
+              "Procesos ilimitados",
+              "Integración con ERP",
+              "Varias sedes y áreas"
+            ],
+            "cta": "Hablar con ventas"
+          }
+        ]
+      },
+      "case": {
+        "chip": "Caso de éxito · [Industria]",
+        "title": "[Cliente] ahorró [X] horas al mes automatizando su facturación",
+        "quote": "[Testimonio real del cliente]",
+        "author": "[Nombre, Cargo]",
+        "photo": "[Foto del cliente · alt descriptivo]"
+      },
+      "faq": {
+        "title": "Preguntas frecuentes sobre automatización de procesos",
+        "items": [
+          {
+            "question": "¿Tengo que cambiar mis sistemas actuales?",
+            "answer": "[Respuesta: cómo nos conectamos a lo que ya usas]."
+          },
+          {
+            "question": "¿Qué procesos conviene automatizar primero?",
+            "answer": "[Respuesta: criterios de volumen, repetición y costo]."
+          },
+          {
+            "question": "¿Cuánto tarda la implementación?",
+            "answer": "[Plazo típico]."
+          },
+          {
+            "question": "¿Qué pasa si un flujo falla?",
+            "answer": "[Respuesta: alertas, reintentos y soporte]."
+          }
+        ]
+      },
+      "related": {
+        "services": [
+          {
+            "label": "Agentes de IA para WhatsApp",
+            "href": "/servicios/agentes-ia-whatsapp/"
+          },
+          {
+            "label": "Software y CRM a medida",
+            "href": "/servicios/software-a-medida/"
+          },
+          {
+            "label": "Integraciones web",
+            "href": "/marketing-digital/integraciones-web/"
+          }
+        ],
+        "guides": [
+          {
+            "label": "Cómo automatizar la facturación electrónica DIAN en una pyme",
+            "href": "/blog/automatizar-facturacion-electronica-dian/"
+          },
+          {
+            "label": "5 señales de que tu empresa necesita un CRM",
+            "href": "/blog/senales-de-que-tu-empresa-necesita-un-crm/"
+          }
+        ]
+      },
+      "contact": {
+        "title": "Descubre cuántas horas puedes recuperar",
+        "text": "Revisamos tus procesos y te mostramos cuáles automatizar primero. Solo [N] diagnósticos por semana.",
+        "submitLabel": "Quiero mi diagnóstico gratis"
+      }
+    },
+    "software-a-medida": {
+      "hero": {
+        "title": {
+          "before": "Software a medida y CRM para empresas:",
+          "highlight": "toda tu operación",
+          "after": "en una sola pantalla"
+        },
+        "intro": "ERP, CRM, dashboards y portales construidos sobre cómo trabaja tu empresa, no al revés. Migramos tus datos sin perder información y lo desplegamos en la nube.",
+        "primaryCta": {
+          "label": "Cotizar mi software",
+          "href": "#contacto"
+        },
+        "secondaryCta": {
+          "label": "Ver planes y precios",
+          "href": "#precios"
+        },
+        "rating": "[4,9]/5",
+        "proof": [
+          "Precio cerrado por fase",
+          "El código es tuyo"
+        ]
+      },
+      "whatIs": {
+        "title": "¿Qué es el software a medida?",
+        "body": "El software a medida es un sistema diseñado para los procesos exactos de tu empresa: tus reglas de negocio, tus roles y tus reportes. A diferencia de una plataforma genérica, no pagas por funciones que no usas ni adaptas tu operación a las limitaciones de otro.",
+        "problems": [
+          "Diez archivos de Excel distintos y nadie sabe cuál es la versión correcta.",
+          "Cinco plataformas que no se hablan y datos que se copian a mano.",
+          "Licencias caras de un software que tu equipo usa a medias."
+        ]
+      },
+      "howItWorks": {
+        "title": "Cómo desarrollamos tu software",
+        "steps": [
+          {
+            "title": "Descubrimiento",
+            "text": "Entendemos tus procesos, usuarios y reportes clave."
+          },
+          {
+            "title": "Prototipo",
+            "text": "Ves y pruebas las pantallas antes de escribir código."
+          },
+          {
+            "title": "Desarrollo por fases",
+            "text": "Entregas cada [N] semanas con precio cerrado."
+          },
+          {
+            "title": "Migración y despliegue",
+            "text": "Pasamos tus datos y lo publicamos en la nube."
+          }
+        ]
+      },
+      "features": {
+        "title": "Lo que construimos",
+        "items": [
+          {
+            "title": "ERP y CRM a la medida",
+            "text": "Ventas, inventario, compras y clientes en un mismo sistema."
+          },
+          {
+            "title": "Analítica y dashboards",
+            "text": "Indicadores en tiempo real para decidir con datos."
+          },
+          {
+            "title": "Migración de datos",
+            "text": "Traemos tu información de Excel o del sistema anterior sin pérdidas."
+          },
+          {
+            "title": "Nube y despliegue",
+            "text": "Infraestructura segura, copias de respaldo y alta disponibilidad."
+          },
+          {
+            "title": "Portales empresariales",
+            "text": "Portales para clientes, proveedores o empleados con acceso por roles."
+          },
+          {
+            "title": "Integraciones personalizadas",
+            "text": "Conexión con facturación electrónica, pagos, WhatsApp y más."
+          }
+        ],
+        "integrations": [
+          "Facturación electrónica DIAN",
+          "PSE y pasarelas de pago",
+          "WhatsApp Business API",
+          "Google Workspace",
+          "Microsoft 365",
+          "Power BI",
+          "Tu ERP actual"
+        ]
+      },
+      "comparison": {
+        "title": "Software a medida vs. software genérico",
+        "columns": [
+          "Criterio",
+          "Software genérico",
+          "Software a medida Orion"
+        ],
+        "rows": [
+          [
+            "Se adapta a tus procesos",
+            "Tú te adaptas a él",
+            "Sí, desde el diseño"
+          ],
+          [
+            "Funciones que no usas",
+            "Muchas",
+            "Ninguna"
+          ],
+          [
+            "Integraciones",
+            "Limitadas",
+            "Las que necesites"
+          ],
+          [
+            "Propiedad del código",
+            "Del proveedor",
+            "Tuya"
+          ],
+          [
+            "Costo",
+            "[Licencias por usuario]",
+            "Desde [$X] por fase"
+          ]
+        ],
+        "idealFor": [
+          "Distribuidoras",
+          "Manufactura",
+          "Constructoras",
+          "Salud",
+          "Educación",
+          "Empresas de servicios"
+        ]
+      },
+      "pricing": {
+        "title": "Planes y precios de software a medida",
+        "note": "Precios en pesos colombianos, IVA no incluido. Cotización con precio cerrado por fase.",
+        "plans": [
+          {
+            "name": "Módulo",
+            "price": "[$X]",
+            "items": [
+              "1 módulo (CRM, inventario o portal)",
+              "Hasta [N] usuarios",
+              "Despliegue en la nube"
+            ],
+            "cta": "Elegir Módulo"
+          },
+          {
+            "name": "Sistema",
+            "price": "[$X]",
+            "badge": "Más elegido",
+            "items": [
+              "ERP o CRM completo",
+              "Dashboards en tiempo real",
+              "Migración de datos",
+              "Soporte [N] meses"
+            ],
+            "cta": "Elegir Sistema"
+          },
+          {
+            "name": "Empresa",
+            "price": "A medida",
+            "items": [
+              "Varios sistemas integrados",
+              "Portales y apps",
+              "Alta disponibilidad"
+            ],
+            "cta": "Hablar con ventas"
+          }
+        ]
+      },
+      "case": {
+        "chip": "Caso de éxito · [Industria]",
+        "title": "[Cliente] reemplazó [N] hojas de cálculo con un solo sistema",
+        "quote": "[Testimonio real del cliente]",
+        "author": "[Nombre, Cargo]",
+        "photo": "[Foto del cliente · alt descriptivo]"
+      },
+      "faq": {
+        "title": "Preguntas frecuentes sobre software a medida",
+        "items": [
+          {
+            "question": "¿Cuánto cuesta desarrollar un software a medida?",
+            "answer": "[Respuesta: rangos según módulos y usuarios]."
+          },
+          {
+            "question": "¿El código queda a nombre de mi empresa?",
+            "answer": "[Respuesta: propiedad intelectual y entrega del código]."
+          },
+          {
+            "question": "¿Cuánto tarda el desarrollo?",
+            "answer": "[Plazo típico por fase]."
+          },
+          {
+            "question": "¿Qué pasa con mis datos actuales?",
+            "answer": "[Respuesta: proceso de migración y validación]."
+          }
+        ]
+      },
+      "related": {
+        "services": [
+          {
+            "label": "Automatización de procesos",
+            "href": "/servicios/automatizacion-de-procesos/"
+          },
+          {
+            "label": "Agentes de IA para WhatsApp",
+            "href": "/servicios/agentes-ia-whatsapp/"
+          },
+          {
+            "label": "Integraciones web",
+            "href": "/marketing-digital/integraciones-web/"
+          }
+        ],
+        "guides": [
+          {
+            "label": "5 señales de que tu empresa necesita un CRM",
+            "href": "/blog/senales-de-que-tu-empresa-necesita-un-crm/"
+          },
+          {
+            "label": "Cómo automatizar la facturación electrónica DIAN en una pyme",
+            "href": "/blog/automatizar-facturacion-electronica-dian/"
+          }
+        ]
+      },
+      "contact": {
+        "title": "Cotiza tu software con precio cerrado",
+        "text": "Cuéntanos qué necesitas y te enviamos un alcance y un precio por fase. Solo [N] proyectos nuevos por mes.",
+        "submitLabel": "Quiero mi cotización"
+      }
+    },
+    "seguridad-control-de-acceso": {
+      "hero": {
+        "title": {
+          "before": "Control de acceso y reconocimiento facial para empresas:",
+          "highlight": "seguridad en tiempo real",
+          "after": ""
+        },
+        "intro": "Controla quién entra, cuándo y por dónde con terminales de reconocimiento facial, permisos por horario y alertas en tiempo real. Instalación y soporte de nuestro equipo técnico.",
+        "primaryCta": {
+          "label": "Evaluar mi seguridad gratis",
+          "href": "#contacto"
+        },
+        "secondaryCta": {
+          "label": "Ver planes y precios",
+          "href": "#precios"
+        },
+        "rating": "[4,9]/5",
+        "proof": [
+          "Instalación en [N] días",
+          "Garantía [N] meses"
+        ]
+      },
+      "whatIs": {
+        "title": "¿Qué es un sistema de control de acceso facial?",
+        "body": "Un sistema de control de acceso facial identifica a cada persona por su rostro y decide si puede entrar según sus permisos, el horario y la zona. Cada ingreso queda registrado, y si algo no cuadra, el sistema envía una alerta en el momento.",
+        "problems": [
+          "Tarjetas y claves que se prestan, se pierden o se copian.",
+          "No sabes quién estaba en las instalaciones cuando ocurrió un incidente.",
+          "El registro de asistencia se hace a mano y nadie confía en él."
+        ]
+      },
+      "howItWorks": {
+        "title": "Cómo funciona el control de acceso facial",
+        "steps": [
+          {
+            "title": "Evaluamos tus accesos",
+            "text": "Visitamos tus sedes y definimos puertas, zonas y riesgos."
+          },
+          {
+            "title": "Instalamos",
+            "text": "Terminales faciales, cerraduras y cámaras conectadas."
+          },
+          {
+            "title": "Registramos personas",
+            "text": "Empleados, visitantes y contratistas con sus permisos."
+          },
+          {
+            "title": "Monitoreas en vivo",
+            "text": "Ingresos, alertas y reportes desde tu celular."
+          }
+        ]
+      },
+      "features": {
+        "title": "Funcionalidades incluidas",
+        "items": [
+          {
+            "title": "Reconocimiento facial",
+            "text": "Identificación en menos de un segundo, incluso con tapabocas."
+          },
+          {
+            "title": "Permisos por horario y zona",
+            "text": "Cada persona entra solo donde y cuando debe."
+          },
+          {
+            "title": "Registro de visitantes",
+            "text": "Accesos temporales para visitantes y contratistas."
+          },
+          {
+            "title": "Alertas en tiempo real",
+            "text": "Avisos por intentos fallidos o puertas forzadas."
+          },
+          {
+            "title": "Control de asistencia",
+            "text": "Entradas y salidas listas para nómina."
+          },
+          {
+            "title": "Reportes y auditoría",
+            "text": "Historial completo de quién entró, cuándo y por dónde."
+          }
+        ],
+        "integrations": [
+          "Cámaras IP",
+          "Cerraduras electromagnéticas",
+          "Torniquetes",
+          "Software de nómina",
+          "Google Workspace",
+          "Tu ERP"
+        ]
+      },
+      "comparison": {
+        "title": "Control de acceso facial vs. tarjetas y claves",
+        "columns": [
+          "Criterio",
+          "Tarjetas y claves",
+          "Acceso facial Orion"
+        ],
+        "rows": [
+          [
+            "Se puede prestar",
+            "Sí",
+            "No"
+          ],
+          [
+            "Registro de ingresos",
+            "Parcial o manual",
+            "Automático"
+          ],
+          [
+            "Alertas",
+            "No",
+            "En tiempo real"
+          ],
+          [
+            "Control de asistencia",
+            "Aparte",
+            "Incluido"
+          ],
+          [
+            "Costo",
+            "[Tarjetas + reposiciones]",
+            "Desde [$X]"
+          ]
+        ],
+        "idealFor": [
+          "Oficinas",
+          "Bodegas y centros logísticos",
+          "Conjuntos residenciales",
+          "Clínicas",
+          "Colegios",
+          "Plantas industriales"
+        ]
+      },
+      "pricing": {
+        "title": "Planes y precios de control de acceso",
+        "note": "Precios en pesos colombianos, IVA no incluido. Evaluación de seguridad gratis.",
+        "plans": [
+          {
+            "name": "Puerta",
+            "price": "[$X]",
+            "items": [
+              "1 terminal facial",
+              "Hasta [N] personas",
+              "Instalación incluida"
+            ],
+            "cta": "Elegir Puerta"
+          },
+          {
+            "name": "Sede",
+            "price": "[$X]",
+            "badge": "Más elegido",
+            "items": [
+              "Hasta [N] puertas",
+              "Alertas en tiempo real",
+              "Control de asistencia",
+              "Soporte [N] meses"
+            ],
+            "cta": "Elegir Sede"
+          },
+          {
+            "name": "Empresa",
+            "price": "A medida",
+            "items": [
+              "Varias sedes",
+              "Integración con cámaras y nómina",
+              "Monitoreo centralizado"
+            ],
+            "cta": "Hablar con ventas"
+          }
+        ]
+      },
+      "case": {
+        "chip": "Caso de éxito · [Industria]",
+        "title": "[Cliente] controla el acceso de [N] sedes desde un solo panel",
+        "quote": "[Testimonio real del cliente]",
+        "author": "[Nombre, Cargo]",
+        "photo": "[Foto del cliente · alt descriptivo]"
+      },
+      "faq": {
+        "title": "Preguntas frecuentes sobre control de acceso facial",
+        "items": [
+          {
+            "question": "¿Es legal usar reconocimiento facial en mi empresa?",
+            "answer": "[Respuesta: autorización de datos biométricos según la Ley 1581 de 2012]."
+          },
+          {
+            "question": "¿Funciona con tapabocas o poca luz?",
+            "answer": "[Respuesta: precisión de los equipos]."
+          },
+          {
+            "question": "¿Cuánto tarda la instalación?",
+            "answer": "[Plazo típico]."
+          },
+          {
+            "question": "¿Qué pasa si se va la luz o el internet?",
+            "answer": "[Respuesta: respaldo y funcionamiento sin conexión]."
+          }
+        ]
+      },
+      "related": {
+        "services": [
+          {
+            "label": "Automatización de procesos",
+            "href": "/servicios/automatizacion-de-procesos/"
+          },
+          {
+            "label": "Software y CRM a medida",
+            "href": "/servicios/software-a-medida/"
+          },
+          {
+            "label": "Tienda de tecnología",
+            "href": "/tienda/"
+          }
+        ],
+        "guides": [
+          {
+            "label": "Control de acceso con reconocimiento facial: guía para empresas",
+            "href": "/blog/control-de-acceso-reconocimiento-facial/"
+          }
+        ]
+      },
+      "contact": {
+        "title": "Evalúa la seguridad de tu empresa gratis",
+        "text": "Visitamos tus instalaciones y te decimos dónde están los riesgos. Solo [N] evaluaciones por semana.",
+        "submitLabel": "Quiero mi evaluación gratis"
+      }
+    }
+  },
+  "marketingHub": {
+    "hero": {
+      "title": "Agencia de marketing digital 360° en Colombia",
+      "intro": {
+        "before": "Estrategia, marca, contenido, pauta y tecnología trabajando juntos para que tu empresa consiga",
+        "strong": "más clientes, no solo más likes",
+        "after": ". Contrata una línea o el ecosistema completo."
+      },
+      "primaryCta": {
+        "label": "Auditoría de marketing gratis",
+        "href": "#contacto"
+      },
+      "secondaryCta": {
+        "label": "Ver planes",
+        "href": "#planes"
+      },
+      "scarcity": "Solo tomamos [N] marcas nuevas por mes para garantizar resultados.",
+      "stage": {
+        "reel": "[Reel 9:16 de un cliente]",
+        "logo": "[Logo / branding]",
+        "post": "[Post de redes]",
+        "metricLabel": "Resultados de campaña",
+        "metricValue": "[X]x ROAS"
+      }
+    },
+    "strategy": {
+      "id": "marketing-360",
+      "title": "Marketing Digital 360°",
+      "visual": "Diagrama de estrategia y embudo",
+      "heading": "Estrategia de marketing digital integral",
+      "text": "Un plan trimestral que conecta marca, contenido, pauta y ventas, con metas claras y un tablero donde ves qué funciona.",
+      "items": [
+        "Auditoría inicial",
+        "Plan trimestral",
+        "Embudo de ventas",
+        "Tablero de resultados"
+      ],
+      "cta": "Quiero mi estrategia 360°"
+    },
+    "plans": {
+      "title": "Planes de marketing digital",
+      "note": "Mensuales, sin permanencia. La inversión en pauta va aparte.",
+      "plans": [
+        {
+          "name": "Presencia",
+          "price": "[$X]",
+          "period": "/mes",
+          "items": [
+            "Community manager",
+            "[N] piezas al mes",
+            "Reporte mensual"
+          ],
+          "cta": "Elegir Presencia"
+        },
+        {
+          "name": "Crecimiento",
+          "price": "[$X]",
+          "period": "/mes",
+          "badge": "Más elegido",
+          "items": [
+            "Todo Presencia",
+            "Pauta en 2 plataformas",
+            "Landing page + email",
+            "Tablero en vivo"
+          ],
+          "cta": "Elegir Crecimiento"
+        },
+        {
+          "name": "360°",
+          "price": "[$X]",
+          "period": "/mes",
+          "items": [
+            "Las 8 líneas",
+            "Pauta multicanal",
+            "Integraciones web y CRM"
+          ],
+          "cta": "Elegir 360°"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Preguntas frecuentes sobre marketing digital",
+      "items": [
+        {
+          "question": "¿Cuánto debo invertir en pauta?",
+          "answer": "[Rango recomendado según objetivo y sector]."
+        },
+        {
+          "question": "¿En cuánto tiempo veo resultados?",
+          "answer": "[Plazos típicos para pauta, redes orgánicas y SEO]."
+        },
+        {
+          "question": "¿Las cuentas y el contenido son míos?",
+          "answer": "Sí. Todas las cuentas publicitarias, archivos y piezas quedan a nombre de tu empresa."
+        }
+      ]
+    },
+    "contact": {
+      "title": "Auditoría de marketing gratuita",
+      "text": "Revisamos tu web, tus redes y tu pauta, y te decimos qué arreglar primero. Valorada en [$X].",
+      "submitLabel": "Quiero mi auditoría"
+    }
+  },
+  "shop": {
+    "title": "Tienda de tecnología para empresas",
+    "intro": "Laptops, redes Wi‑Fi, cámaras de seguridad y control de acceso seleccionados por nuestro equipo técnico, con envío a toda Colombia, garantía oficial e instalación opcional.",
+    "freeShippingFrom": null,
+    "combo": {
+      "chip": "Combos empresariales",
+      "title": "Arma tu oficina conectada y ahorra en el combo",
+      "text": "Laptop + red + seguridad con instalación por nuestro equipo técnico.",
+      "cta": {
+        "label": "Ver combo · [PRECIO]",
+        "href": "/tienda/router-wifi-6-malla/#combo"
+      },
+      "photo": "[Foto del combo]"
+    },
+    "seoText": {
+      "title": "Cómo elegir tecnología para tu empresa",
+      "body": "[Texto de 150–300 palabras para la categoría: qué considerar, para qué tamaño de empresa sirve cada opción y enlaces a la guía del blog y al servicio de instalación. Cada categoría tiene su propio texto único]."
+    },
+    "b2b": {
+      "title": "¿Compras para tu empresa?",
+      "text": "Cotización por volumen, factura electrónica e instalación incluida.",
+      "cta": {
+        "label": "Pedir cotización B2B",
+        "href": "/contacto/"
+      }
+    },
+    "priceRanges": [
+      {
+        "label": "Hasta [$X]",
+        "min": null,
+        "max": null
+      },
+      {
+        "label": "[$X] – [$Y]",
+        "min": null,
+        "max": null
+      },
+      {
+        "label": "Más de [$Y]",
+        "min": null,
+        "max": null
+      }
+    ],
+    "trust": [
+      {
+        "icon": "truck",
+        "title": "Envío a todo Colombia",
+        "text": "Gratis desde [$X]"
+      },
+      {
+        "icon": "shield",
+        "title": "Garantía oficial",
+        "text": "[N] meses"
+      },
+      {
+        "icon": "lock",
+        "title": "Pago seguro",
+        "text": "PSE · Tarjeta · Nequi · Contraentrega"
+      },
+      {
+        "icon": "whatsapp",
+        "title": "Asesor por WhatsApp",
+        "text": "Respuesta inmediata"
+      }
+    ],
+    "payments": [
+      "PSE",
+      "Visa",
+      "Master",
+      "Nequi",
+      "Efecty"
+    ],
+    "paymentsLine": "PSE · Tarjeta · Nequi · Contraentrega",
+    "product": {
+      "gallery": [
+        "Foto principal",
+        "Foto en uso",
+        "Detalle puertos",
+        "Video 15 s",
+        "Comparativa"
+      ],
+      "rating": "[4,X]",
+      "reviewsCount": "[N]",
+      "installments": "o [N] cuotas sin interés de [$X] · IVA incluido",
+      "cardInstallments": "o [N] cuotas de [$X]",
+      "stockNotice": {
+        "strong": "Quedan [N] unidades",
+        "text": "Pide antes de las [HORA] y llega",
+        "day": "[día]"
+      },
+      "perks": [
+        {
+          "icon": "truck",
+          "text": "Envío gratis a todo Colombia"
+        },
+        {
+          "icon": "shield",
+          "text": "Garantía [N] meses"
+        },
+        {
+          "icon": "rotate",
+          "text": "Devolución en [N] días"
+        },
+        {
+          "icon": "tool",
+          "text": "Instalación opcional"
+        }
+      ],
+      "description": "[Descripción propia orientada a beneficios, no copiada del fabricante: qué problema resuelve, para quién es y cómo se instala. Incluye la palabra clave del producto y un enlace al [servicio de instalación](/servicios/seguridad-control-de-acceso/)].",
+      "shipping": "[Tiempos por ciudad, costo, política de devolución y derecho de retracto].",
+      "questions": [
+        {
+          "question": "¿Incluye instalación?",
+          "answer": "[Respuesta]"
+        },
+        {
+          "question": "¿Tiene garantía en Colombia?",
+          "answer": "[Respuesta]"
+        }
+      ],
+      "reviews": {
+        "distribution": [
+          78,
+          15,
+          4,
+          2,
+          1
+        ],
+        "items": [
+          {
+            "name": "[Nombre]",
+            "stars": 5,
+            "text": "[Reseña real con foto del cliente]"
+          },
+          {
+            "name": "[Nombre]",
+            "stars": 4,
+            "text": "[Reseña real]"
+          }
+        ]
+      },
+      "bundle": {
+        "title": "Se compran juntos",
+        "extras": [
+          "[Instalación]"
+        ],
+        "total": "[PRECIO COMBO]",
+        "savings": "Ahorras [$X] comprando juntos"
+      },
+      "crossSell": "kit-teclado-mouse"
+    }
+  },
+  "authors": {
+    "michael": {
+      "name": "Michael [Apellido]",
+      "role": "[Cargo] en Orion Core",
+      "bio": "Michael [Apellido] es [cargo] en Orion Core y ha implementado [N] agentes de IA para empresas en Colombia. [Formación o certificaciones].",
+      "href": "/nosotros/",
+      "linkedin": null
+    }
+  },
+  "blog": {
+    "sideCta": {
+      "title": "Prueba un agente de IA gratis",
+      "text": "Demo con la información de tu negocio.",
+      "label": "Probar en WhatsApp"
+    }
+  }
+}

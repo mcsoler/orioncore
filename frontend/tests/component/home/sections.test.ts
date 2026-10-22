@@ -187,7 +187,7 @@ describe('Marketing360', () => {
       '/marketing-digital/analisis-web/',
       '/marketing-digital/branding-digital/',
       '/marketing-digital/community-manager/',
-      '/marketing-digital/posicionamiento-presencial/',
+      '/marketing-digital/posicionamiento-de-marca/',
       '/marketing-digital/email-marketing/',
       '/marketing-digital/pauta-digital/',
       '/marketing-digital/integraciones-web/',

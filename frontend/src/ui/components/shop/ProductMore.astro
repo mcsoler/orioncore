@@ -1,0 +1,147 @@
+---
+/** Combo, información visible (sin pestañas, para que Google la lea), reseñas y relacionados. */
+import type { ProductPageView } from '../../../application/dto/PageViews';
+import AddBundleButton from '../../islands/AddBundleButton';
+import { stars } from '../../presenters/richText';
+import RichText from '../page/RichText.astro';
+
+interface Props {
+  view: ProductPageView;
+}
+
+const { view } = Astro.props;
+const { bundle, details, reviews } = view;
+// Los nombres pendientes ya traen corchetes ([Switch…]); el resto se marca como foto pendiente
+const photo = (label: string) => (label.startsWith('[') ? label : `[${label}]`);
+---
+
+{
+  bundle && (
+    <section id="combo" aria-labelledby="combo-titulo" class="card mt-14 p-7 scroll-mt-24">
+      <h2 id="combo-titulo" class="font-poppins text-[26px] font-bold mb-[18px]">
+        {bundle.title}
+      </h2>
+      <div class="flex flex-wrap items-center gap-4">
+        {bundle.items.map((item, i) => (
+          <>
+            {i > 0 && (
+              <span class="text-2xl text-white/70" aria-hidden="true">
+                +
+              </span>
+            )}
+            {item.href && item.href !== view.path ? (
+              <a href={item.href} class="ph w-[140px] h-[120px] px-2 hover:border-brand-blue">
+                {photo(item.label)}
+              </a>
+            ) : (
+              <div class="ph w-[140px] h-[120px] px-2">{photo(item.label)}</div>
+            )}
+          </>
+        ))}
+        <div class="flex-1 min-w-[220px] flex flex-col items-start gap-2">
+          <span class="text-white/70">Total del combo</span>
+          <span class="font-poppins text-[30px] font-bold">{bundle.total}</span>
+          <span class="text-sm text-success">{bundle.savings}</span>
+          <AddBundleButton client:visible slugs={bundle.slugs} />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<section aria-label="Información del producto" class="mt-14 grid gap-8 grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))]">
+  <div>
+    <h2 class="font-poppins text-2xl font-bold mb-3">Descripción</h2>
+    <RichText text={details.description} class="text-white/70 leading-[1.7]" />
+  </div>
+  <div>
+    <h2 class="font-poppins text-2xl font-bold mb-3">Especificaciones técnicas</h2>
+    <table class="w-full border-collapse text-[15px]">
+      <tbody>
+        {
+          details.specs.map((spec) => (
+            <tr class="border-y border-line">
+              <th scope="row" class="text-left py-2.5 pr-3 font-medium text-white/70">
+                {spec.label}
+              </th>
+              <td class="py-2.5">{spec.value}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h2 class="font-poppins text-2xl font-bold mb-3">Envío y garantía</h2>
+    <p class="text-white/70 leading-[1.7]">{details.shipping}</p>
+    <h3 class="font-poppins text-lg font-semibold mt-5 mb-2">Preguntas de clientes</h3>
+    <div class="flex flex-col gap-2">
+      {
+        details.questions.map((q) => (
+          <details class="card px-4 py-3.5">
+            <summary class="cursor-pointer font-semibold">{q.question}</summary>
+            <p class="mt-2 text-white/70">{q.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section id="resenas" aria-labelledby="resenas-titulo" class="mt-6 flex flex-wrap gap-10 scroll-mt-24">
+  <div class="card flex-[1_1_260px] max-w-[320px] p-6 flex flex-col gap-2.5">
+    <h2 id="resenas-titulo" class="sr-only">Reseñas</h2>
+    <span class="font-poppins text-5xl font-bold">{reviews.average}</span>
+    <span class="text-brand-cyan" aria-hidden="true">★★★★★</span>
+    <span class="text-sm text-white/70">{reviews.count} reseñas verificadas</span>
+    <ul class="flex flex-col gap-1">
+      {
+        reviews.distribution.map((row) => (
+          <li class="flex items-center gap-2 text-[13px] text-white/70">
+            <span class="w-[18px]">{row.stars}★</span>
+            <span class="flex-1 h-1.5 rounded-full bg-surface-2" aria-label={`${row.percent}% de ${row.stars} estrellas`} role="img">
+              <span class="block h-full rounded-full bg-brand-cyan" style={`width: ${row.percent}%`} />
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+    <a href="/contacto/" class="btn-ghost min-h-11">Escribir reseña</a>
+  </div>
+  <div class="flex-[999_1_420px] min-w-0 flex flex-col gap-3.5">
+    {
+      reviews.items.map((review) => (
+        <article class="card p-5">
+          <div class="flex flex-wrap justify-between gap-2">
+            <strong>
+              {review.name} · <span class="text-[13px] font-medium text-success">Compra verificada</span>
+            </strong>
+            <span class="text-brand-cyan" role="img" aria-label={`${review.stars} de 5 estrellas`}>
+              {stars(review.stars)}
+            </span>
+          </div>
+          <p class="mt-2.5 text-white/70">{review.text}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<section aria-labelledby="relacionados-titulo" class="mt-14">
+  <h2 id="relacionados-titulo" class="font-poppins text-[26px] font-bold mb-[18px]">También te puede interesar</h2>
+  <ul class="grid gap-[18px] grid-cols-2 lg:grid-cols-4">
+    {
+      view.related.map((item) => (
+        <li>
+          <a href={item.href} class="card p-3.5 flex flex-col gap-2 text-white hover:border-brand-blue h-full">
+            <span class="ph h-[140px]" aria-hidden="true">
+              [Foto]
+            </span>
+            <strong>{item.title}</strong>
+            <span>{item.price}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

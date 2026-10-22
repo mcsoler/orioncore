@@ -1,0 +1,60 @@
+---
+/** Índice de anclas y las 8 filas del hub (estrategia 360° + 7 líneas), alternando lado. */
+import type { HubRowView } from '../../../application/dto/PageViews';
+
+interface Props {
+  rows: HubRowView[];
+}
+
+const { rows } = Astro.props;
+---
+
+<nav aria-label="Servicios de marketing" class="border-y border-line bg-surface">
+  <div class="wrap flex flex-wrap gap-2 py-3.5">
+    {
+      rows.map((row) => (
+        <a class="chip hover:border-brand-blue hover:text-white" href={`#${row.id}`}>
+          {row.title}
+        </a>
+      ))
+    }
+  </div>
+</nav>
+
+<section aria-label="Líneas de marketing digital" class="py-[72px]">
+  <div class="wrap flex flex-col gap-[72px]">
+    {
+      rows.map((row, i) => (
+        <article id={row.id} aria-labelledby={`${row.id}-titulo`} class:list={['grid gap-14 items-center lg:grid-cols-2 scroll-mt-24', i % 2 === 1 && 'lg:[&>*:first-child]:order-2']}>
+          <div class="ph min-h-[300px] p-4 flex-col gap-2.5" aria-hidden="true">
+            <span class="font-poppins text-[40px] font-bold text-brand-cyan">{row.number}</span>[{row.visual}]
+          </div>
+          <div class="flex flex-col gap-3.5">
+            <span class="tag self-start bg-surface-2 text-brand-cyan">
+              {row.number} · {row.title}
+            </span>
+            <h2 id={`${row.id}-titulo`} class="font-poppins text-[28px] md:text-[34px] font-bold leading-[1.12]">
+              {row.heading}
+            </h2>
+            <p class="text-[17px] leading-relaxed text-white/70">{row.text}</p>
+            <ul class="flex flex-wrap gap-2">
+              {row.items.map((item) => (
+                <li class="chip text-white">{item}</li>
+              ))}
+            </ul>
+            <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3.5 sm:items-center pt-1">
+              <a href="#contacto" class="btn-primary">
+                {row.cta}
+              </a>
+              {row.href !== '#contacto' && (
+                <a href={row.href} class="text-link">
+                  Ver {row.title} →
+                </a>
+              )}
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
